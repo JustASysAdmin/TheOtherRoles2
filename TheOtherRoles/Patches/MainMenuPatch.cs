@@ -7,9 +7,12 @@ using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 using TheOtherRoles.Patches;
 using UnityEngine.SceneManagement;
+using TMPro;
+using AmongUs.Data;
+using Assets.InnerNet;
 
 namespace TheOtherRoles.Modules {
-    
+
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class MainMenuPatch {
         private static bool horseButtonState = MapOptionsTor.enableHorseMode;
@@ -18,28 +21,35 @@ namespace TheOtherRoles.Modules {
         private static GameObject bottomTemplate;
         private static AnnouncementPopUp popUp;
 
-        private static void Prefix(MainMenuManager __instance) {
-            CustomHatLoader.LaunchHatFetcher();
+        private static void Prefix(MainMenuManager __instance)
+        {
+            //CustomHatLoader.LaunchHatFetcher();
             var template = GameObject.Find("ExitGameButton");
             if (template == null) return;
 
             var buttonDiscord = UnityEngine.Object.Instantiate(template, null);
-            buttonDiscord.transform.localPosition = new Vector3(buttonDiscord.transform.localPosition.x, buttonDiscord.transform.localPosition.y + 0.6f, buttonDiscord.transform.localPosition.z);
+            GameObject.Destroy(buttonDiscord.GetComponent<AspectPosition>());
+            buttonDiscord.transform.localPosition = new(4f, -2, 0);
 
-            var textDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
-            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
-                textDiscord.SetText("Discord");
+            var textDiscord = buttonDiscord.GetComponentInChildren<TextMeshPro>();
+            textDiscord.transform.localPosition = new(0, 0.035f, -2);
+            textDiscord.alignment = TextAlignmentOptions.Right;
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
+            {
+                if (textDiscord != null)
+                    textDiscord.SetText("Discord");
             })));
 
             PassiveButton passiveButtonDiscord = buttonDiscord.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSpriteDiscord = buttonDiscord.GetComponent<SpriteRenderer>();
+            SpriteRenderer buttonSpriteDiscord = buttonDiscord.transform.FindChild("Inactive").GetComponent<SpriteRenderer>();
 
             passiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
             passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://discord.gg/77RkMJHWsM")));
 
             Color discordColor = new Color32(88, 101, 242, byte.MaxValue);
             buttonSpriteDiscord.color = textDiscord.color = discordColor;
-            passiveButtonDiscord.OnMouseOut.AddListener((System.Action)delegate {
+            passiveButtonDiscord.OnMouseOut.AddListener((System.Action)delegate
+            {
                 buttonSpriteDiscord.color = textDiscord.color = discordColor;
             });
 
@@ -81,22 +91,36 @@ namespace TheOtherRoles.Modules {
             });*/
 
             // TOR credits button
-            if (bottomTemplate == null) return;
-            var creditsButton = Object.Instantiate(bottomTemplate, bottomTemplate.transform.parent);
-            var passiveCreditsButton = creditsButton.GetComponent<PassiveButton>();
-            var spriteCreditsButton = creditsButton.GetComponent<SpriteRenderer>();
+            var buttoncredits = GameObject.Instantiate(template, null);
+            Object.Destroy(buttoncredits.GetComponent<AspectPosition>());
+            buttoncredits.transform.localPosition = new(0.25f, -2, 0);
 
-            spriteCreditsButton.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.CreditsButton.png", 75f);
+            var textcredits = buttoncredits.GetComponentInChildren<TextMeshPro>();
+            textcredits.transform.localPosition = new(0, 0.035f, -2);
+            textcredits.alignment = TextAlignmentOptions.Right;
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
+            {
+                textcredits.SetText("TOR Credits");
+            })));
 
-            passiveCreditsButton.OnClick = new ButtonClickedEvent();
+            PassiveButton passiveButtoncredits = buttoncredits.GetComponent<PassiveButton>();
+            SpriteRenderer buttonSpritecredits = buttoncredits.transform.FindChild("Inactive").GetComponent<SpriteRenderer>();
 
-            passiveCreditsButton.OnClick.AddListener((System.Action)delegate {
+            passiveButtoncredits.OnClick = new Button.ButtonClickedEvent();
+            Color creditsColor = new Color32(0, 245, 255, byte.MaxValue);
+            buttonSpritecredits.color = textcredits.color = creditsColor;
+            passiveButtoncredits.OnMouseOut.AddListener((System.Action)delegate
+            {
+                buttonSpritecredits.color = textcredits.color = creditsColor;
+            });
+            passiveButtoncredits.OnClick.AddListener((System.Action)delegate
+            {
                 // do stuff
                 if (popUp != null) Object.Destroy(popUp);
-                popUp = Object.Instantiate(Object.FindObjectOfType<AnnouncementPopUp>(true));
+                var popUpTemplate = Object.FindObjectOfType<AnnouncementPopUp>(true);
+                popUp = Object.Instantiate(popUpTemplate);
+
                 popUp.gameObject.SetActive(true);
-                popUp.Init();
-                //SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, "test");
                 string creditsString = @$"<align=""center"">Github Contributors:
 Alex2911    amsyarasyiq    MaximeGillot
 Psynomit    probablyadnf    JustASysAdmin
@@ -127,27 +151,33 @@ Ottomated - Idea for the Morphling, Snitch and Camouflager role came from Ottoma
 Crowded-Mod - Our implementation for 10+ player lobbies was inspired by the one from the Crowded Mod Team
 Goose-Goose-Duck - Idea for the Vulture role came from Slushiegoose</size>";
                 creditsString += "</align>";
-                popUp.AnnounceTextMeshPro.text = creditsString;
-                __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) => {
-                    if (p == 1) {
-                        var titleText = GameObject.Find("Title_Text").GetComponent<TMPro.TextMeshPro>();
-                        if (titleText != null) titleText.text = "Credits and Contributors";
+                Assets.InnerNet.Announcement creditsAnnouncement = new()
+                {
+                    Id = "torCredits",
+                    Language = 0,
+                    Number = 500,
+                    Title = "Credits and Contributors",
+                    ShortTitle = "TOR Credits",
+                    SubTitle = "",
+                    PinState = false,
+                    Date = "01.07.2021",
+                    Text = creditsString,
+                };
+                __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>
+                {
+                    if (p == 1)
+                    {
+                        var backup = DataManager.Player.Announcements.allAnnouncements;
+                        DataManager.Player.Announcements.allAnnouncements = new();
+                        popUp.Init(false);
+                        DataManager.Player.Announcements.SetAnnouncements(new Announcement[] { creditsAnnouncement });
+                        popUp.CreateAnnouncementList();
+                        popUp.UpdateAnnouncementText(creditsAnnouncement.Number);
+                        popUp.visibleAnnouncements._items[0].PassiveButton.OnClick.RemoveAllListeners();
+                        DataManager.Player.Announcements.allAnnouncements = backup;
                     }
                 })));
             });
-            
-        }
-
-        public static void Postfix(MainMenuManager __instance) {
-            __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) => {
-                if (p == 1) {
-                    bottomTemplate = GameObject.Find("InventoryButton");
-                    foreach (Transform tf in bottomTemplate.transform.parent.GetComponentsInChildren<Transform>()) {
-                        tf.localPosition = new Vector2(tf.localPosition.x * 0.8f, tf.localPosition.y);
-                    }
-                }
-            })));
-
         }
 
         public static void addSceneChangeCallbacks() {
@@ -190,7 +220,7 @@ Goose-Goose-Duck - Idea for the Vulture role came from Slushiegoose</size>";
         }
     }
 
-    [HarmonyPatch(typeof(AnnouncementPopUp), nameof(AnnouncementPopUp.UpdateAnnounceText))]
+    /*[HarmonyPatch(typeof(AnnouncementPopUp), nameof(AnnouncementPopUp.UpdateAnnounceText))]
     public static class Announcement
     {
         public static ModUpdateBehaviour.UpdateData updateData = null;
@@ -203,6 +233,6 @@ Goose-Goose-Duck - Idea for the Vulture role came from Slushiegoose</size>";
 
             return false;
         }
-    }
+    }*/
 
 }

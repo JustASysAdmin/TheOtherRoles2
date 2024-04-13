@@ -59,8 +59,8 @@ namespace TheOtherRoles {
             }
             options.Add(this);
         }
-
-        public static CustomOption Create(int id, CustomOptionType type, string name, string[] selections, CustomOption parent = null, bool isHeader = false) {
+        public static CustomOption Create(int id, CustomOptionType type, string name, string[] selections, CustomOption parent = null, bool isHeader = false, Action onChange = null)
+        {
             return new CustomOption(id, type, name, selections, "", parent, isHeader);
         }
 
@@ -95,7 +95,7 @@ namespace TheOtherRoles {
         }
 
         public static void saveVanillaOptions() {
-            vanillaSettings.Value = Convert.ToBase64String(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameManager.Instance.LogicOptions.currentGameOptions));
+            vanillaSettings.Value = Convert.ToBase64String(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameManager.Instance.LogicOptions.currentGameOptions, false));
         }
 
         public static void loadVanillaOptions() {
