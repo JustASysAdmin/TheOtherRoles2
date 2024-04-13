@@ -120,6 +120,7 @@ namespace TheOtherRoles
             Harmony.PatchAll();
             CustomOptionHolder.Load();
             CustomColors.Load();
+            Translation.Load();
             CustomHatManager.LoadHats();
             if (ToggleCursor.Value) {
                 Helpers.enableCursor(true);
