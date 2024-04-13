@@ -36,7 +36,7 @@ namespace TheOtherRoles.Patches {
         {
             if (CachedPlayer.LocalPlayer.PlayerControl == Hacker.hacker) return;
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && CachedPlayer.LocalPlayer.PlayerControl.isAlive())
+            if (MapOptionsTor.restrictDevices > 0 && MapOptionsTor.restrictAdminTime > 0f && CachedPlayer.LocalPlayer.PlayerControl.isAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -61,7 +61,7 @@ namespace TheOtherRoles.Patches {
         {
             public static bool Prefix(MapConsole __instance)
             {
-                return MapOptions.canUseAdmin;
+                return MapOptionsTor.canUseAdmin;
             }
         }
 
@@ -104,7 +104,7 @@ namespace TheOtherRoles.Patches {
 
                 playerColors = new Dictionary<SystemTypes, List<Color>>();
 
-                if (MapOptions.restrictDevices > 0)
+                if (MapOptionsTor.restrictDevices > 0)
                 {
                     if (OutOfTime == null)
                     {
@@ -114,7 +114,7 @@ namespace TheOtherRoles.Patches {
 
                     if (TimeRemaining == null)
                     {
-                        TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
+                        TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskPanel.taskText, __instance.transform);
                         TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(3.25f, 5.25f);
@@ -122,7 +122,7 @@ namespace TheOtherRoles.Patches {
                         TimeRemaining.color = Palette.White;
                     }
 
-                    if (MapOptions.restrictAdminTime <= 0f && (CachedPlayer.LocalPlayer.PlayerControl != Hacker.hacker && !CachedPlayer.LocalPlayer.Data.IsDead))
+                    if (MapOptionsTor.restrictAdminTime <= 0f && (CachedPlayer.LocalPlayer.PlayerControl != Hacker.hacker && !CachedPlayer.LocalPlayer.Data.IsDead))
                     {
                         __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
                         OutOfTime.gameObject.SetActive(true);
@@ -137,9 +137,9 @@ namespace TheOtherRoles.Patches {
 
                     clearedIcons = false;
                     OutOfTime.gameObject.SetActive(false);
-                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
+                    string timeString = TimeSpan.FromSeconds(MapOptionsTor.restrictAdminTime).ToString(@"mm\:ss\.ff");
                     TimeRemaining.text = String.Format("Remaining: {0}", timeString);
-                    //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                    //TimeRemaining.color = MapOptionsTor.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
                     TimeRemaining.gameObject.SetActive(true);
                 }
 

@@ -36,7 +36,7 @@ namespace TheOtherRoles.CustomGameModes {
         }
 
         public static void clearAndReload() {
-            isHideNSeekGM = MapOptions.gameMode == CustomGamemodes.HideNSeek;
+            isHideNSeekGM = MapOptionsTor.gameMode == CustomGamemodes.HideNSeek;
             if (timerText != null) UnityEngine.Object.Destroy(timerText);
             timerText = null;
             if (polusVent != null) UnityEngine.Object.Destroy(polusVent);

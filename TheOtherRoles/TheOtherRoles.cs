@@ -24,6 +24,8 @@ namespace TheOtherRoles
             Mayor.clearAndReload();
             Portalmaker.clearAndReload();
             Bomber.clearAndReload();
+			Poucher.clearAndReload();
+			Mimic.clearAndReload();
             Engineer.clearAndReload();
             Sheriff.clearAndReload();
 			Cursed.clearAndReload();
@@ -39,6 +41,7 @@ namespace TheOtherRoles
             BodyGuard.clearAndReload();
             Veteren.clearAndReload();
             Medic.clearAndReload();
+			PrivateInvestigator.clearAndReload();
             Shifter.clearAndReload();
             Swapper.clearAndReload();
             Lovers.clearAndReload();
@@ -82,6 +85,7 @@ namespace TheOtherRoles
             Indomitable.clearAndReload();
             Blind.clearAndReload();
             Tunneler.clearAndReload();
+            Paranoid.clearAndReload();
             Slueth.clearAndReload();
             Vip.clearAndReload();
             Invert.clearAndReload();
@@ -282,6 +286,34 @@ namespace TheOtherRoles
                 highlightForTeamJackal = CustomOptionHolder.engineerHighlightForTeamJackal.getBool();
             }
         }
+		
+		
+    public static class PrivateInvestigator
+    {
+        public static PlayerControl privateInvestigator;
+		public static Color color = new Color32(23, 86, 92, byte.MaxValue);
+		private static Sprite buttonSprite;
+		public static PlayerControl watching = null;
+		public static PlayerControl currentTarget;            
+
+
+		public static bool seeFlashColor = false; 
+
+		public static Sprite getButtonSprite() {
+			if (buttonSprite) return buttonSprite;
+			buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Watch.png", 115f);
+			return buttonSprite;
+		}
+
+
+
+        public static void clearAndReload(bool clearList = true)
+        {
+            privateInvestigator = null;
+			watching = null;
+			seeFlashColor = CustomOptionHolder.privateInvestigatorSeeColor.getBool();
+        }
+    }
 
         public static class Godfather {
             public static PlayerControl godfather;
@@ -820,7 +852,7 @@ namespace TheOtherRoles
         }
 
         public static Sprite getAdminSprite() {
-            byte mapId = PlayerControl.GameOptions.MapId;
+            byte mapId = GameOptionsManager.Instance.currentNormalGameOptions.MapId;
             UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
             if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
             else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
@@ -957,6 +989,7 @@ namespace TheOtherRoles
 
         public static List<Arrow> localArrows = new List<Arrow>();
         public static int taskCountForReveal = 1;
+		public static bool seeInMeeting = false;
         public static bool includeTeamJackal = false;
         public static bool teamJackalUseDifferentArrowColor = true;
 
@@ -970,6 +1003,7 @@ namespace TheOtherRoles
             localArrows = new List<Arrow>();
             taskCountForReveal = Mathf.RoundToInt(CustomOptionHolder.snitchLeftTasksForReveal.getFloat());
             includeTeamJackal = CustomOptionHolder.snitchIncludeTeamJackal.getBool();
+            seeInMeeting = CustomOptionHolder.snitchSeeMeeting.getBool();
             teamJackalUseDifferentArrowColor = CustomOptionHolder.snitchTeamJackalUseDifferentArrowColor.getBool();
             snitch = null;
         }
@@ -1008,6 +1042,24 @@ namespace TheOtherRoles
         }
     }
     
+	
+    public static class Mimic
+    {
+        public static PlayerControl mimic;
+		public static bool hasMimic = false;
+        public static Color color = Palette.ImpostorRed;
+        public static List<PlayerControl> killed = new List<PlayerControl>();
+
+
+
+        public static void clearAndReload(bool clearList = true)
+        {
+            mimic = null;
+			if (clearList) hasMimic = false;
+
+        }
+    }
+	
     public static class Werewolf {
         public static PlayerControl werewolf;
         public static PlayerControl currentTarget;
@@ -1324,6 +1376,22 @@ namespace TheOtherRoles
             dragingDelaiAfterKill = CustomOptionHolder.undertakerDragingDelaiAfterKill.getFloat();
         }
     }
+	
+    public static class Poucher
+    {
+        public static PlayerControl poucher;
+        public static Color color = Palette.ImpostorRed;
+        public static List<PlayerControl> killed = new List<PlayerControl>();
+
+
+
+        public static void clearAndReload(bool clearList = true)
+        {
+            poucher = null;
+			if (clearList) killed = new List<PlayerControl>();
+
+        }
+    }
 
     public static class Warlock {
 
@@ -1508,7 +1576,7 @@ namespace TheOtherRoles
             douseTarget = null; 
             triggerArsonistWin = false;
             dousedPlayers = new List<PlayerControl>();
-            foreach (PoolablePlayer p in MapOptions.playerIcons.Values) {
+            foreach (PoolablePlayer p in MapOptionsTor.playerIcons.Values) {
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             }
             cooldown = CustomOptionHolder.arsonistCooldown.getFloat();
@@ -1580,7 +1648,7 @@ namespace TheOtherRoles
             arrow = null;
             if (cooldownText != null && cooldownText.gameObject != null) UnityEngine.Object.Destroy(cooldownText.gameObject);
             cooldownText = null;
-            foreach (PoolablePlayer p in MapOptions.playerIcons.Values) {
+            foreach (PoolablePlayer p in MapOptionsTor.playerIcons.Values) {
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             }
 
@@ -2042,6 +2110,16 @@ namespace TheOtherRoles
             tunneler = null;
         }
     }
+	
+    public static class Paranoid {
+        public static PlayerControl paranoid;
+        public static Color color = new Color32(48, 21, 89, byte.MaxValue);
+
+
+        public static void clearAndReload() {
+            paranoid = null;
+        }
+    }
 
     public static class Sunglasses {
         public static List<PlayerControl> sunglasses = new List<PlayerControl>();
@@ -2074,8 +2152,6 @@ namespace TheOtherRoles
         }
 
         public static float growingProgress() {
-            if (timeOfGrowthStart == null) return 0f;
-
             float timeSinceStart = (float)(DateTime.UtcNow - timeOfGrowthStart).TotalMilliseconds;
             return Mathf.Clamp(timeSinceStart / (growingUpDuration * 1000), 0f, 1f);
         }
@@ -2140,8 +2216,8 @@ namespace TheOtherRoles
                 if (chameleonPlayer == Ninja.ninja && Ninja.isInvisble) continue;  // Dont make Ninja visible...
                 // check movement by animation
                 PlayerPhysics playerPhysics = chameleonPlayer.MyPhysics;
-                var currentPhysicsAnim = playerPhysics.Animator.GetCurrentAnimation();
-                if (currentPhysicsAnim != playerPhysics.CurrentAnimationGroup.IdleAnim) {
+                var currentPhysicsAnim = playerPhysics.Animations.Animator.GetCurrentAnimation();
+                if (currentPhysicsAnim != playerPhysics.Animations.group.IdleAnim) {
                     lastMoved[chameleonPlayer.PlayerId] = Time.time;
                 }
                 // calculate and set visibility

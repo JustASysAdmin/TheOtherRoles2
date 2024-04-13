@@ -3,7 +3,7 @@ using UnityEngine;
 using TheOtherRoles.Players;
 
 namespace TheOtherRoles{
-    static class MapOptions {
+    static class MapOptionsTor {
         // Set values
         public static int maxNumberOfMeetings = 10;
         public static bool blockSkippingInEmergencyMeetings = false;
@@ -14,6 +14,8 @@ namespace TheOtherRoles{
         public static bool ghostsSeeTasks = true;
         public static bool ghostsSeeVotes = true;
         public static bool showRoleSummary = true;
+        public static bool disableMedscanWalking = false;
+
         public static bool allowParallelMedBayScans = false;
         public static bool showLighterDarker = true;
         public static bool toggleCursor = true;
@@ -28,6 +30,9 @@ namespace TheOtherRoles{
         public static float restrictVitalsTime = 600f;
         public static float restrictVitalsTimeMax = 600f;
         public static bool enableSoundEffects = true;
+        public static bool disableCamsRoundOne = false;
+        public static bool isRoundOne = true;
+
 
         public static bool enableHorseMode = false;
         public static bool shieldFirstKill = false;
@@ -53,6 +58,9 @@ namespace TheOtherRoles{
             hidePlayerNames = CustomOptionHolder.hidePlayerNames.getBool();
             allowParallelMedBayScans = CustomOptionHolder.allowParallelMedBayScans.getBool();
             shieldFirstKill = CustomOptionHolder.shieldFirstKill.getBool();
+            disableCamsRoundOne = CustomOptionHolder.disableCamsRound1.getBool();
+            disableMedscanWalking = CustomOptionHolder.disableMedbayWalk.getBool();
+			isRoundOne = true; 
             firstKillPlayer = null;
             restrictDevices = CustomOptionHolder.restrictDevices.getSelection();
             restrictAdminTime = restrictAdminTimeMax = CustomOptionHolder.restrictAdmin.getFloat();
@@ -74,7 +82,7 @@ namespace TheOtherRoles{
 
             enableSoundEffects = TheOtherRolesPlugin.EnableSoundEffects.Value;
             enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
-            Patches.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
+            //Patches.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }
 
         public static void resetDeviceTimes() {

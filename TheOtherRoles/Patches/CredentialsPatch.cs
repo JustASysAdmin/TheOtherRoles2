@@ -72,8 +72,8 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy</color></size>";
                     }
                 } else {
                     string gameModeText = $"";
-                    if (MapOptions.gameMode == CustomGamemodes.HideNSeek) gameModeText = $"Hide 'N Seek";
-                    else if (MapOptions.gameMode == CustomGamemodes.Guesser) gameModeText = $"Guesser";
+                    if (MapOptionsTor.gameMode == CustomGamemodes.HideNSeek) gameModeText = $"Hide 'N Seek";
+                    else if (MapOptionsTor.gameMode == CustomGamemodes.Guesser) gameModeText = $"Guesser";
                     if (gameModeText != "") gameModeText = Helpers.cs(Color.yellow, gameModeText) + "\n";
 
                     __instance.text.text = $"{fullCredentialsVersion}\n  {gameModeText + fullCredentials}\n {__instance.text.text}";
@@ -104,7 +104,7 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy</color></size>";
 
                 instance = __instance;
                 loadSprites();
-                renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                renderer.sprite = MapOptionsTor.enableHorseMode ? horseBannerSprite : bannerSprite;
             }
 
             public static void loadSprites() {
@@ -119,7 +119,7 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy</color></size>";
                     instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
                         renderer.color = new Color(1, 1, 1, 1 - p);
                         if (p == 1) {
-                            renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                            renderer.sprite = MapOptionsTor.enableHorseMode ? horseBannerSprite : bannerSprite;
                             instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
                                 renderer.color = new Color(1, 1, 1, p);
                             })));

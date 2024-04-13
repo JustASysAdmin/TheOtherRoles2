@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.MapOptions;
+using static TheOtherRoles.MapOptionsTor;
 using TheOtherRoles.Objects;
 using System;
 using TheOtherRoles.Players;
@@ -146,7 +146,7 @@ namespace TheOtherRoles.Patches {
             public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)]GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)]int index, [HarmonyArgument(2)]Transform parent) {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
                 int cId = voterPlayer.DefaultOutfit.ColorId;
-                if (!(!PlayerControl.GameOptions.AnonymousVotes || (CachedPlayer.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || Mayor.mayor != null && CachedPlayer.LocalPlayer.PlayerControl == Mayor.mayor && Mayor.canSeeVoteColors && TasksHandler.taskInfo(CachedPlayer.LocalPlayer.Data).Item1 >= Mayor.tasksNeededToSeeVoteColors))
+                if (!(!GameOptionsManager.Instance.currentNormalGameOptions.AnonymousVotes || (CachedPlayer.LocalPlayer.Data.IsDead && MapOptionsTor.ghostsSeeVotes) || Mayor.mayor != null && CachedPlayer.LocalPlayer.PlayerControl == Mayor.mayor && Mayor.canSeeVoteColors && TasksHandler.taskInfo(CachedPlayer.LocalPlayer.Data).Item1 >= Mayor.tasksNeededToSeeVoteColors))
                     voterPlayer.Object.SetColor(6);                    
                 voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);
@@ -616,7 +616,7 @@ namespace TheOtherRoles.Patches {
                 if (meetingTarget == null) meetingsCount++;
                 // Save the meeting target
                 target = meetingTarget;
-
+				MapOptionsTor.isRoundOne = false;
                 
                 if (Blackmailer.blackmailed == CachedPlayer.LocalPlayer.PlayerControl) { Helpers.BlackmailShhh(); }
 
@@ -672,9 +672,10 @@ namespace TheOtherRoles.Patches {
                 if (__instance.state >= MeetingHud.VoteStates.Discussion)
                 {
                     // Remove first kill shield
-                    MapOptions.firstKillPlayer = null;
+                    MapOptionsTor.firstKillPlayer = null;
                 }
-                if (Blackmailer.blackmailer != null ) {
+                
+				if (Blackmailer.blackmailer != null && Blackmailer.blackmailed != null) {
                     // Blackmailer show overlay
                     var playerState = __instance.playerStates.FirstOrDefault(x => x.TargetPlayerId == Blackmailer.blackmailed.PlayerId);
                     playerState.Overlay.gameObject.SetActive(true);
@@ -684,6 +685,7 @@ namespace TheOtherRoles.Patches {
                         (__instance as MonoBehaviour).StartCoroutine(Effects.SwayX(playerState.transform));
                     }
                 }
+				
             }
         }
 
@@ -711,6 +713,7 @@ namespace TheOtherRoles.Patches {
 
 	public static void Postfix(MeetingHud __instance) {
 		shookAlready = false;
+		if (Blackmailer.blackmailed == null) return;
 		if (Blackmailer.blackmailed.Data.PlayerId == CachedPlayer.LocalPlayer.PlayerId && !Blackmailer.blackmailed.Data.IsDead) {
 			  // Nothing here for now. What to do when local player who is blackmailed starts meeting
 			  //Coroutines.Start(BlackmailShhh());

@@ -7,7 +7,7 @@ namespace TheOtherRoles {
     public class CustomOptionHolder {
         public static string[] rates = new string[]{"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
         public static string[] ratesModifier = new string[]{"1", "2", "3"};
-        public static string[] presets = new string[]{"Preset 1", "Preset 2", "Preset 3", "Preset 4", "Preset 5"};
+        public static string[] presets = new string[]{"Preset 1", "Preset 2", "Random Preset Skeld", "Random Preset Mira HQ", "Random Preset Polus", "Random Preset Airship", "Random Preset Submerged" };
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
@@ -38,6 +38,8 @@ namespace TheOtherRoles {
         public static CustomOption morphlingCooldown;
         public static CustomOption morphlingDuration;
         
+        public static CustomOption modifierParanoid;
+		
         public static CustomOption bomberSpawnRate;
         public static CustomOption bomberBombCooldown;
         public static CustomOption bomberDelay;
@@ -58,6 +60,10 @@ namespace TheOtherRoles {
         public static CustomOption vampireCanKillNearGarlics;
 
         public static CustomOption guesserShowInfoInGhostChat;
+
+        public static CustomOption poucherSpawnRate;
+        public static CustomOption mimicSpawnRate;
+
 
         public static CustomOption eraserSpawnRate;
         public static CustomOption eraserCooldown;
@@ -145,6 +151,11 @@ namespace TheOtherRoles {
         public static CustomOption engineerNumberOfFixes;
         public static CustomOption engineerHighlightForImpostors;
         public static CustomOption engineerHighlightForTeamJackal;
+     
+		public static CustomOption privateInvestigatorSpawnRate;
+        public static CustomOption privateInvestigatorSeeColor;
+
+
 
         public static CustomOption sheriffSpawnRate;
         public static CustomOption sheriffCooldown;
@@ -217,6 +228,8 @@ namespace TheOtherRoles {
         public static CustomOption snitchSpawnRate;
         public static CustomOption snitchLeftTasksForReveal;
         public static CustomOption snitchIncludeTeamJackal;
+        public static CustomOption snitchSeeMeeting;
+
         public static CustomOption snitchTeamJackalUseDifferentArrowColor;
 
         public static CustomOption spySpawnRate;
@@ -372,10 +385,14 @@ namespace TheOtherRoles {
 		
 		public static CustomOption enableCamoComms;
 		
+        public static CustomOption disableMedbayWalk;
+
         public static CustomOption restrictDevices;
+        public static CustomOption disableCamsRound1;
         public static CustomOption restrictAdmin;
         public static CustomOption restrictCameras;
         public static CustomOption restrictVents;
+        public static CustomOption dynamicMapSeparateSettings;
 
         //Guesser Gamemode
         public static CustomOption guesserGamemodeCrewNumber;
@@ -432,8 +449,9 @@ namespace TheOtherRoles {
         }
 
         public static void Load() {
-            
-            
+
+            CustomOption.vanillaSettings = TheOtherRolesPlugin.Instance.Config.Bind("Preset0", "VanillaOptions", "");
+
             // Role Options
             presetSelection = CustomOption.Create(0, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Preset"), presets, null, true);
             activateRoles = CustomOption.Create(1, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Enable Mod Roles And Block Vanilla Roles"), true, null, true);
@@ -455,6 +473,7 @@ namespace TheOtherRoles {
             morphlingCooldown = CustomOption.Create(21, Types.Impostor, "Morphling Cooldown", 30f, 10f, 60f, 2.5f, morphlingSpawnRate);
             morphlingDuration = CustomOption.Create(22, Types.Impostor, "Morph Duration", 10f, 1f, 20f, 0.5f, morphlingSpawnRate);
 
+            modifierParanoid = CustomOption.Create(8831, Types.Modifier, cs(Color.yellow, "Paranoid"), rates, null, true);
         // public static CustomOption bomberSpawnRate;
         // public static CustomOption bomberBombCooldown;
         // public static CustomOption bomberDelay;
@@ -485,6 +504,10 @@ namespace TheOtherRoles {
             eraserSpawnRate = CustomOption.Create(230, Types.Impostor, cs(Eraser.color, "Eraser"), rates, null, true);
             eraserCooldown = CustomOption.Create(231, Types.Impostor, "Eraser Cooldown", 30f, 10f, 120f, 5f, eraserSpawnRate);
             eraserCanEraseAnyone = CustomOption.Create(232, Types.Impostor, "Eraser Can Erase Anyone", false, eraserSpawnRate);
+			
+			poucherSpawnRate = CustomOption.Create(8833, Types.Impostor, cs(Poucher.color, "Poucher"), rates, null, true);
+			mimicSpawnRate = CustomOption.Create(8835, Types.Impostor, cs(Mimic.color, "Mimic"), rates, null, true);
+
             
             //cultistSpawnRate =  CustomOption.Create(3801, Types.Impostor, cs(Cultist.color, "Cultist"), rates, null, true);
 
@@ -606,6 +629,10 @@ namespace TheOtherRoles {
             engineerHighlightForImpostors = CustomOption.Create(92, Types.Crewmate, "Impostors See Vents Highlighted", true, engineerSpawnRate);
             engineerHighlightForTeamJackal = CustomOption.Create(93, Types.Crewmate, "Jackal and Sidekick See Vents Highlighted ", true, engineerSpawnRate);
 
+            privateInvestigatorSpawnRate = CustomOption.Create(8839, Types.Crewmate, cs(PrivateInvestigator.color, "Private Investigator"), rates, null, true);
+			privateInvestigatorSeeColor = CustomOption.Create(8844, Types.Crewmate, "Can see target player color", true, privateInvestigatorSpawnRate);
+
+
             sheriffSpawnRate = CustomOption.Create(100, Types.Crewmate, cs(Sheriff.color, "Sheriff"), rates, null, true);
             sheriffCooldown = CustomOption.Create(101, Types.Crewmate, "Sheriff Cooldown", 30f, 10f, 60f, 2.5f, sheriffSpawnRate);
             sheriffCanKillNeutrals = CustomOption.Create(102, Types.Crewmate, "Sheriff Can Kill Neutrals", false, sheriffSpawnRate);
@@ -676,6 +703,7 @@ namespace TheOtherRoles {
             snitchSpawnRate = CustomOption.Create(210, Types.Crewmate, cs(Snitch.color, "Snitch"), rates, null, true);
             snitchLeftTasksForReveal = CustomOption.Create(211, Types.Crewmate, "Task Count Where The Snitch Will Be Revealed", 1f, 0f, 5f, 1f, snitchSpawnRate);
             snitchIncludeTeamJackal = CustomOption.Create(212, Types.Crewmate, "Include Team Jackal", false, snitchSpawnRate);
+            snitchSeeMeeting = CustomOption.Create(8836, Types.Crewmate, "Show roles in Meeting", false, snitchSpawnRate);
             snitchTeamJackalUseDifferentArrowColor = CustomOption.Create(213, Types.Crewmate, "Use Different Arrow Color For Team Jackal", true, snitchIncludeTeamJackal);
 
             spySpawnRate = CustomOption.Create(240, Types.Crewmate, cs(Spy.color, "Spy"), rates, null, true);
@@ -845,13 +873,14 @@ namespace TheOtherRoles {
 
 
 
-	enableCamoComms = CustomOption.Create(1105, Types.General, "Enable Camouflage Comms", false,  null, false);
+			enableCamoComms = CustomOption.Create(1105, Types.General, "Enable Camouflage Comms", false,  null, false);
+			disableMedbayWalk = CustomOption.Create(8847, Types.General, "Disable Medbay Walk", false, null, false);
 
             restrictDevices = CustomOption.Create(1101, Types.General, "Restrict Map Information", new string[] {"Off", "Per Round", "Per Game"},  null, false);
             restrictAdmin = CustomOption.Create(1102, Types.General, "Restrict Admin Table", 30f, 0f, 600f, 5f, restrictDevices);
             restrictCameras = CustomOption.Create(1103, Types.General, "Restrict Cameras", 30f, 0f, 600f, 5f, restrictDevices);
             restrictVents = CustomOption.Create(1104, Types.General, "Restrict Vitals", 30f, 0f, 600f, 5f, restrictDevices);
-
+			disableCamsRound1 = CustomOption.Create(8834, Types.General, "Disable Cameras round 1", false, null, false);
 
             showButtonTarget = CustomOption.Create(9994, Types.General, "Show Button Target", true);
             blockGameEnd = CustomOption.Create(9995, Types.General, "Block Game End if Power Crew is Alive", false);
@@ -860,6 +889,7 @@ namespace TheOtherRoles {
             randomGameStartPosition = CustomOption.Create(9041, Types.General, "Random Spawn Location", false);
             allowModGuess = CustomOption.Create(9043, Types.General, "Allow Guessing Some Modifiers", false);
             resetRoundStartCooldown = CustomOption.Create(9042, Types.General, "Reset Spawn Cooldown", false);
+            dynamicMapSeparateSettings = CustomOption.Create(509, Types.General, "Use Random Map Setting Presets", true, dynamicMap, false);
 
             blockedRolePairings.Add((byte)RoleId.Vampire, new [] { (byte)RoleId.Warlock});
             blockedRolePairings.Add((byte)RoleId.Warlock, new [] { (byte)RoleId.Vampire});

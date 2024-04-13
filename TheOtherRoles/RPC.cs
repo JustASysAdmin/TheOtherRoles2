@@ -3,7 +3,7 @@ using Hazel;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.HudManagerStartPatch;
 using static TheOtherRoles.GameHistory;
-using static TheOtherRoles.MapOptions;
+using static TheOtherRoles.MapOptionsTor;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ using TheOtherRoles.Players;
 using TheOtherRoles.Utilities;
 using TheOtherRoles.CustomGameModes;
 using AmongUs.Data;
+using AmongUs.GameOptions;
 
 namespace TheOtherRoles
 {
@@ -23,6 +24,7 @@ namespace TheOtherRoles
         Mayor,
         Portalmaker,
         Engineer,
+		PrivateInvestigator,
         Sheriff,
         Deputy,
         Cultist,
@@ -34,6 +36,7 @@ namespace TheOtherRoles
         Janitor,
         Detective,
         TimeMaster,
+		Mimic,
         Swooper,
         Veteren,
         Amnisiac,
@@ -72,9 +75,11 @@ namespace TheOtherRoles
         Ninja,
         Blackmailer,
         Thief,
+		Poucher,
         Crewmate,
         Impostor,
         // Modifier ---
+		Paranoid,
         Lover,
         Bait,
         Bloody,
@@ -130,6 +135,8 @@ namespace TheOtherRoles
         TimeMasterRewindTime,
 		TurnToImpostor,
         BodyGuardGuardPlayer,
+		PrivateInvestigatorWatchPlayer,
+		PrivateInvestigatorWatchFlash,
         VeterenAlert,
         VeterenKill,
         ShifterShift,
@@ -154,6 +161,7 @@ namespace TheOtherRoles
         PlaceNinjaTrace,
         PlacePortal,
         AmnisiacTakeRole,
+		MimicMimicRole,
         UsePortal,
         CultistCreateImposter,
         TurnToCrewmate,
@@ -232,7 +240,10 @@ namespace TheOtherRoles
             {
                 if (!player.Data.Role.IsImpostor)
                 {
-                    player.RemoveInfected();
+                    
+                    GameData.Instance.GetPlayerById(player.PlayerId); // player.RemoveInfected(); (was removed in 2022.12.08, no idea if we ever need that part again, replaced by these 2 lines.) 
+                    player.SetRole(RoleTypes.Crewmate);
+
                     player.MurderPlayer(player);
                     player.Data.IsDead = true;
                 }
@@ -240,7 +251,7 @@ namespace TheOtherRoles
         }
 
         public static void shareGamemode(byte gm) {
-            MapOptions.gameMode = (CustomGamemodes) gm;
+            MapOptionsTor.gameMode = (CustomGamemodes) gm;
         }
 
         public static void workaroundSetRoles(byte numberOfRoles, MessageReader reader)
@@ -259,6 +270,7 @@ namespace TheOtherRoles
         }
 
         public static void setRole(byte roleId, byte playerId) {
+			PlayerControl target = Helpers.playerById(playerId);
             foreach (PlayerControl player in CachedPlayer.AllPlayers)
                 if (player.PlayerId == playerId) {
                     switch((RoleId)roleId) {
@@ -379,6 +391,15 @@ namespace TheOtherRoles
                     case RoleId.Bomber:
                         Bomber.bomber = player;
                         break;
+                    case RoleId.Poucher:
+                        Poucher.poucher = player;
+                        break;
+                    case RoleId.PrivateInvestigator:
+                        PrivateInvestigator.privateInvestigator = player;
+                        break;
+                    case RoleId.Mimic:
+                        Mimic.mimic = player;
+                        break;
                     case RoleId.Warlock:
                         Warlock.warlock = player;
                         break;
@@ -475,6 +496,9 @@ namespace TheOtherRoles
                 case RoleId.Tunneler:
                     Tunneler.tunneler = player;
                     break;
+                case RoleId.Paranoid:
+                    Paranoid.paranoid = player;
+                    break;
                 case RoleId.Invert:
                     Invert.invert.Add(player);
                     break;
@@ -533,7 +557,7 @@ namespace TheOtherRoles
         }
 
         public static void dynamicMapOption(byte mapId) {
-            PlayerControl.GameOptions.MapId = mapId;
+           GameOptionsManager.Instance.currentNormalGameOptions.MapId = mapId;
         }
 
         public static void setCrewmate(PlayerControl player) {
@@ -894,6 +918,20 @@ namespace TheOtherRoles
                     Trickster.trickster = amnisiac;
                     Amnisiac.clearAndReload();
                     break;
+					
+                case RoleId.Poucher:
+                    Helpers.turnToImpostor(Amnisiac.amnisiac);
+                    if (Amnisiac.resetRole) Poucher.clearAndReload(false);
+                    Poucher.poucher = amnisiac;
+                    Amnisiac.clearAndReload();
+                    break;
+
+                case RoleId.Mimic:
+                    Helpers.turnToImpostor(Amnisiac.amnisiac);
+                    if (Amnisiac.resetRole) Mimic.clearAndReload(false);
+                    Mimic.mimic = amnisiac;
+                    Amnisiac.clearAndReload();
+                    break;
 
                 case RoleId.Cleaner:
                     Helpers.turnToImpostor(Amnisiac.amnisiac);
@@ -927,21 +965,21 @@ namespace TheOtherRoles
                         Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z);
                         foreach (PlayerControl p in CachedPlayer.AllPlayers)
                         {
-                            if (MapOptions.playerIcons.ContainsKey(p.PlayerId) && p != Arsonist.arsonist)
+                            if (MapOptionsTor.playerIcons.ContainsKey(p.PlayerId) && p != Arsonist.arsonist)
                             {
                                 //Arsonist.poolIcons.Add(p);
                                 if (Arsonist.dousedPlayers.Contains(p))
                                 {
-                                    MapOptions.playerIcons[p.PlayerId].setSemiTransparent(false);
+                                    MapOptionsTor.playerIcons[p.PlayerId].setSemiTransparent(false);
                                 }
                                 else
                                 {
-                                    MapOptions.playerIcons[p.PlayerId].setSemiTransparent(true);
+                                    MapOptionsTor.playerIcons[p.PlayerId].setSemiTransparent(true);
                                 }
 
-                                MapOptions.playerIcons[p.PlayerId].transform.localPosition = bottomLeft + new Vector3(-0.25f, -0.25f, 0) + Vector3.right * playerCounter++ * 0.35f;
-                                MapOptions.playerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.2f;
-                                MapOptions.playerIcons[p.PlayerId].gameObject.SetActive(true);
+                                MapOptionsTor.playerIcons[p.PlayerId].transform.localPosition = bottomLeft + new Vector3(-0.25f, -0.25f, 0) + Vector3.right * playerCounter++ * 0.35f;
+                                MapOptionsTor.playerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.2f;
+                                MapOptionsTor.playerIcons[p.PlayerId].gameObject.SetActive(true);
                             }
                         }
                     }
@@ -977,12 +1015,12 @@ namespace TheOtherRoles
 
                         foreach (PlayerControl p in CachedPlayer.AllPlayers)
                         {
-                            if (MapOptions.playerIcons.ContainsKey(p.PlayerId))
+                            if (MapOptionsTor.playerIcons.ContainsKey(p.PlayerId))
                             {
-                                MapOptions.playerIcons[p.PlayerId].setSemiTransparent(false);
-                                MapOptions.playerIcons[p.PlayerId].transform.localPosition = bottomLeft + new Vector3(0f, -1f, 0);
-                                MapOptions.playerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.4f;
-                                MapOptions.playerIcons[p.PlayerId].gameObject.SetActive(false);
+                                MapOptionsTor.playerIcons[p.PlayerId].setSemiTransparent(false);
+                                MapOptionsTor.playerIcons[p.PlayerId].transform.localPosition = bottomLeft + new Vector3(0f, -1f, 0);
+                                MapOptionsTor.playerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.4f;
+                                MapOptionsTor.playerIcons[p.PlayerId].gameObject.SetActive(false);
                             }
                         }
                     }
@@ -998,6 +1036,12 @@ namespace TheOtherRoles
                 case RoleId.Medium:
                     if (Amnisiac.resetRole) Medium.clearAndReload();
                     Medium.medium = amnisiac;
+                    Amnisiac.clearAndReload();
+                    break;
+					
+                case RoleId.PrivateInvestigator:
+                    if (Amnisiac.resetRole) PrivateInvestigator.clearAndReload();
+                    PrivateInvestigator.privateInvestigator = amnisiac;
                     Amnisiac.clearAndReload();
                     break;
 
@@ -1041,6 +1085,125 @@ namespace TheOtherRoles
                     if (Amnisiac.resetRole) Miner.clearAndReload();
                     Miner.miner = amnisiac;
                     Amnisiac.clearAndReload();
+                    break;
+        }
+    }
+
+
+    public static void mimicMimicRole(byte targetId) {
+        PlayerControl target = Helpers.playerById(targetId);
+            if (target == null || Mimic.mimic == null) return;
+            List<RoleInfo> targetInfo = RoleInfo.getRoleInfoForPlayer(target);
+            RoleInfo roleInfo = targetInfo.Where(info => !info.isModifier).FirstOrDefault();
+            switch((RoleId)roleInfo.roleId) {
+                case RoleId.BodyGuard:
+                    if (Amnisiac.resetRole) BodyGuard.clearAndReload();
+                    BodyGuard.bodyguard = Mimic.mimic;
+					bodyGuardGuardButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+                    
+                case RoleId.Mayor:
+                    if (Amnisiac.resetRole) Mayor.clearAndReload();
+                    Mayor.mayor = Mimic.mimic;
+					mayorMeetingButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+
+					Mimic.hasMimic = true;
+                    break;
+					
+                case RoleId.Trapper:
+                    if (Amnisiac.resetRole) Trapper.clearAndReload();
+                    Trapper.trapper = Mimic.mimic;
+					trapperButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Portalmaker:
+                    if (Amnisiac.resetRole) Portalmaker.clearAndReload();
+                    Portalmaker.portalmaker = Mimic.mimic;
+					portalmakerPlacePortalButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Engineer:
+                    if (Amnisiac.resetRole) Engineer.clearAndReload();
+                    Engineer.engineer = Mimic.mimic;
+					engineerRepairButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+
+                case RoleId.Detective:
+                    if (Amnisiac.resetRole) Detective.clearAndReload();
+                    Detective.detective = Mimic.mimic;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.TimeMaster:
+                    if (Amnisiac.resetRole) TimeMaster.clearAndReload();
+                    TimeMaster.timeMaster = Mimic.mimic;
+					timeMasterShieldButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Veteren:
+                    if (Amnisiac.resetRole) Veteren.clearAndReload();
+                    Veteren.veteren = Mimic.mimic;
+					veterenAlertButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Medic:
+                    if (Amnisiac.resetRole) Medic.clearAndReload();
+                    Medic.medic = Mimic.mimic;
+					medicShieldButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Swapper:
+                    if (Amnisiac.resetRole) Swapper.clearAndReload();
+                    Swapper.swapper = Mimic.mimic;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Seer:
+                    if (Amnisiac.resetRole) Seer.clearAndReload();
+                    Seer.seer = Mimic.mimic;
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Hacker:
+                    if (Amnisiac.resetRole) Hacker.clearAndReload();
+                    Hacker.hacker = Mimic.mimic;
+					hackerAdminTableButton.PositionOffset = CustomButton.ButtonPositions.upperRowFarLeft;
+					hackerVitalsButton.PositionOffset = CustomButton.ButtonPositions.lowerRowFarLeft;
+					hackerButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Tracker:
+                    if (Amnisiac.resetRole) Tracker.clearAndReload();
+                    Tracker.tracker = Mimic.mimic;
+					trackerTrackPlayerButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.SecurityGuard:
+                    if (Amnisiac.resetRole) SecurityGuard.clearAndReload();
+                    SecurityGuard.securityGuard = Mimic.mimic;
+					securityGuardButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					securityGuardCamButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+
+					Mimic.hasMimic = true;
+                    break;
+
+                case RoleId.Medium:
+                    if (Amnisiac.resetRole) Medium.clearAndReload();
+                    Medium.medium = Mimic.mimic;
+					mediumButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+					Mimic.hasMimic = true;
                     break;
         }
     }
@@ -1106,37 +1269,14 @@ namespace TheOtherRoles
             Shifter.clearAndReload();
 
             // Suicide (exile) when impostor or impostor variants
-            if (player.Data.Role.IsImpostor ||  // Don't shift on Imps
-                player == Jackal.jackal || //  Don't shift on Jackal
-                player == Swooper.swooper || // Don't shift on Swooper
-                player == Sidekick.sidekick || // Don't shift on Sidekick 
-                player == Werewolf.werewolf || // Don't shift on Werewolf
-                Jackal.formerJackals.Contains(player) || // Don't shift on former jackals
-                player == Jester.jester || // Don't shift on Jester
-                player == Arsonist.arsonist || // Don't shift on Arso
-                player == Vulture.vulture || // Don't shift on Vulture
-                player == Lawyer.lawyer || // Don't shift on Lawyer
-                player == Prosecutor.prosecutor || // Don't shift on Prosecutor
-                player == Amnisiac.amnisiac) { // Don't shift on Amnesiac
-                    oldShifter.Exiled();
-                    return;
-            }
-
-            if (true) {
-                // Switch shield
-                if (Medic.shielded != null && Medic.shielded == player) {
-                    Medic.shielded = oldShifter;
-                } else if (Medic.shielded != null && Medic.shielded == oldShifter) {
-                    Medic.shielded = player;
+            if (player.Data.Role.IsImpostor || Helpers.isNeutral(player)) {
+                oldShifter.Exiled();
+                if (oldShifter == Lawyer.target && AmongUsClient.Instance.AmHost && Lawyer.lawyer != null) {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.LawyerPromotesToPursuer, Hazel.SendOption.Reliable, -1);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.lawyerPromotesToPursuer();
                 }
-                // Shift Lovers Role
-                if (Lovers.lover1 != null && oldShifter == Lovers.lover1) Lovers.lover1 = player;
-                else if (Lovers.lover1 != null && player == Lovers.lover1) Lovers.lover1 = oldShifter;
-
-                if (Lovers.lover2 != null && oldShifter == Lovers.lover2) Lovers.lover2 = player;
-                else if (Lovers.lover2 != null && player == Lovers.lover2) Lovers.lover2 = oldShifter;
-
-                // TODO other Modifiers?
+                return;
             }
 
             // Shift role
@@ -1312,6 +1452,7 @@ namespace TheOtherRoles
             if (player == Mayor.mayor) Mayor.clearAndReload();
             if (player == Portalmaker.portalmaker) Portalmaker.clearAndReload();
             if (player == Engineer.engineer) Engineer.clearAndReload();
+			if (player == PrivateInvestigator.privateInvestigator) PrivateInvestigator.clearAndReload();
             if (player == Sheriff.sheriff) Sheriff.clearAndReload();
             if (player == Deputy.deputy) Deputy.clearAndReload();
             if (player == Lighter.lighter) Lighter.clearAndReload();
@@ -1345,6 +1486,8 @@ namespace TheOtherRoles
             if (player == Cleaner.cleaner) Cleaner.clearAndReload();
             if (player == Undertaker.undertaker) Undertaker.clearAndReload();
             if (player == Bomber.bomber) Bomber.clearAndReload();
+            if (player == Poucher.poucher) Poucher.clearAndReload();
+            if (player == Mimic.mimic) Mimic.clearAndReload();
             if (player == Warlock.warlock) Warlock.clearAndReload();
             if (player == Witch.witch) Witch.clearAndReload();
             if (player == Ninja.ninja) Ninja.clearAndReload();
@@ -1357,7 +1500,6 @@ namespace TheOtherRoles
             if (player == Swooper.swooper) Swooper.clearAndReload();
             if (player == Miner.miner) Miner.clearAndReload();
             if (player == Arsonist.arsonist) Arsonist.clearAndReload();
-            if (Guesser.isGuesser(player.PlayerId)) Guesser.clear(player.PlayerId);
             if (player == Jackal.jackal) { // Promote Sidekick and hence override the the Jackal or erase Jackal
                 if (Sidekick.promotesToJackal && Sidekick.sidekick != null && !Sidekick.sidekick.Data.IsDead) {
                     RPCProcedure.sidekickPromotes();
@@ -1530,12 +1672,14 @@ namespace TheOtherRoles
             if (target == null) return;
             if (flag == byte.MaxValue) {
                 target.cosmetics.currentBodySprite.BodySprite.color = Color.white;
+				target.cosmetics.colorBlindText.gameObject.SetActive(DataManager.Settings.Accessibility.ColorBlindMode);
                 if (Camouflager.camouflageTimer <= 0 && !Helpers.isActiveCamoComms()) target.setDefaultLook();
                 Swooper.isInvisable = false;
                 return;
             }
             target.setLook("", 6, "", "", "", "");
-            Color color = Color.clear;           
+            Color color = Color.clear;    
+			target.cosmetics.colorBlindText.gameObject.SetActive(false);			
             if (Swooper.swooper == CachedPlayer.LocalPlayer.PlayerControl || CachedPlayer.LocalPlayer.Data.IsDead || (Swooper.swooper == Jackal.jackal && Sidekick.sidekick == CachedPlayer.LocalPlayer.PlayerControl)) color.a = 0.1f;
             target.cosmetics.currentBodySprite.BodySprite.color = color;
             Swooper.swoopTimer = Swooper.duration;
@@ -1601,7 +1745,7 @@ namespace TheOtherRoles
             camera.transform.position = new Vector3(position.x, position.y, referenceCamera.transform.position.z - 1f);
             camera.CamName = $"Security Camera {SecurityGuard.placedCameras}";
             camera.Offset = new Vector3(0f, 0f, camera.Offset.z);
-            if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
+            if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 2 || GameOptionsManager.Instance.currentNormalGameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
 
             if (SubmergedCompatibility.IsSubmerged) {
                 // remove 2d box collider of console, so that no barrier can be created. (irrelevant for now, but who knows... maybe we need it later)
@@ -1619,7 +1763,7 @@ namespace TheOtherRoles
             } else {
                 camera.gameObject.SetActive(false);
             }
-            MapOptions.camerasToAdd.Add(camera);
+            MapOptionsTor.camerasToAdd.Add(camera);
         }
 
         public static void sealVent(int ventId) {
@@ -1638,7 +1782,7 @@ namespace TheOtherRoles
                 vent.name = "FutureSealedVent_" + vent.name;
             }
 
-            MapOptions.ventsToSeal.Add(vent);
+            MapOptionsTor.ventsToSeal.Add(vent);
         }
 
         public static void arsonistWin() {
@@ -1761,17 +1905,17 @@ namespace TheOtherRoles
 
         public static void useAdminTime(float time)
         {
-            MapOptions.restrictAdminTime -= time;
+            MapOptionsTor.restrictAdminTime -= time;
         }
 
         public static void useCameraTime(float time)
         {
-            MapOptions.restrictCamerasTime -= time;
+            MapOptionsTor.restrictCamerasTime -= time;
         }
 
         public static void useVitalsTime(float time)
         {
-            MapOptions.restrictVitalsTime -= time;
+            MapOptionsTor.restrictVitalsTime -= time;
         }
 
     public static void BHSetBounty(byte playerId) {
@@ -1799,6 +1943,25 @@ namespace TheOtherRoles
         BodyGuard.usedGuard = true;
         BodyGuard.guarded = target;
     }
+	
+    public static void privateInvestigatorWatchPlayer(byte targetId) {
+        PlayerControl target = Helpers.playerById(targetId);
+        PrivateInvestigator.watching = target;
+    }
+	
+    public static void privateInvestigatorWatchFlash(byte targetId) {
+        PlayerControl target = Helpers.playerById(targetId);
+        // GetDefaultOutfit().ColorId
+		if (CachedPlayer.LocalPlayer.PlayerControl == PrivateInvestigator.privateInvestigator) {
+			if (PrivateInvestigator.seeFlashColor) {
+				Helpers.showFlash(Palette.PlayerColors[target.Data.DefaultOutfit.ColorId]);
+			} else {
+				Helpers.showFlash(PrivateInvestigator.color);
+			}
+		} else {
+			return;
+		}
+    }
 
     public static void unblackmailPlayer() {
       Blackmailer.blackmailed = null;
@@ -1821,7 +1984,7 @@ namespace TheOtherRoles
         public static void setFirstKill(byte playerId) {
             PlayerControl target = Helpers.playerById(playerId);
             if (target == null) return;
-            MapOptions.firstKillPlayer = target;
+            MapOptionsTor.firstKillPlayer = target;
         }
 
         public static void setTiebreak() {
@@ -1841,7 +2004,6 @@ namespace TheOtherRoles
                 Sidekick.sidekick = thief;
                 Jackal.formerJackals.Add(target);
             }
-            if (target == Guesser.evilGuesser) Guesser.evilGuesser = thief;
             if (target == Godfather.godfather) Godfather.godfather = thief;
             if (target == Mafioso.mafioso) Mafioso.mafioso = thief;
             if (target == Janitor.janitor) Janitor.janitor = thief;
@@ -1857,8 +2019,28 @@ namespace TheOtherRoles
             if (target == Ninja.ninja) Ninja.ninja = thief;
             if (target.Data.Role.IsImpostor) {
                 RoleManager.Instance.SetRole(Thief.thief, RoleTypes.Impostor);
-                FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(Thief.thief.killTimer, PlayerControl.GameOptions.KillCooldown);
+                FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(Thief.thief.killTimer, GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown);
             }
+			
+			// START ADD CUSTOM BAD ROLES 
+            if (target == Swooper.swooper) Swooper.swooper = thief;
+            if (target == Werewolf.werewolf) Werewolf.werewolf = thief;
+            if (target == BodyGuard.bodyguard) BodyGuard.bodyguard = thief;
+            if (target == Bomber.bomber) Bomber.bomber = thief;
+            if (target == Miner.miner) Miner.miner = thief;
+            if (target == Undertaker.undertaker) Undertaker.undertaker = thief;
+            if (target == Veteren.veteren) Veteren.veteren = thief;
+            if (target == Blackmailer.blackmailer) Blackmailer.blackmailer = thief;
+            if (target == Mimic.mimic) {
+				Mimic.mimic = thief;
+				Mimic.hasMimic = false;
+			}
+			if (target == Poucher.poucher) Poucher.poucher = thief;
+
+
+
+
+			
             if (Lawyer.lawyer != null && target == Lawyer.target)
                 Lawyer.target = thief;
             if (Thief.thief == PlayerControl.LocalPlayer) CustomButton.ResetAllCooldowns();
@@ -2052,6 +2234,9 @@ namespace TheOtherRoles
                 case (byte)CustomRPC.AmnisiacTakeRole:
                     RPCProcedure.amnisiacTakeRole(reader.ReadByte());
                     break;
+                case (byte)CustomRPC.MimicMimicRole:
+                    RPCProcedure.mimicMimicRole(reader.ReadByte());
+                    break;
                 case (byte)CustomRPC.ShowIndomitableFlash:
                     RPCProcedure.showIndomitableFlash();
                     break;
@@ -2095,6 +2280,12 @@ namespace TheOtherRoles
                     break;  
                 case (byte)CustomRPC.BodyGuardGuardPlayer:
                     RPCProcedure.bodyGuardGuardPlayer(reader.ReadByte());
+                    break;  
+                case (byte)CustomRPC.PrivateInvestigatorWatchPlayer:
+                    RPCProcedure.privateInvestigatorWatchPlayer(reader.ReadByte());
+                    break;  
+                case (byte)CustomRPC.PrivateInvestigatorWatchFlash:
+                    RPCProcedure.privateInvestigatorWatchFlash(reader.ReadByte());
                     break;  
                 case (byte)CustomRPC.DeputyUsedHandcuffs:
                     RPCProcedure.deputyUsedHandcuffs(reader.ReadByte());
