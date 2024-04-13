@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Net;
 using TheOtherRoles.CustomGameModes;
 using AmongUs.GameOptions;
+using static Rewired.Demos.GamepadTemplateUI.GamepadTemplateUI;
+using System.Globalization;
 
 namespace TheOtherRoles {
 
@@ -280,7 +282,7 @@ public static bool isPlayerLover(PlayerControl player) {
 			if (Morphling.morphTimer > 0f && Morphling.morphling != null && Morphling.morphTarget != null) {
 				PlayerControl target = Morphling.morphTarget;
 				Morphling.morphling.setLook(target.Data.PlayerName, target.Data.DefaultOutfit.ColorId, target.Data.DefaultOutfit.HatId, target.Data.DefaultOutfit.VisorId, target.Data.DefaultOutfit.SkinId, target.Data.DefaultOutfit.PetId);
-			}
+            }
 		}
 
         public static bool canAlwaysBeGuessed(RoleId roleId) {
@@ -407,7 +409,7 @@ public static bool isPlayerLover(PlayerControl player) {
         }
 
         public static AudioClip loadAudioClipFromResources(string path, string clipName = "UNNAMED_TOR_AUDIO_CLIP") {
-            // must be "raw (headerless) 2-channel signed 32 bit pcm (le)" (can e.g. use Audacity® to export)
+            // must be "raw (headerless) 2-channel signed 32 bit pcm (le)" (can e.g. use Audacity?to export)
             try {
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 Stream stream = assembly.GetManifestResourceStream(path);
@@ -531,6 +533,27 @@ public static bool isPlayerLover(PlayerControl player) {
             return n != StringNames.ServerNA && n != StringNames.ServerEU && n != StringNames.ServerAS;
         }
 
+        public static bool isAirship()
+        {
+            return GameOptionsManager.Instance.CurrentGameOptions.MapId == 4;
+        }
+        public static bool isSkeld()
+        {
+            return GameOptionsManager.Instance.CurrentGameOptions.MapId == 0;
+        }
+        public static bool isPolus()
+        {
+            return GameOptionsManager.Instance.CurrentGameOptions.MapId == 2;
+        }
+
+        public static bool isFungle()
+        {
+            return GameOptionsManager.Instance.CurrentGameOptions.MapId == 5;
+        }
+        public static bool MushroomSabotageActive()
+        {
+            return CachedPlayer.LocalPlayer.PlayerControl.myTasks.ToArray().Any((x) => x.TaskType == TaskTypes.MushroomMixupSabotage);
+        }
         public static bool isDead(this PlayerControl player)
         {
             return player == null || player?.Data?.IsDead == true || player?.Data?.Disconnected == true;
@@ -610,8 +633,9 @@ public static bool isPlayerLover(PlayerControl player) {
         }
 
         public static bool hidePlayerName(PlayerControl source, PlayerControl target) {
-            if (Camouflager.camouflageTimer > 0f) return true; // No names are visible
-			else if (isActiveCamoComms()) return true;
+            if (Camouflager.camouflageTimer > 0f || Helpers.MushroomSabotageActive()) return true; // No names are visible
+            if (Patches.SurveillanceMinigamePatch.nightVisionIsActive) return true;
+            else if (isActiveCamoComms()) return true;
             else if (Ninja.isInvisble && Ninja.ninja == target) return true; 
             else if (Swooper.isInvisable && Swooper.swooper == target) return true; 
             else if (!MapOptionsTor.hidePlayerNames || source.Data.IsDead) return false; // All names are visible
@@ -625,17 +649,30 @@ public static bool isPlayerLover(PlayerControl player) {
             return true;
         }
 
-        public static void setDefaultLook(this PlayerControl target) {
-            target.setLook(target.Data.PlayerName, target.Data.DefaultOutfit.ColorId, target.Data.DefaultOutfit.HatId, target.Data.DefaultOutfit.VisorId, target.Data.DefaultOutfit.SkinId, target.Data.DefaultOutfit.PetId);
+        public static void setDefaultLook(this PlayerControl target, bool enforceNightVisionUpdate = true)
+        {
+            if (MushroomSabotageActive())
+            {
+                var instance = ShipStatus.Instance.CastFast<FungleShipStatus>().specialSabotage;
+                MushroomMixupSabotageSystem.CondensedOutfit condensedOutfit = instance.currentMixups[target.PlayerId];
+                GameData.PlayerOutfit playerOutfit = instance.ConvertToPlayerOutfit(condensedOutfit);
+                target.MixUpOutfit(playerOutfit);
+            }
+            else
+                target.setLook(target.Data.PlayerName, target.Data.DefaultOutfit.ColorId, target.Data.DefaultOutfit.HatId, target.Data.DefaultOutfit.VisorId, target.Data.DefaultOutfit.SkinId, target.Data.DefaultOutfit.PetId, enforceNightVisionUpdate);
         }
 
-        public static void setLook(this PlayerControl target, String playerName, int colorId, string hatId, string visorId, string skinId, string petId) {
+        public static void setLook(this PlayerControl target, String playerName, int colorId, string hatId, string visorId, string skinId, string petId, bool enforceNightVisionUpdate = true)
+        {
             target.RawSetColor(colorId);
-            target.RawSetVisor(visorId,colorId);
+            target.RawSetVisor(visorId, colorId);
             target.RawSetHat(hatId, colorId);
             target.RawSetName(hidePlayerName(CachedPlayer.LocalPlayer.PlayerControl, target) ? "" : playerName);
 
-            SkinViewData nextSkin = FastDestroyableSingleton<HatManager>.Instance.GetSkinById(skinId).viewData.viewData;
+
+            SkinViewData nextSkin = null;
+            try { nextSkin = ShipStatus.Instance.CosmeticsCache.GetSkin(skinId); } catch { return; };
+
             PlayerPhysics playerPhysics = target.MyPhysics;
             AnimationClip clip = null;
             var spriteAnim = playerPhysics.myPlayer.cosmetics.skin.animator;
@@ -651,17 +688,14 @@ public static bool isPlayerLover(PlayerControl player) {
             float progress = playerPhysics.Animations.Animator.m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             playerPhysics.myPlayer.cosmetics.skin.skin = nextSkin;
             playerPhysics.myPlayer.cosmetics.skin.UpdateMaterial();
+
             spriteAnim.Play(clip, 1f);
             spriteAnim.m_animator.Play("a", 0, progress % 1);
             spriteAnim.m_animator.Update(0f);
 
-            if (target.cosmetics.currentPet) UnityEngine.Object.Destroy(target.cosmetics.currentPet.gameObject);
-            target.cosmetics.currentPet = UnityEngine.Object.Instantiate<PetBehaviour>(FastDestroyableSingleton<HatManager>.Instance.GetPetById(petId).viewData.viewData);
-            target.cosmetics.currentPet.transform.position = target.transform.position;
-            target.cosmetics.currentPet.Source = target;
-            target.cosmetics.currentPet.Visible = target.Visible;
-            target.SetPlayerMaterialColors(target.cosmetics.currentPet.rend);
+            target.RawSetPet(petId, colorId);
 
+            if (enforceNightVisionUpdate) Patches.SurveillanceMinigamePatch.enforceNightVision(target);
             Chameleon.update();  // so that morphling and camo wont make the chameleons visible
         }
 
@@ -905,9 +939,14 @@ public static bool isPlayerLover(PlayerControl player) {
 
             return murder;            
         }
-    
 
-	public static bool checkAndDoVetKill(PlayerControl target) {
+        public static void MurderPlayer(this PlayerControl player, PlayerControl target)
+        {
+            player.MurderPlayer(target, MurderResultFlags.Succeeded);
+        }
+
+
+      public static bool checkAndDoVetKill(PlayerControl target) {
 	  bool shouldVetKill = (Veteren.veteren == target && Veteren.alertActive);
 	  if (shouldVetKill) {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VeterenKill, Hazel.SendOption.Reliable, -1);
@@ -917,6 +956,11 @@ public static bool isPlayerLover(PlayerControl player) {
 	  }
 	  return shouldVetKill;
 	}
+
+    public static void RpcRepairSystem(this ShipStatus shipStatus, SystemTypes systemType, byte amount)
+    {
+        shipStatus.RpcUpdateSystem(systemType, amount);
+    }
 
         public static void shareGameVersion() {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VersionHandshake, Hazel.SendOption.Reliable, -1);
@@ -942,8 +986,10 @@ public static bool isPlayerLover(PlayerControl player) {
             return team;
         }
 
-
-
+        public static bool isMira()
+        {
+            return GameOptionsManager.Instance.CurrentGameOptions.MapId == 1;
+        }
 
         public static bool zoomOutStatus = false;
         public static void toggleZoom(bool reset=false) {
@@ -957,13 +1003,27 @@ public static bool isPlayerLover(PlayerControl player) {
 
             HudManagerStartPatch.zoomOutButton.Sprite = zoomOutStatus ? Helpers.loadSpriteFromResources("TheOtherRoles.Resources.PlusButton.png", 75f) : Helpers.loadSpriteFromResources("TheOtherRoles.Resources.MinusButton.png", 150f);
             HudManagerStartPatch.zoomOutButton.PositionOffset = zoomOutStatus ? new Vector3(0f, 3f, 0) : new Vector3(0.4f, 2.8f, 0);
-            ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height); // This will move button positions to the correct position.
+            ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height, Screen.width, Screen.height, Screen.fullScreen); // This will move button positions to the correct position.
+        }
+
+        private static long GetBuiltInTicks()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var builtin = assembly.GetType("Builtin");
+            if (builtin == null) return 0;
+            var field = builtin.GetField("CompileTime");
+            if (field == null) return 0;
+            var value = field.GetValue(null);
+            if (value == null) return 0;
+            return (long)value;
         }
 
         public static async Task checkBeta() {
             if (TheOtherRolesPlugin.betaDays > 0) {
                 TheOtherRolesPlugin.Logger.LogMessage($"Beta check");
-                var compileTime = new DateTime(Builtin.CompileTime, DateTimeKind.Utc);  // This may show as an error, but it is not, compilation will work!
+                var ticks = GetBuiltInTicks();
+                var compileTime = new DateTime(ticks, DateTimeKind.Utc);  // This may show as an error, but it is not, compilation will work!
+                TheOtherRolesPlugin.Logger.LogMessage($"Compiled at {compileTime.ToString(CultureInfo.InvariantCulture)}");
                 DateTime? now;
                 // Get time from the internet, so no-one can cheat it (so easily).
                 try {

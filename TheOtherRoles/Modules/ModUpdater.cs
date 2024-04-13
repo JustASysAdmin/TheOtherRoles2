@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using AmongUs.Data;
+using Assets.InnerNet;
 using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Unity.IL2CPP;
@@ -21,7 +22,7 @@ using Action = System.Action;
 using IntPtr = System.IntPtr;
 using Version = SemanticVersioning.Version;
 
-namespace TheOtherRoles.Modules 
+namespace TheOtherRoles.Modules
 {
     public class ModUpdateBehaviour : MonoBehaviour
     {
@@ -35,13 +36,15 @@ namespace TheOtherRoles.Modules
         {
             public string Content;
             public string Tag;
+            public string TimeString;
             public JObject Request;
             public Version Version => Version.Parse(Tag);
-            
+
             public UpdateData(JObject data)
             {
                 Tag = data["tag_name"]?.ToString().TrimStart('v');
                 Content = data["body"]?.ToString();
+                TimeString = DateTime.FromBinary(((Il2CppSystem.DateTime)data["published_at"]).ToBinaryRaw()).ToString();
                 Request = data;
             }
 
@@ -57,15 +60,15 @@ namespace TheOtherRoles.Modules
 
         [HideFromIl2Cpp]
         public UpdateData RequiredUpdateData => TORUpdate ?? SubmergedUpdate;
-        
+
         public void Awake()
         {
             if (Instance) Destroy(this);
             Instance = this;
-            
-            SceneManager.add_sceneLoaded((System.Action<Scene, LoadSceneMode>) (OnSceneLoaded));
+
+            SceneManager.add_sceneLoaded((System.Action<Scene, LoadSceneMode>)(OnSceneLoaded));
             this.StartCoroutine(CoCheckUpdates());
-            
+
             foreach (var file in Directory.GetFiles(Paths.PluginPath, "*.old"))
             {
                 File.Delete(file);
@@ -75,111 +78,136 @@ namespace TheOtherRoles.Modules
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             if (updateInProgress || scene.name != "MainMenu") return;
-            if (RequiredUpdateData is null) {
+            if (RequiredUpdateData is null)
+            {
                 showPopUp = false;
                 return;
             }
-            
+
             var template = GameObject.Find("ExitGameButton");
             if (!template) return;
-            
+
             var button = Instantiate(template, null);
             var buttonTransform = button.transform;
-            var pos = buttonTransform.localPosition;
-            pos.y += 1.2f;
-            buttonTransform.localPosition = pos;
+            //buttonTransform.localPosition = new Vector3(-2f, -2f);
+            button.GetComponent<AspectPosition>().anchorPoint = new Vector2(0.458f, 0.124f);
 
             PassiveButton passiveButton = button.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();
             passiveButton.OnClick = new Button.ButtonClickedEvent();
-            passiveButton.OnClick.AddListener((Action) (() =>
+            passiveButton.OnClick.AddListener((Action)(() =>
             {
                 this.StartCoroutine(CoUpdate());
                 button.SetActive(false);
             }));
 
-            var text = button.transform.GetChild(0).GetComponent<TMP_Text>();
-            string t = "Update";
+            var text = button.transform.GetComponentInChildren<TMPro.TMP_Text>();
+            string t = "Update TOR";
             if (TORUpdate is null && SubmergedUpdate is not null) t = SubmergedCompatibility.Loaded ? $"Update\nSubmerged" : $"Download\nSubmerged";
 
             StartCoroutine(Effects.Lerp(0.1f, (System.Action<float>)(p => text.SetText(t))));
-
-            buttonSprite.color = text.color = Color.red;
-            passiveButton.OnMouseOut.AddListener((Action)(() => buttonSprite.color = text.color = Color.red));
+            passiveButton.OnMouseOut.AddListener((Action)(() => text.color = Color.red));
+            passiveButton.OnMouseOver.AddListener((Action)(() => text.color = Color.white));
 
             var isSubmerged = TORUpdate == null;
-            var announcement = $"<size=150%>A new <color=#FC0303>{(isSubmerged ? "Submerged" : "THE OTHER ROLES")}</color> update to {(isSubmerged ? SubmergedUpdate.Tag : TORUpdate.Tag)} is available</size>\n{(isSubmerged ? SubmergedUpdate.Content : TORUpdate.Content)}";
+            var announcement = $"<size=150%>A new {(isSubmerged ? "Submerged" : "THE OTHER ROLES")} update to {(isSubmerged ? SubmergedUpdate.Tag : TORUpdate.Tag)} is available</size>\n{(isSubmerged ? SubmergedUpdate.Content : TORUpdate.Content)}";
             var mgr = FindObjectOfType<MainMenuManager>(true);
 
-            if (!isSubmerged) {
-                try {
+            if (!isSubmerged)
+            {
+                try
+                {
                     string updateVersion = TORUpdate.Content[^5..];
-                    if (Version.Parse(TheOtherRolesPlugin.VersionString).BaseVersion() < Version.Parse(updateVersion).BaseVersion()) {
+                    if (Version.Parse(TheOtherRolesPlugin.VersionString).BaseVersion() < Version.Parse(updateVersion).BaseVersion())
+                    {
                         passiveButton.OnClick.RemoveAllListeners();
                         passiveButton.OnClick = new Button.ButtonClickedEvent();
                         passiveButton.OnClick.AddListener((Action)(() => {
-                            mgr.StartCoroutine(CoShowAnnouncement($"<size=150%><color=#FC0303>A MANUAL UPDATE IS REQUIRED</color></size>"));
+                            mgr.StartCoroutine(CoShowAnnouncement($"<size=150%>A MANUAL UPDATE IS REQUIRED</size>"));
                         }));
                     }
-                } catch {  
+                }
+                catch
+                {
                     TheOtherRolesPlugin.Logger.LogError("parsing version for auto updater failed :(");
                 }
 
             }
 
             if (isSubmerged && !SubmergedCompatibility.Loaded) showPopUp = false;
-            if (showPopUp) mgr.StartCoroutine(CoShowAnnouncement(announcement));
+            if (showPopUp) mgr.StartCoroutine(CoShowAnnouncement(announcement, shortTitle: isSubmerged ? "Submerged Update" : "TOR Update", date: isSubmerged ? SubmergedUpdate.TimeString : TORUpdate.TimeString));
             showPopUp = false;
         }
-        
+
         [HideFromIl2Cpp]
         public IEnumerator CoUpdate()
         {
             updateInProgress = true;
             var isSubmerged = TORUpdate is null;
             var updateName = (isSubmerged ? "Submerged" : "The Other Roles");
-            
+
             var popup = Instantiate(TwitchManager.Instance.TwitchPopup);
             popup.TextAreaTMP.fontSize *= 0.7f;
             popup.TextAreaTMP.enableAutoSizing = false;
-            
+
             popup.Show();
 
             var button = popup.transform.GetChild(2).gameObject;
             button.SetActive(false);
             popup.TextAreaTMP.text = $"Updating {updateName}\nPlease wait...";
-            
+
             var download = Task.Run(DownloadUpdate);
             while (!download.IsCompleted) yield return null;
-            
+
             button.SetActive(true);
             popup.TextAreaTMP.text = download.Result ? $"{updateName}\nupdated successfully\nPlease restart the game." : "Update wasn't successful\nTry again later,\nor update manually.";
         }
 
+
+        private static int announcementNumber = 501;
         [HideFromIl2Cpp]
-        public IEnumerator CoShowAnnouncement(string announcement)
+        public IEnumerator CoShowAnnouncement(string announcement, bool show = true, string shortTitle = "TOR Update", string title = "", string date = "")
         {
-            var popUp = Instantiate(FindObjectOfType<AnnouncementPopUp>(true));
+            var mgr = FindObjectOfType<MainMenuManager>(true);
+            var popUpTemplate = UnityEngine.Object.FindObjectOfType<AnnouncementPopUp>(true);
+            if (popUpTemplate == null)
+            {
+                TheOtherRolesPlugin.Logger.LogError("couldnt show credits, popUp is null");
+                yield return null;
+            }
+            var popUp = UnityEngine.Object.Instantiate(popUpTemplate);
+
             popUp.gameObject.SetActive(true);
-            yield return popUp.Init();
-            var last = DataManager.Announcements.LastViewedAnnouncement;
-            last.Id = 1;
-            last.Text = announcement;
-            SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, name);
-            popUp.AnnounceTextMeshPro.text = announcement;
+
+            Assets.InnerNet.Announcement creditsAnnouncement = new()
+            {
+                Id = "torAnnouncement",
+                Language = 0,
+                Number = announcementNumber++,
+                Title = title == "" ? "The Other Roles Announcement" : title,
+                ShortTitle = shortTitle,
+                SubTitle = "",
+                PinState = false,
+                Date = date == "" ? DateTime.Now.Date.ToString() : date,
+                Text = announcement,
+            };
+            mgr.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) => {
+                if (p == 1)
+                {
+                    var backup = DataManager.Player.Announcements.allAnnouncements;
+                    DataManager.Player.Announcements.allAnnouncements = new();
+                    popUp.Init(false);
+                    DataManager.Player.Announcements.SetAnnouncements(new Announcement[] { creditsAnnouncement });
+                    popUp.CreateAnnouncementList();
+                    popUp.UpdateAnnouncementText(creditsAnnouncement.Number);
+                    popUp.visibleAnnouncements[0].PassiveButton.OnClick.RemoveAllListeners();
+                    DataManager.Player.Announcements.allAnnouncements = backup;
+                }
+            })));
         }
 
         [HideFromIl2Cpp]
         public static IEnumerator CoCheckUpdates()
         {
-            var torUpdateCheck = Task.Run(() => Instance.GetGithubUpdate("JustASysAdmin", "TheOtherRoles2"));
-            while (!torUpdateCheck.IsCompleted) yield return null;
-            Announcement.updateData = torUpdateCheck.Result;
-            if (torUpdateCheck.Result != null && torUpdateCheck.Result.IsNewer(Version.Parse(TheOtherRolesPlugin.VersionString)))
-            {
-                Instance.TORUpdate = torUpdateCheck.Result;
-            }
-
             if (CheckForSubmergedUpdates)
             {
                 var submergedUpdateCheck = Task.Run(() => Instance.GetGithubUpdate("SubmergedAmongUs", "Submerged"));
@@ -190,7 +218,6 @@ namespace TheOtherRoles.Modules
                     if (Instance.SubmergedUpdate.Tag.Equals("2022.10.26")) Instance.SubmergedUpdate = null;
                 }
             }
-            
             Instance.OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         }
 
@@ -200,15 +227,18 @@ namespace TheOtherRoles.Modules
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
 
-            try {
-                var req = await client.GetAsync($"https://api.github.com/repos/{owner}/{repo}/releases/latest", HttpCompletionOption.ResponseContentRead);
+            try
+            {
+                var req = await client.GetAsync($"https://api.github.com/repos/JustASysAdmin/TheOtherRoles2/releases/latest", HttpCompletionOption.ResponseContentRead);
 
                 if (!req.IsSuccessStatusCode) return null;
 
                 var dataString = await req.Content.ReadAsStringAsync();
                 JObject data = JObject.Parse(dataString);
                 return new UpdateData(data);
-            } catch (HttpRequestException) {
+            }
+            catch (HttpRequestException)
+            {
                 return null;
             }
         }
@@ -238,26 +268,28 @@ namespace TheOtherRoles.Modules
             }
             return true;
         }
-            
-        
+
+
         [HideFromIl2Cpp]
         public async Task<bool> DownloadUpdate()
         {
             var isSubmerged = TORUpdate is null;
             if (isSubmerged && TryUpdateSubmergedInternally()) return true;
             var data = isSubmerged ? SubmergedUpdate : TORUpdate;
-            
+
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
-            
+
             JToken assets = data.Request["assets"];
             string downloadURI = "";
-            for (JToken current = assets.First; current != null; current = current.Next) 
+            for (JToken current = assets.First; current != null; current = current.Next)
             {
                 string browser_download_url = current["browser_download_url"]?.ToString();
-                if (browser_download_url != null && current["content_type"] != null) {
+                if (browser_download_url != null && current["content_type"] != null)
+                {
                     if (current["content_type"].ToString().Equals("application/x-msdownload") &&
-                        browser_download_url.EndsWith(".dll")) {
+                        browser_download_url.EndsWith(".dll"))
+                    {
                         downloadURI = browser_download_url;
                         break;
                     }
