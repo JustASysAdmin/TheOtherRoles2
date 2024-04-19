@@ -436,6 +436,7 @@ namespace TheOtherRoles.Patches {
                 RoleId.Tiebreaker,
                 RoleId.Mini,
                 RoleId.Bait,
+                RoleId.Disperser,
                 RoleId.Bloody,
                 RoleId.AntiTeleport,
                 RoleId.Sunglasses,
@@ -600,6 +601,15 @@ namespace TheOtherRoles.Patches {
                 modifiers.RemoveAll(x => x == RoleId.NiceGuesser);
             }
 
+            if (modifiers.Contains(RoleId.Disperser))
+            {
+                List<PlayerControl> impPlayer = new List<PlayerControl>(playerList); //testing
+                impPlayer.RemoveAll(x => !x.Data.Role.IsImpostor);
+                playerId = setModifierToRandomPlayer((byte)RoleId.Disperser, impPlayer);
+                //   crewPlayer.RemoveAll(x => x.PlayerId == playerId);
+                playerList.RemoveAll(x => x.PlayerId == playerId);
+                modifiers.RemoveAll(x => x == RoleId.Disperser);
+            }
 
             if (modifiers.Contains(RoleId.Cursed)) {
                 List<PlayerControl> crewPlayerC = new List<PlayerControl>(playerList);
@@ -691,6 +701,9 @@ namespace TheOtherRoles.Patches {
                 case RoleId.Bait:
                     selection = CustomOptionHolder.modifierBait.getSelection();
                     if (multiplyQuantity) selection *= CustomOptionHolder.modifierBaitQuantity.getQuantity();
+                    break;
+                case RoleId.Disperser:
+                    selection = CustomOptionHolder.modifierDisperser.getSelection(); 
                     break;
                 case RoleId.Bloody:
                     selection = CustomOptionHolder.modifierBloody.getSelection();
