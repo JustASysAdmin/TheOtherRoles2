@@ -29,6 +29,7 @@ namespace TheOtherRoles
         private static CustomButton bomberKillButton;
         private static CustomButton cultistTurnButton;
         private static CustomButton shifterShiftButton;
+        private static CustomButton disperserDisperseButton;
         private static CustomButton morphlingButton;
         private static CustomButton camouflagerButton;
         public static CustomButton portalmakerPlacePortalButton;
@@ -90,6 +91,7 @@ namespace TheOtherRoles
         public static TMPro.TMP_Text hackerVitalsChargesText;
         public static TMPro.TMP_Text trapperChargesText;
         public static TMPro.TMP_Text huntedShieldCountText;
+        public static TMPro.TMP_Text disperserChargesText;
 
         public static void setCustomButtonCooldowns() {
             if (!initialized) {
@@ -109,6 +111,8 @@ namespace TheOtherRoles
             veterenAlertButton.MaxTimer = Veteren.cooldown;
             medicShieldButton.MaxTimer = 0f;
             shifterShiftButton.MaxTimer = 0f;
+            disperserDisperseButton.MaxTimer = 0f;
+            disperserDisperseButton.MaxTimer = Disperser.cooldown;
             morphlingButton.MaxTimer = Morphling.cooldown;
             bomberBombButton.MaxTimer = Bomber.cooldown;
             camouflagerButton.MaxTimer = Camouflager.cooldown;
@@ -566,8 +570,39 @@ namespace TheOtherRoles
                 true
             );
 
+            // Disperser disperse
+            disperserDisperseButton = new CustomButton(
+                () => {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.Disperse, Hazel.SendOption.Reliable, -1);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.disperse();
+                    SoundEffectsManager.play("disperserDisperse");
+
+                    disperserDisperseButton.Timer = disperserDisperseButton.MaxTimer;
+                },
+                () => { return Disperser.disperser != null && Disperser.disperser == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
+                () => {
+                    if (disperserChargesText != null) disperserChargesText.text = $"{Disperser.remainingDisperses}";
+                    return Disperser.remainingDisperses > 0 && CachedPlayer.LocalPlayer.PlayerControl.CanMove;
+                },
+                () => {
+                    if (Disperser.remainingDisperses > 0) disperserDisperseButton.Timer = disperserDisperseButton.MaxTimer;
+                },
+                Disperser.getButtonSprite(),
+                new Vector3(0, 1f, 0),
+                __instance,
+                null,
+                true,
+                buttonText: "DISPERSE"
+            );
+            disperserChargesText = GameObject.Instantiate(disperserDisperseButton.actionButton.cooldownTimerText, disperserDisperseButton.actionButton.cooldownTimerText.transform.parent);
+            disperserChargesText.text = "";
+            disperserChargesText.enableWordWrapping = false;
+            disperserChargesText.transform.localScale = Vector3.one * 0.5f;
+            disperserChargesText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
+
             // Morphling morph
-            
+
             morphlingButton = new CustomButton(
                 () => {
                     if (Morphling.sampledTarget != null) {

@@ -69,7 +69,6 @@ namespace TheOtherRoles
             ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
             var regions = new IRegionInfo[] {
                 new DnsRegionInfo(Ip.Value, "Custom", StringNames.NoTranslation, Ip.Value, Port.Value, false).CastFast<IRegionInfo>(),
-                new DnsRegionInfo("play.scumscyb.org", "Scoom", StringNames.NoTranslation, "play.scumscyb.org", 22023, false).CastFast<IRegionInfo>()
             };
             IRegionInfo currentRegion = serverManager.CurrentRegion;
             Logger.LogInfo($"Adding {regions.Length} regions");
