@@ -308,6 +308,11 @@ namespace TheOtherRoles {
 
         public static CustomOption modifiersAreHidden;
 
+        public static CustomOption modifierDisperser;
+        public static CustomOption modifierDisperserCooldown;
+        public static CustomOption modifierDisperserNumberOfUses;
+        public static CustomOption modifierDisperserDispersesToVent;
+
         public static CustomOption modifierBait;
         public static CustomOption modifierBaitQuantity;
         public static CustomOption modifierBaitReportDelayMin;
@@ -478,7 +483,6 @@ namespace TheOtherRoles {
             morphlingCooldown = CustomOption.Create(21, Types.Impostor, "Morphling Cooldown", 30f, 10f, 60f, 2.5f, morphlingSpawnRate);
             morphlingDuration = CustomOption.Create(22, Types.Impostor, "Morph Duration", 10f, 1f, 20f, 0.5f, morphlingSpawnRate);
 
-            modifierParanoid = CustomOption.Create(8831, Types.Modifier, cs(Color.yellow, "Paranoid"), rates, null, true);
         // public static CustomOption bomberSpawnRate;
         // public static CustomOption bomberBombCooldown;
         // public static CustomOption bomberDelay;
@@ -552,16 +556,6 @@ namespace TheOtherRoles {
 
             blackmailerSpawnRate = CustomOption.Create(710, Types.Impostor, cs(Blackmailer.color, "Blackmailer"), rates, null, true);
             blackmailerCooldown = CustomOption.Create(711, Types.Impostor, "Blackmail Cooldown", 30f, 5f, 120f, 5f, blackmailerSpawnRate);
-        
-            guesserSpawnRate = CustomOption.Create(310, Types.Modifier, cs(Guesser.color, "Guesser"), false, null, true);
-            guesserIsImpGuesserRate = CustomOption.Create(311, Types.Modifier, "Evil Spawn Rate", rates, guesserSpawnRate);
-            guesserSpawnBothRate = CustomOption.Create(317, Types.Modifier, "Other Spawn Rate", rates, guesserSpawnRate);
-            guesserNumberOfShots = CustomOption.Create(312, Types.Modifier, "Guesser Number Of Shots", 2f, 1f, 15f, 1f, guesserSpawnRate);
-            guesserHasMultipleShotsPerMeeting = CustomOption.Create(313, Types.Modifier, "Guesser Can Shoot Multiple Times Per Meeting", false, guesserSpawnRate);
-            guesserShowInfoInGhostChat = CustomOption.Create(314, Types.Modifier, "Guesses Visible In Ghost Chat", true, guesserSpawnRate);
-            guesserKillsThroughShield  = CustomOption.Create(315, Types.Modifier, "Guesses Ignore The Medic Shield", true, guesserSpawnRate);
-            guesserEvilCanKillSpy  = CustomOption.Create(316, Types.Modifier, "Evil Guesser Can Guess The Spy", true, guesserSpawnRate);
-            guesserCantGuessSnitchIfTaksDone = CustomOption.Create(318, Types.Modifier, "Guesser Can't Guess Snitch When Tasks Completed", true, guesserSpawnRate);
 
             jesterSpawnRate = CustomOption.Create(60, Types.Neutral, cs(Jester.color, "Jester"), rates, null, true);
             jesterCanCallEmergency = CustomOption.Create(61, Types.Neutral, "Jester Can Call Emergency Meeting", true, jesterSpawnRate);
@@ -758,9 +752,24 @@ namespace TheOtherRoles {
             trapperTrapDuration = CustomOption.Create(454, Types.Crewmate, "Trap Duration", 5f, 1f, 15f, 1f, trapperSpawnRate);
 
             // Modifier (1000 - 1999)
-            modifiersAreHidden = CustomOption.Create(1009, Types.Modifier, cs(Color.yellow, "Hide After Death Modifiers"), true, null, true);
+            modifiersAreHidden = CustomOption.Create(1099, Types.Modifier, cs(Color.yellow, "Hide After Death Modifiers"), true, null, true);
 
+            modifierDisperser = CustomOption.Create(1110, Types.Modifier, cs(Color.red, "Disperser"), rates, null, true);
+            modifierDisperserCooldown = CustomOption.Create(1112, Types.Modifier, "Disperser Cooldown", 30f, 10f, 60f, 2.5f, modifierDisperser);
+            modifierDisperserNumberOfUses = CustomOption.Create(1114, Types.Modifier, "Number Of Uses", 1, 1, 5, 1, modifierDisperser);
+            modifierDisperserDispersesToVent = CustomOption.Create(1113, Types.Modifier, "Disperse To Vent", true, modifierDisperser);
 
+            modifierParanoid = CustomOption.Create(8831, Types.Modifier, cs(Color.yellow, "Paranoid"), rates, null, true);
+
+            guesserSpawnRate = CustomOption.Create(310, Types.Modifier, cs(Guesser.color, "Guesser"), false, null, true);
+            guesserIsImpGuesserRate = CustomOption.Create(311, Types.Modifier, "Evil Spawn Rate", rates, guesserSpawnRate);
+            guesserSpawnBothRate = CustomOption.Create(317, Types.Modifier, "Other Spawn Rate", rates, guesserSpawnRate);
+            guesserNumberOfShots = CustomOption.Create(312, Types.Modifier, "Guesser Number Of Shots", 2f, 1f, 15f, 1f, guesserSpawnRate);
+            guesserHasMultipleShotsPerMeeting = CustomOption.Create(313, Types.Modifier, "Guesser Can Shoot Multiple Times Per Meeting", false, guesserSpawnRate);
+            guesserShowInfoInGhostChat = CustomOption.Create(314, Types.Modifier, "Guesses Visible In Ghost Chat", true, guesserSpawnRate);
+            guesserKillsThroughShield = CustomOption.Create(315, Types.Modifier, "Guesses Ignore The Medic Shield", true, guesserSpawnRate);
+            guesserEvilCanKillSpy = CustomOption.Create(316, Types.Modifier, "Evil Guesser Can Guess The Spy", true, guesserSpawnRate);
+            guesserCantGuessSnitchIfTaksDone = CustomOption.Create(318, Types.Modifier, "Guesser Can't Guess Snitch When Tasks Completed", true, guesserSpawnRate);
 
             modifierBloody = CustomOption.Create(1000, Types.Modifier, cs(Color.yellow, "Bloody"), rates, null, true);
             modifierBloodyQuantity = CustomOption.Create(1001, Types.Modifier, cs(Color.yellow, "Bloody Quantity"), ratesModifier, modifierBloody);
