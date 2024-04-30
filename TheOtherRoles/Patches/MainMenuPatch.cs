@@ -29,7 +29,7 @@ namespace TheOtherRoles.Modules {
 
             var buttonDiscord = UnityEngine.Object.Instantiate(template, null);
             GameObject.Destroy(buttonDiscord.GetComponent<AspectPosition>());
-            buttonDiscord.transform.localPosition = new(4f, -2, 0);
+            buttonDiscord.transform.localPosition = new(4f, -1.5f, 0);
 
             var textDiscord = buttonDiscord.GetComponentInChildren<TextMeshPro>();
             textDiscord.transform.localPosition = new(0, 0.035f, -2);
@@ -93,7 +93,7 @@ namespace TheOtherRoles.Modules {
             // TOR credits button
             var buttoncredits = GameObject.Instantiate(template, null);
             Object.Destroy(buttoncredits.GetComponent<AspectPosition>());
-            buttoncredits.transform.localPosition = new(0.25f, -2, 0);
+            buttoncredits.transform.localPosition = new(0.25f, -1.5f, 0);
 
             var textcredits = buttoncredits.GetComponentInChildren<TextMeshPro>();
             textcredits.transform.localPosition = new(0, 0.035f, -2);

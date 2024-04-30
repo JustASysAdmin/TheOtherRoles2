@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TheOtherRoles;
 using TheOtherRoles.CustomGameModes;
 using TheOtherRoles.Players;
@@ -11,19 +12,14 @@ using UnityEngine;
 namespace TheOtherRoles.Patches {
     [HarmonyPatch]
     public static class CredentialsPatch {
+        public static string producer = "<color=#FCCE03FF>JustASysAdmin</color>";
+        public static string artworker = "<color=#FCCE03FF>SvettyScribbles</color>, <color=#FCCE03FF>JustASysAdmin</color> and <color=#00ffff>fangkuai</color>";
+        public static string specialthanks = "<color=#FCCE03FF>K3ndo & Smeggy and fangkuai</color>";
+        public static string pingtextcolor = "";
         public static string fullCredentialsVersion = 
-$@"<size=130%><color=#ff351f>TheOtherRolesCE</color></size> v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays>0 ? "-BETA": "")}";
-
-        public static string fullCredentials = 
-$@"<size=130%><color=#ff351f>TheOtherRoles Community Edition</color></size> v{TheOtherRolesPlugin.Version.ToString()}
-<size=60%>
-Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color> and <color=#FCCE03FF>JustASysAdmin</color>.</size>";
-
+$@"<size=130%><color=#ff351f>TheOtherRoles Community Edition</color></size> v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays>0 ? "-BETA": "")}";
     public static string mainMenuCredentials = 
-$@"Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color> and <color=#FCCE03FF>JustASysAdmin</color>.</size>";
-
-        public static string contributorsCredentials =
-$@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy and fangkuai</color></size>";
+$@"Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by .<br>Additional artwork by .</size>";
 
         [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
         internal static class PingTrackerPatch
@@ -44,6 +40,14 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy and fangkuai</co
 
             static void Postfix(PingTracker __instance)
             {
+                var ping = AmongUsClient.Instance.Ping;
+                if (ping < 50) pingtextcolor = "<color=#00ffff>";
+                else if (ping < 100) pingtextcolor = "<color=#00ec00>";
+                else if (ping < 200) pingtextcolor = "<color=#ff44ff>";
+                else if (ping < 300) pingtextcolor = "<color=#8600ff>";
+                else if (ping < 400) pingtextcolor = "<color=#ff0000>";
+                else if (ping > 700) pingtextcolor = ("<color=#ff0000>" + Helpers.transl("pingveryhigh"));
+
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
@@ -51,7 +55,7 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy and fangkuai</co
                     if (HideNSeek.isHideNSeekGM) gameModeText = $"Hide 'N Seek";
                     else if (HandleGuesser.isGuesserGm) gameModeText = $"Guesser";
                     if (gameModeText != "") gameModeText = Helpers.cs(Color.yellow, gameModeText) + "\n";
-                    __instance.text.text = $"<size=130%><color=#ff351f>TheOtherRoles CE</color></size> v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays > 0 ? "-BETA" : "")}\n{gameModeText}" + __instance.text.text;
+                    __instance.text.text = $"<size=130%><color=#ff351f>TheOtherRoles CE</color></size> v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays > 0 ? "-BETA" : "")}\n{gameModeText}" + pingtextcolor + string.Format(Helpers.transl("pingtextchange"), AmongUsClient.Instance.Ping);
                     if (CachedPlayer.LocalPlayer.Data.IsDead || (!(CachedPlayer.LocalPlayer.PlayerControl == null) && (CachedPlayer.LocalPlayer.PlayerControl == Lovers.lover1 || CachedPlayer.LocalPlayer.PlayerControl == Lovers.lover2)))
                     {
                         __instance.transform.localPosition = new Vector3(3.45f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
@@ -67,8 +71,7 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy and fangkuai</co
                     if (MapOptionsTor.gameMode == CustomGamemodes.HideNSeek) gameModeText = $"Hide 'N Seek";
                     else if (MapOptionsTor.gameMode == CustomGamemodes.Guesser) gameModeText = $"Guesser";
                     if (gameModeText != "") gameModeText = Helpers.cs(Color.yellow, gameModeText) + "\n";
-
-                    __instance.text.text = $"{fullCredentialsVersion}\n  {gameModeText + fullCredentials}\n {__instance.text.text}";
+                    __instance.text.text = $"{fullCredentialsVersion}\n  {gameModeText}" + "<size=60%>" + Helpers.transl("Moddedby") + producer + $"\n{Helpers.transl("artwork")+ artworker + "\n" + Helpers.transl("basedtor")}" + $"</size>\n{pingtextcolor}" + string.Format(Helpers.transl("pingtextchange"),AmongUsClient.Instance.Ping);
                     __instance.transform.localPosition = new Vector3(3.5f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                 }
             }
@@ -98,11 +101,11 @@ $@"<size=60%> <color=#FCCE03FF>Special thanks to K3ndo & Smeggy and fangkuai</co
 
                 instance = __instance;
                 loadSprites();
-                // renderer.sprite = TORMapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                //renderer.sprite = horseBannerSprite;
                 renderer.sprite = EventUtility.isEnabled ? banner2Sprite : bannerSprite;
                 var credentialObject = new GameObject("credentialsTOR");
                 var credentials = credentialObject.AddComponent<TextMeshPro>();
-                credentials.SetText($"v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays > 0 ? "-BETA" : "")}\n<size=30f%>\n</size>{mainMenuCredentials}\n<size=30%>\n</size>{contributorsCredentials}");
+                credentials.SetText($"v{TheOtherRolesPlugin.Version.ToString() + (TheOtherRolesPlugin.betaDays > 0 ? "-BETA" : "")}\n<size=30f%>\n</size>{Helpers.transl("Moddedby") + producer + "\n" + Helpers.transl("artwork") + artworker + "\n" + Helpers.transl("basedtor")}\n<size=60%>\n{Helpers.transl("specialthanks") + specialthanks }</size>");
                 credentials.alignment = TMPro.TextAlignmentOptions.Center;
                 credentials.fontSize *= 0.05f;
 

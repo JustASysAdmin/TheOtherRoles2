@@ -11,6 +11,7 @@ using TheOtherRoles.Players;
 using TheOtherRoles.Utilities;
 using TheOtherRoles.Objects;
 using TheOtherRoles.CustomGameModes;
+using Reactor.Utilities.Extensions;
 
 namespace TheOtherRoles.Patches {
 
@@ -569,14 +570,18 @@ namespace TheOtherRoles.Patches {
         private static bool isLightsOut;
 
         [HarmonyPatch(typeof(SurveillanceMinigame), nameof(SurveillanceMinigame.Begin))]
-        class SurveillanceMinigameBeginPatch {
-            public static void Postfix(SurveillanceMinigame __instance) {
+        class SurveillanceMinigameBeginPatch
+        {
+            public static void Postfix(SurveillanceMinigame __instance)
+            {
                 // Add securityGuard cameras
                 page = 0;
                 timer = 0;
-                if (MapUtilities.CachedShipStatus.AllCameras.Length > 4 && __instance.FilteredRooms.Length > 0) {
+                if (MapUtilities.CachedShipStatus.AllCameras.Length > 4 && __instance.FilteredRooms.Length > 0)
+                {
                     __instance.textures = __instance.textures.ToList().Concat(new RenderTexture[MapUtilities.CachedShipStatus.AllCameras.Length - 4]).ToArray();
-                    for (int i = 4; i < MapUtilities.CachedShipStatus.AllCameras.Length; i++) {
+                    for (int i = 4; i < MapUtilities.CachedShipStatus.AllCameras.Length; i++)
+                    {
                         SurvCamera surv = MapUtilities.CachedShipStatus.AllCameras[i];
                         Camera camera = UnityEngine.Object.Instantiate<Camera>(__instance.CameraPrefab);
                         camera.transform.SetParent(__instance.transform);
@@ -591,28 +596,34 @@ namespace TheOtherRoles.Patches {
         }
 
         [HarmonyPatch(typeof(SurveillanceMinigame), nameof(SurveillanceMinigame.Update))]
-        class SurveillanceMinigameUpdatePatch {
-
-            public static bool Prefix(SurveillanceMinigame __instance) {
+        class SurveillanceMinigameUpdatePatch
+        {
+            public static bool Prefix(SurveillanceMinigame __instance)
+            {
                 // Update normal and securityGuard cameras
                 timer += Time.deltaTime;
                 int numberOfPages = Mathf.CeilToInt(MapUtilities.CachedShipStatus.AllCameras.Length / 4f);
 
                 bool update = false;
 
-                if (timer > 3f || Input.GetKeyDown(KeyCode.RightArrow)) {
+                if (timer > 3f || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                {
                     update = true;
                     timer = 0f;
                     page = (page + 1) % numberOfPages;
-                } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                {
                     page = (page + numberOfPages - 1) % numberOfPages;
                     update = true;
                     timer = 0f;
                 }
 
-                if ((__instance.isStatic || update) && !PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(CachedPlayer.LocalPlayer.PlayerControl)) {
+                if ((__instance.isStatic || update) && !PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(CachedPlayer.LocalPlayer.PlayerControl))
+                {
                     __instance.isStatic = false;
-                    for (int i = 0; i < __instance.ViewPorts.Length; i++) {
+                    for (int i = 0; i < __instance.ViewPorts.Length; i++)
+                    {
                         __instance.ViewPorts[i].sharedMaterial = __instance.DefaultMaterial;
                         __instance.SabText[i].gameObject.SetActive(false);
                         if (page * 4 + i < __instance.textures.Length)
@@ -620,15 +631,189 @@ namespace TheOtherRoles.Patches {
                         else
                             __instance.ViewPorts[i].sharedMaterial = __instance.StaticMaterial;
                     }
-                } else if (!__instance.isStatic && PlayerTask.PlayerHasTaskOfType<HudOverrideTask>(CachedPlayer.LocalPlayer.PlayerControl)) {
+                }
+                else if (!__instance.isStatic && PlayerTask.PlayerHasTaskOfType<HudOverrideTask>(CachedPlayer.LocalPlayer.PlayerControl))
+                {
                     __instance.isStatic = true;
-                    for (int j = 0; j < __instance.ViewPorts.Length; j++) {
+                    for (int j = 0; j < __instance.ViewPorts.Length; j++)
+                    {
                         __instance.ViewPorts[j].sharedMaterial = __instance.StaticMaterial;
                         __instance.SabText[j].gameObject.SetActive(true);
                     }
                 }
+
+                nightVisionUpdate(SkeldCamsMinigame: __instance);
                 return false;
             }
+        }
+
+        [HarmonyPatch(typeof(PlanetSurveillanceMinigame), nameof(PlanetSurveillanceMinigame.Update))]
+        class PlanetSurveillanceMinigameUpdatePatch
+        {
+            public static void Postfix(PlanetSurveillanceMinigame __instance)
+            {
+                if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                    __instance.NextCamera(1);
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                    __instance.NextCamera(-1);
+
+                nightVisionUpdate(SwitchCamsMinigame: __instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(FungleSurveillanceMinigame), nameof(FungleSurveillanceMinigame.Update))]
+        class FungleSurveillanceMinigameUpdatePatch
+        {
+            public static void Postfix(FungleSurveillanceMinigame __instance)
+            {
+                nightVisionUpdate(FungleCamMinigame: __instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(SurveillanceMinigame), nameof(SurveillanceMinigame.OnDestroy))]
+        class SurveillanceMinigameDestroyPatch
+        {
+            public static void Prefix()
+            {
+                resetNightVision();
+            }
+        }
+
+        [HarmonyPatch(typeof(PlanetSurveillanceMinigame), nameof(PlanetSurveillanceMinigame.OnDestroy))]
+        class PlanetSurveillanceMinigameDestroyPatch
+        {
+            public static void Prefix()
+            {
+                resetNightVision();
+            }
+        }
+
+
+        private static void nightVisionUpdate(SurveillanceMinigame SkeldCamsMinigame = null, PlanetSurveillanceMinigame SwitchCamsMinigame = null, FungleSurveillanceMinigame FungleCamMinigame = null)
+        {
+            GameObject closeButton = null;
+            if (nightVisionOverlays == null)
+            {
+                List<MeshRenderer> viewPorts = new();
+                Transform viewablesTransform = null;
+                if (SkeldCamsMinigame != null)
+                {
+                    closeButton = SkeldCamsMinigame.Viewables.transform.Find("CloseButton").gameObject;
+                    foreach (var rend in SkeldCamsMinigame.ViewPorts) viewPorts.Add(rend);
+                    viewablesTransform = SkeldCamsMinigame.Viewables.transform;
+                }
+                else if (SwitchCamsMinigame != null)
+                {
+                    closeButton = SwitchCamsMinigame.Viewables.transform.Find("CloseButton").gameObject;
+                    viewPorts.Add(SwitchCamsMinigame.ViewPort);
+                    viewablesTransform = SwitchCamsMinigame.Viewables.transform;
+                }
+                else if (FungleCamMinigame != null)
+                {
+                    closeButton = FungleCamMinigame.transform.Find("CloseButton").gameObject;
+                    viewPorts.Add(FungleCamMinigame.viewport);
+                    viewablesTransform = FungleCamMinigame.viewport.transform;
+                }
+                else return;
+
+                nightVisionOverlays = new List<GameObject>();
+
+                foreach (var renderer in viewPorts)
+                {
+                    GameObject overlayObject;
+                    float zPosition;
+                    if (FungleCamMinigame != null)
+                    {
+                        overlayObject = GameObject.Instantiate(closeButton, renderer.transform);
+                        overlayObject.layer = renderer.gameObject.layer;
+                        zPosition = -0.5f;
+                        overlayObject.transform.localPosition = new Vector3(0, 0, zPosition);
+                    }
+                    else
+                    {
+                        overlayObject = GameObject.Instantiate(closeButton, viewablesTransform);
+                        zPosition = overlayObject.transform.position.z;
+                        overlayObject.layer = closeButton.layer;
+                        overlayObject.transform.position = new Vector3(renderer.transform.position.x, renderer.transform.position.y, zPosition);
+                    }
+                    Vector3 localScale = (SkeldCamsMinigame != null) ? new Vector3(0.91f, 0.612f, 1f) : new Vector3(2.124f, 1.356f, 1f);
+                    localScale = (FungleCamMinigame != null) ? new Vector3(10f, 10f, 1f) : localScale;
+                    overlayObject.transform.localScale = localScale;
+                    var overlayRenderer = overlayObject.GetComponent<SpriteRenderer>();
+                    overlayRenderer.sprite = overlaySprite;
+                    overlayObject.SetActive(false);
+                    GameObject.Destroy(overlayObject.GetComponent<CircleCollider2D>());
+                    nightVisionOverlays.Add(overlayObject);
+                }
+            }
+
+
+            isLightsOut = CachedPlayer.LocalPlayer.PlayerControl.myTasks.ToArray().Any(x => x.name.Contains("FixLightsTask")) || Trickster.lightsOutTimer > 0;
+            bool ignoreNightVision = CustomOptionHolder.camsNoNightVisionIfImpVision.getBool() && Helpers.hasImpVision(GameData.Instance.GetPlayerById(CachedPlayer.LocalPlayer.PlayerId)) || CachedPlayer.LocalPlayer.Data.IsDead;
+            bool nightVisionEnabled = CustomOptionHolder.camsNightVision.getBool();
+
+            if (isLightsOut && !nightVisionIsActive && nightVisionEnabled && !ignoreNightVision)
+            {  // only update when something changed!
+                foreach (PlayerControl pc in CachedPlayer.AllPlayers)
+                {
+                    pc.setLook("", 11, "", "", "", "", false);
+                }
+                foreach (var overlayObject in nightVisionOverlays)
+                {
+                    overlayObject.SetActive(true);
+                }
+                // Dead Bodies
+                foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+                {
+                    SpriteRenderer component = deadBody.bodyRenderers.FirstOrDefault();
+                    component.material.SetColor("_BackColor", Palette.ShadowColors[11]);
+                    component.material.SetColor("_BodyColor", Palette.PlayerColors[11]);
+                }
+                nightVisionIsActive = true;
+            }
+            else if (!isLightsOut && nightVisionIsActive)
+            {
+                resetNightVision();
+            }
+        }
+
+        public static void resetNightVision()
+        {
+            foreach (var go in nightVisionOverlays)
+            {
+                go.Destroy();
+            }
+            nightVisionOverlays = null;
+
+            if (nightVisionIsActive)
+            {
+                nightVisionIsActive = false;
+                foreach (PlayerControl pc in CachedPlayer.AllPlayers)
+                {
+                    if (Camouflager.camouflageTimer > 0)
+                    {
+                        pc.setLook("", 6, "", "", "", "", false);
+                    }
+                    else if (pc == Morphling.morphling && Morphling.morphTimer > 0)
+                    {
+                        PlayerControl target = Morphling.morphTarget;
+                        Morphling.morphling.setLook(target.Data.PlayerName, target.Data.DefaultOutfit.ColorId, target.Data.DefaultOutfit.HatId, target.Data.DefaultOutfit.VisorId, target.Data.DefaultOutfit.SkinId, target.Data.DefaultOutfit.PetId, false);
+                    }
+                    else
+                    {
+                        Helpers.setDefaultLook(pc, false);
+                    }
+                    // Dead Bodies
+                    foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+                    {
+                        var colorId = GameData.Instance.GetPlayerById(deadBody.ParentId).Object.Data.DefaultOutfit.ColorId;
+                        SpriteRenderer component = deadBody.bodyRenderers.FirstOrDefault();
+                        component.material.SetColor("_BackColor", Palette.ShadowColors[colorId]);
+                        component.material.SetColor("_BodyColor", Palette.PlayerColors[colorId]);
+                    }
+                }
+            }
+
         }
 
         public static void enforceNightVision(PlayerControl player)
@@ -638,24 +823,41 @@ namespace TheOtherRoles.Patches {
                 player.setLook("", 11, "", "", "", "", false);
             }
         }
+
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetPlayerMaterialColors))]
+        public static void Postfix(PlayerControl __instance, SpriteRenderer rend)
+        {
+            if (!nightVisionIsActive) return;
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+            {
+                foreach (SpriteRenderer component in new SpriteRenderer[2] { deadBody.bodyRenderers.FirstOrDefault(), deadBody.bloodSplatter })
+                {
+                    component.material.SetColor("_BackColor", Palette.ShadowColors[11]);
+                    component.material.SetColor("_BodyColor", Palette.PlayerColors[11]);
+                }
+            }
+        }
     }
 
     [HarmonyPatch(typeof(MedScanMinigame), nameof(MedScanMinigame.FixedUpdate))]
-    class MedScanMinigameFixedUpdatePatch {
-        static void Prefix(MedScanMinigame __instance) {
-            if (MapOptionsTor.allowParallelMedBayScans) {
+    class MedScanMinigameFixedUpdatePatch
+    {
+        static void Prefix(MedScanMinigame __instance)
+        {
+            if (MapOptionsTor.allowParallelMedBayScans)
+            {
                 __instance.medscan.CurrentUser = CachedPlayer.LocalPlayer.PlayerId;
                 __instance.medscan.UsersList.Clear();
             }
         }
     }
-
     [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.ShowSabotageMap))]
-    class ShowSabotageMapPatch {
-        static bool Prefix(MapBehaviour __instance) {
-            if (HideNSeek.isHideNSeekGM) 
+    class ShowSabotageMapPatch
+    {
+        static bool Prefix(MapBehaviour __instance)
+        {
+            if (HideNSeek.isHideNSeekGM)
                 return HideNSeek.canSabotage;
-
             return true;
         }
     }

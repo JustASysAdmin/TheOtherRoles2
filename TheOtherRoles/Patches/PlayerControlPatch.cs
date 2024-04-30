@@ -739,16 +739,19 @@ namespace TheOtherRoles.Patches {
               
         }
 
-        static void bountyHunterUpdate() {
+        static void bountyHunterUpdate()
+        {
             if (BountyHunter.bountyHunter == null || CachedPlayer.LocalPlayer.PlayerControl != BountyHunter.bountyHunter) return;
 
-            if (BountyHunter.bountyHunter.Data.IsDead) {
+            if (BountyHunter.bountyHunter.Data.IsDead)
+            {
                 if (BountyHunter.arrow != null || BountyHunter.arrow.arrow != null) UnityEngine.Object.Destroy(BountyHunter.arrow.arrow);
                 BountyHunter.arrow = null;
                 if (BountyHunter.cooldownText != null && BountyHunter.cooldownText.gameObject != null) UnityEngine.Object.Destroy(BountyHunter.cooldownText.gameObject);
                 BountyHunter.cooldownText = null;
                 BountyHunter.bounty = null;
-                foreach (PoolablePlayer p in MapOptionsTor.playerIcons.Values) {
+                foreach (PoolablePlayer p in MapOptionsTor.playerIcons.Values)
+                {
                     if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
                 }
                 return;
@@ -757,24 +760,23 @@ namespace TheOtherRoles.Patches {
             BountyHunter.arrowUpdateTimer -= Time.fixedDeltaTime;
             BountyHunter.bountyUpdateTimer -= Time.fixedDeltaTime;
 
-            if (BountyHunter.bounty == null || BountyHunter.bountyUpdateTimer <= 0f) {
+            if (BountyHunter.bounty == null || BountyHunter.bountyUpdateTimer <= 0f)
+            {
                 // Set new bounty
                 BountyHunter.bounty = null;
                 BountyHunter.arrowUpdateTimer = 0f; // Force arrow to update
                 BountyHunter.bountyUpdateTimer = BountyHunter.bountyDuration;
                 var possibleTargets = new List<PlayerControl>();
-                foreach (PlayerControl p in CachedPlayer.AllPlayers) {
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                {
                     if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p != Mini.mini || Mini.isGrownUp()) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.BHSetBounty, Hazel.SendOption.Reliable, -1);
-                writer.Write(BountyHunter.bounty.Data.PlayerId);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.BHSetBounty(BountyHunter.bounty.Data.PlayerId);
 
                 // Show poolable player
-                if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null) {
+                if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
+                {
                     foreach (PoolablePlayer pp in MapOptionsTor.playerIcons.Values) pp.gameObject.SetActive(false);
                     if (MapOptionsTor.playerIcons.ContainsKey(BountyHunter.bounty.PlayerId) && MapOptionsTor.playerIcons[BountyHunter.bounty.PlayerId].gameObject != null)
                         MapOptionsTor.playerIcons[BountyHunter.bounty.PlayerId].gameObject.SetActive(true);
@@ -786,15 +788,18 @@ namespace TheOtherRoles.Patches {
                 MapOptionsTor.playerIcons[BountyHunter.bounty.PlayerId].gameObject.SetActive(false);
 
             // Update Cooldown Text
-            if (BountyHunter.cooldownText != null) {
+            if (BountyHunter.cooldownText != null)
+            {
                 BountyHunter.cooldownText.text = Mathf.CeilToInt(Mathf.Clamp(BountyHunter.bountyUpdateTimer, 0, BountyHunter.bountyDuration)).ToString();
                 BountyHunter.cooldownText.gameObject.SetActive(!MeetingHud.Instance);  // Show if not in meeting
             }
 
             // Update Arrow
-            if (BountyHunter.showArrow && BountyHunter.bounty != null) {
+            if (BountyHunter.showArrow && BountyHunter.bounty != null)
+            {
                 if (BountyHunter.arrow == null) BountyHunter.arrow = new Arrow(Color.red);
-                if (BountyHunter.arrowUpdateTimer <= 0f) {
+                if (BountyHunter.arrowUpdateTimer <= 0f)
+                {
                     BountyHunter.arrow.Update(BountyHunter.bounty.transform.position);
                     BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateIntervall;
                 }
@@ -802,7 +807,7 @@ namespace TheOtherRoles.Patches {
             }
         }
 
-	static void arsonistUpdate() {
+        static void arsonistUpdate() {
 	    if (Arsonist.arsonist == null || CachedPlayer.LocalPlayer.PlayerControl != Arsonist.arsonist) return;
             foreach (PlayerControl p in Arsonist.dousedPlayers) {
                 if (MapOptionsTor.playerIcons.ContainsKey(p.PlayerId)) {
@@ -1047,15 +1052,18 @@ namespace TheOtherRoles.Patches {
             }
         }
 
-        static void hunterUpdate() {
+        static void hunterUpdate()
+        {
             if (!HideNSeek.isHideNSeekGM) return;
             int minutes = (int)HideNSeek.timer / 60;
             int seconds = (int)HideNSeek.timer % 60;
             string suffix = $" {minutes:00}:{seconds:00}";
 
-            if (HideNSeek.timerText == null) {
+            if (HideNSeek.timerText == null)
+            {
                 RoomTracker roomTracker = FastDestroyableSingleton<HudManager>.Instance?.roomTracker;
-                if (roomTracker != null) {
+                if (roomTracker != null)
+                {
                     GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
 
                     gameObject.transform.SetParent(FastDestroyableSingleton<HudManager>.Instance.transform);
@@ -1066,19 +1074,26 @@ namespace TheOtherRoles.Patches {
                     gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
                     if (AmongUs.Data.DataManager.Settings.Gameplay.StreamerMode) gameObject.transform.localPosition = new Vector3(0, 2f, gameObject.transform.localPosition.z);
                 }
-            } else {
-                if (HideNSeek.isWaitingTimer) {
+            }
+            else
+            {
+                if (HideNSeek.isWaitingTimer)
+                {
                     HideNSeek.timerText.text = "<color=#0000cc>" + suffix + "</color>";
                     HideNSeek.timerText.color = Color.blue;
-                } else {
+                }
+                else
+                {
                     HideNSeek.timerText.text = "<color=#FF0000FF>" + suffix + "</color>";
                     HideNSeek.timerText.color = Color.red;
                 }
             }
-            if (HideNSeek.isHunted() && !Hunted.taskPunish && !HideNSeek.isWaitingTimer) {
+            if (HideNSeek.isHunted() && !Hunted.taskPunish && !HideNSeek.isWaitingTimer)
+            {
                 var (playerCompleted, playerTotal) = TasksHandler.taskInfo(CachedPlayer.LocalPlayer.Data);
                 int numberOfTasks = playerTotal - playerCompleted;
-                if (numberOfTasks == 0) {
+                if (numberOfTasks == 0)
+                {
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareTimer, Hazel.SendOption.Reliable, -1);
                     writer.Write(HideNSeek.taskPunish);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -1092,14 +1107,19 @@ namespace TheOtherRoles.Patches {
 
             byte playerId = CachedPlayer.LocalPlayer.PlayerId;
             foreach (Arrow arrow in Hunter.localArrows) arrow.arrow.SetActive(false);
-            if (Hunter.arrowActive) {
+            if (Hunter.arrowActive)
+            {
                 int arrowIndex = 0;
-                foreach (PlayerControl p in CachedPlayer.AllPlayers) {
-                    if (!p.Data.IsDead && !p.Data.Role.IsImpostor) {
-                        if (arrowIndex >= Hunter.localArrows.Count) {
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                {
+                    if (!p.Data.IsDead && !p.Data.Role.IsImpostor)
+                    {
+                        if (arrowIndex >= Hunter.localArrows.Count)
+                        {
                             Hunter.localArrows.Add(new Arrow(Color.blue));
                         }
-                        if (arrowIndex < Hunter.localArrows.Count && Hunter.localArrows[arrowIndex] != null) {
+                        if (arrowIndex < Hunter.localArrows.Count && Hunter.localArrows[arrowIndex] != null)
+                        {
                             Hunter.localArrows[arrowIndex].arrow.SetActive(true);
                             Hunter.localArrows[arrowIndex].Update(p.transform.position, Color.blue);
                         }

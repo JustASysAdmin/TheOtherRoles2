@@ -130,9 +130,9 @@ namespace TheOtherRoles.Patches {
             neutralSettings.Add((byte)RoleId.Vulture, CustomOptionHolder.vultureSpawnRate.getSelection());
             neutralSettings.Add((byte)RoleId.Thief, CustomOptionHolder.thiefSpawnRate.getSelection());
 
-            if (false) // Lawyer or Prosecutor
-                neutralSettings.Add((byte)RoleId.Prosecutor, CustomOptionHolder.lawyerSpawnRate.getSelection());
-            else
+            //if (false) // Lawyer or Prosecutor
+                //neutralSettings.Add((byte)RoleId.Prosecutor, CustomOptionHolder.lawyerSpawnRate.getSelection());
+            //else
                 neutralSettings.Add((byte)RoleId.Lawyer, CustomOptionHolder.lawyerSpawnRate.getSelection());
 
             crewSettings.Add((byte)RoleId.Mayor, CustomOptionHolder.mayorSpawnRate.getSelection());
@@ -436,8 +436,8 @@ namespace TheOtherRoles.Patches {
                 RoleId.Tiebreaker,
                 RoleId.Mini,
                 RoleId.Bait,
-                RoleId.Disperser,
                 RoleId.Bloody,
+                RoleId.Disperser,
                 RoleId.AntiTeleport,
                 RoleId.Sunglasses,
                 RoleId.Vip,
@@ -702,12 +702,12 @@ namespace TheOtherRoles.Patches {
                     selection = CustomOptionHolder.modifierBait.getSelection();
                     if (multiplyQuantity) selection *= CustomOptionHolder.modifierBaitQuantity.getQuantity();
                     break;
-                case RoleId.Disperser:
-                    selection = CustomOptionHolder.modifierDisperser.getSelection(); 
-                    break;
                 case RoleId.Bloody:
                     selection = CustomOptionHolder.modifierBloody.getSelection();
                     if (multiplyQuantity) selection *= CustomOptionHolder.modifierBloodyQuantity.getQuantity();
+                    break;
+                case RoleId.Disperser:
+                    selection = CustomOptionHolder.modifierDisperser.getSelection();
                     break;
                 case RoleId.AntiTeleport:
                     selection = CustomOptionHolder.modifierAntiTeleport.getSelection();
