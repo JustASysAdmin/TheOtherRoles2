@@ -198,11 +198,11 @@ namespace TheOtherRoles {
         private static void createClassicTabs(GameOptionsMenu __instance) {
             bool isReturn = setNames(
                 new Dictionary<string, string>() {
-                    ["TORSettings"] = "The Other Roles Settings",
-                    ["ImpostorSettings"] = "Impostor Roles Settings",
-                    ["NeutralSettings"] = "Neutral Roles Settings",
-                    ["CrewmateSettings"] = "Crewmate Roles Settings",
-                    ["ModifierSettings"] = "Modifier Settings"
+                    ["TORSettings"] = Helpers.transl("TORSettings"),
+                    ["ImpostorSettings"] = Helpers.transl("ImpostorSettings"),
+                    ["NeutralSettings"] = Helpers.transl("NeutralSettings"),
+                    ["CrewmateSettings"] = Helpers.transl("CrewmateSettings"),
+                    ["ModifierSettings"] = Helpers.transl("ModifierSettings")
                 });
 
             if (isReturn) return;
@@ -321,12 +321,12 @@ namespace TheOtherRoles {
         private static void createGuesserTabs(GameOptionsMenu __instance) {
             bool isReturn = setNames(
                 new Dictionary<string, string>() {
-                    ["TORSettings"] = "The Other Roles Settings",
-                    ["GuesserSettings"] = "Guesser Mode Settings",
-                    ["ImpostorSettings"] = "Impostor Roles Settings",
-                    ["NeutralSettings"] = "Neutral Roles Settings",
-                    ["CrewmateSettings"] = "Crewmate Roles Settings",
-                    ["ModifierSettings"] = "Modifier Settings"
+                    ["TORSettings"] = Helpers.transl("TORSettings"),
+                    ["GuesserSettings"] = Helpers.transl("GuesserSettings"),
+                    ["ImpostorSettings"] = Helpers.transl("ImpostorSettings"),
+                    ["NeutralSettings"] = Helpers.transl("NeutralSettings"),
+                    ["CrewmateSettings"] = Helpers.transl("CrewmateSettings"),
+                    ["ModifierSettings"] = Helpers.transl("ModifierSettings")
                 });
 
             if (isReturn) return;
@@ -456,8 +456,8 @@ namespace TheOtherRoles {
         private static void createHideNSeekTabs(GameOptionsMenu __instance) {
             bool isReturn = setNames(
                 new Dictionary<string, string>(){ 
-                    ["TORSettings"] = "The Other Roles Settings", 
-                    ["HideNSeekSettings"] = "Hide 'N Seek Settings" 
+                    ["TORSettings"] = Helpers.transl("TORSettings"), 
+                    ["HideNSeekSettings"] = Helpers.transl("HideNSeekSettings")
                 });
 
             if (isReturn) return;
