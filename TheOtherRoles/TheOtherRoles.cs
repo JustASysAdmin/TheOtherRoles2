@@ -1167,7 +1167,7 @@ namespace TheOtherRoles
         public static bool hasImpostorVision = false;
         public static int chatTarget = 1;
         public static bool wasTeamRed;
-        public static bool hasChat = false;
+        //public static bool hasChat = false;
         public static bool wasImpostor;
         public static bool wasSpy;
 
@@ -1200,7 +1200,7 @@ namespace TheOtherRoles
             jackalPromotedFromSidekickCanCreateSidekick = CustomOptionHolder.jackalPromotedFromSidekickCanCreateSidekick.getBool();
             canCreateSidekickFromImpostor = CustomOptionHolder.jackalCanCreateSidekickFromImpostor.getBool();
             formerJackals.Clear();
-            hasChat = CustomOptionHolder.jackalhasChat.getBool();
+            //hasChat = CustomOptionHolder.jackalhasChat.getBool();
             hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
             wasTeamRed = wasImpostor = wasSpy = false;
         }
@@ -1614,7 +1614,6 @@ namespace TheOtherRoles
         public static PlayerControl niceGuesser;
         public static PlayerControl evilGuesser;
         public static Color color = Color.yellow;
-        private static Sprite targetSprite;
 
         public static int remainingShotsEvilGuesser = 2;
         public static int remainingShotsNiceGuesser = 2;

@@ -123,6 +123,11 @@ namespace TheOtherRoles {
                 return roleInfo.isNeutral;
             return false;
         }
+
+        public static string transl(string tag) {
+            return ModTranslation.getString(tag);
+        }
+
 		/* The above func is probably better?
 		
         public static bool isNeutral(PlayerControl p) {
@@ -190,10 +195,10 @@ namespace TheOtherRoles {
                     return false;
                 }
  
-                public static bool isTeamJackalWithChat(PlayerControl player) {
+                /*public static bool isTeamJackalWithChat(PlayerControl player) {
                     if (!isTeamJackal(player)) return false;
                     return Jackal.hasChat;
-                }
+                }*/
 
 public static bool isPlayerLover(PlayerControl player) {
      return !(player == null) && (player == Lovers.lover1 || player == Lovers.lover2);
@@ -201,7 +206,7 @@ public static bool isPlayerLover(PlayerControl player) {
 
         public static PlayerControl getChatPartner(this PlayerControl player)
         {
-            if (!Jackal.hasChat || Sidekick.sidekick == null) return Lovers.getPartner(player);
+            //if (!Jackal.hasChat || Sidekick.sidekick == null) return Lovers.getPartner(player);
 
             if (isPlayerLover(player) && !isTeamJackal(player))
                 return Lovers.getPartner(player);
@@ -376,6 +381,10 @@ public static bool isPlayerLover(PlayerControl player) {
                 System.Console.WriteLine("Error loading sprite from path: " + path);
             }
             return null;
+        }
+        public static Sprite loadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect)
+        {
+            return Sprite.Create(texture, textureRect, new Vector2(0.5f, 0.5f), pixelsPerUnit);
         }
 
         public static unsafe Texture2D loadTextureFromResources(string path) {

@@ -63,8 +63,6 @@ namespace TheOtherRoles
         Warlock,
         SecurityGuard,
         Arsonist,
-        EvilGuesser,
-        NiceGuesser,
         BountyHunter,
         Miner,
         Vulture,
@@ -83,6 +81,8 @@ namespace TheOtherRoles
 		Paranoid,
         Lover,
         Bait,
+        EvilGuesser,
+        NiceGuesser,
         Disperser,
         Bloody,
         AntiTeleport,
@@ -451,8 +451,10 @@ namespace TheOtherRoles
         }
 
         public static void setModifier(byte modifierId, byte playerId, byte flag) {
-            PlayerControl player = Helpers.playerById(playerId); 
-            switch ((RoleId)modifierId) {
+            PlayerControl player = Helpers.playerById(playerId);
+            Helpers.Log("Player: " + player.name + " Modifier: " + ((RoleId)modifierId).ToString());
+            switch ((RoleId)modifierId)
+            {
                 case RoleId.EvilGuesser:
                     Guesser.evilGuesser = player;
                     break;
@@ -465,9 +467,6 @@ namespace TheOtherRoles
                 case RoleId.Lover:
                     if (flag == 0) Lovers.lover1 = player;
                     else Lovers.lover2 = player;
-                    break;
-                case RoleId.Disperser:
-                    Disperser.disperser = player;
                     break;
                 case RoleId.Bloody:
                     Bloody.bloody.Add(player);
@@ -492,6 +491,9 @@ namespace TheOtherRoles
                     break;
                 case RoleId.Slueth:
                     Slueth.slueth = player;
+                    break;
+                case RoleId.Disperser:
+                    Disperser.disperser = player;
                     break;
                 case RoleId.Cursed:
                     Cursed.cursed = player;
@@ -1526,13 +1528,13 @@ namespace TheOtherRoles
             {
                 if (player == Lovers.lover1 || player == Lovers.lover2) Lovers.clearAndReload(); // The whole Lover couple is being erased
                 if (Bait.bait.Any(x => x.PlayerId == player.PlayerId)) Bait.bait.RemoveAll(x => x.PlayerId == player.PlayerId);
-                if (player == Disperser.disperser) Disperser.clearAndReload();
                 if (Bloody.bloody.Any(x => x.PlayerId == player.PlayerId)) Bloody.bloody.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (AntiTeleport.antiTeleport.Any(x => x.PlayerId == player.PlayerId)) AntiTeleport.antiTeleport.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (Sunglasses.sunglasses.Any(x => x.PlayerId == player.PlayerId)) Sunglasses.sunglasses.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (player == Tiebreaker.tiebreaker) Tiebreaker.clearAndReload();
                 if (player == Mini.mini) Mini.clearAndReload();
                 if (player == Cursed.cursed) Cursed.clearAndReload();
+                if (player == Disperser.disperser) Disperser.clearAndReload();
                 if (Vip.vip.Any(x => x.PlayerId == player.PlayerId)) Vip.vip.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (Invert.invert.Any(x => x.PlayerId == player.PlayerId)) Invert.invert.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (Chameleon.chameleon.Any(x => x.PlayerId == player.PlayerId)) Chameleon.chameleon.RemoveAll(x => x.PlayerId == player.PlayerId);
@@ -1738,7 +1740,6 @@ namespace TheOtherRoles
                 new(-0.5743f, -4.7235f, -0.0047f),
                 new(-20.8897f, 2.7606f, 0.002f)
             };
-
             List<Vector3> airshipSpawn = new List<Vector3>() { }; //no spawns since it already has random spawns
 
             AntiTeleport.setPosition();
@@ -1755,35 +1756,13 @@ namespace TheOtherRoles
                     {
                         PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(Vent.currentVent.Id);
                         PlayerControl.LocalPlayer.MyPhysics.ExitAllVents();
-                    };
-                    if (Disperser.dispersesToVent)
-                    {
-                        CachedPlayer.LocalPlayer.PlayerControl.transform.position = FindVentPoss()[rnd.Next(FindVentPoss().Count)];
                     }
-                    else
-                    {
-                        switch (GameOptionsManager.Instance.currentNormalGameOptions.MapId)
-                        {
-                            case 0:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = skeldSpawn[rnd.Next(skeldSpawn.Count)];
-                                break;
-                            case 1:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = miraSpawn[rnd.Next(miraSpawn.Count)];
-                                break;
-                            case 2:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = polusSpawn[rnd.Next(polusSpawn.Count)];
-                                break;
-                            case 3:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = dleksSpawn[rnd.Next(dleksSpawn.Count)];
-                                break;
-                            case 4:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = airshipSpawn[rnd.Next(airshipSpawn.Count)];
-                                break;
-                            case 5:
-                                CachedPlayer.LocalPlayer.PlayerControl.transform.position = fungleSpawn[rnd.Next(fungleSpawn.Count)];
-                                break;
-                        }
-                    }
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 0) CachedPlayer.LocalPlayer.PlayerControl.transform.position = skeldSpawn[rnd.Next(skeldSpawn.Count)];
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 1) CachedPlayer.LocalPlayer.PlayerControl.transform.position = miraSpawn[rnd.Next(miraSpawn.Count)];
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 2) CachedPlayer.LocalPlayer.PlayerControl.transform.position = polusSpawn[rnd.Next(polusSpawn.Count)];
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 3) CachedPlayer.LocalPlayer.PlayerControl.transform.position = dleksSpawn[rnd.Next(dleksSpawn.Count)];
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 4) CachedPlayer.LocalPlayer.PlayerControl.transform.position = airshipSpawn[rnd.Next(airshipSpawn.Count)];
+                    if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5) CachedPlayer.LocalPlayer.PlayerControl.transform.position = fungleSpawn[rnd.Next(fungleSpawn.Count)];
                 }
                 Disperser.remainingDisperses--;
             }
@@ -2566,6 +2545,9 @@ namespace TheOtherRoles
                     break;
                 case (byte)CustomRPC.SetFutureShifted:
                     RPCProcedure.setFutureShifted(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.Disperse:
+                    RPCProcedure.disperse();
                     break;
                 case (byte)CustomRPC.SetFutureShielded:
                     RPCProcedure.setFutureShielded(reader.ReadByte());

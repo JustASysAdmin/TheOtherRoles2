@@ -43,6 +43,8 @@ namespace TheOtherRoles
 
         public static int optionsPage = 2;
 
+        public static string CredentialsText;
+
         public static ConfigEntry<string> DebugMode { get; private set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
@@ -68,8 +70,9 @@ namespace TheOtherRoles
         public static void UpdateRegions() {
             ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
             var regions = new IRegionInfo[] {
-                new DnsRegionInfo(Ip.Value, "Custom", StringNames.NoTranslation, Ip.Value, Port.Value, false).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Custom", StringNames.NoTranslation, Ip.Value, new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Custom", Ip.Value, Port.Value, false) })).CastFast<IRegionInfo>()
             };
+            
             IRegionInfo currentRegion = serverManager.CurrentRegion;
             Logger.LogInfo($"Adding {regions.Length} regions");
             foreach (IRegionInfo region in regions) {
@@ -90,6 +93,8 @@ namespace TheOtherRoles
         }
 
         public override void Load() {
+            ModTranslation.Load();
+
             Logger = Log;
             Instance = this;
 
@@ -107,7 +112,7 @@ namespace TheOtherRoles
             EnableSoundEffects = Config.Bind("Custom", "Enable Sound Effects", true);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            
+
 
             Ip = Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = Config.Bind("Custom", "Custom Server Port", (ushort)22023);
@@ -117,21 +122,21 @@ namespace TheOtherRoles
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", "false");
             Harmony.PatchAll();
+
             CustomOptionHolder.Load();
             CustomColors.Load();
-            Translation.Load();
             CustomHatManager.LoadHats();
-            if (ToggleCursor.Value) {
-                Helpers.enableCursor(true);
-            }
-
+            if (ToggleCursor.Value) Helpers.enableCursor(true);
             if (BepInExUpdater.UpdateRequired)
             {
                 AddComponent<BepInExUpdater>();
                 return;
             }
+
+            EventUtility.Load();
             SubmergedCompatibility.Initialize();
-            Modules.MainMenuPatch.addSceneChangeCallbacks();
+            AddComponent<ModUpdater>();
+            //Modules.MainMenuPatch.addSceneChangeCallbacks();
         }
         public static Sprite GetModStamp() {
             if (ModStamp) return ModStamp;
