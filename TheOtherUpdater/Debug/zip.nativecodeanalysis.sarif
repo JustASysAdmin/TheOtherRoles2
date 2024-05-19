@@ -1,0 +1,1370 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "写入 \"out_buf.m_pBuf\" 时缓冲区溢出。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                },
+                "region": {
+                  "startLine": 3986,
+                  "startColumn": 5,
+                  "endLine": 3986,
+                  "endColumn": 36
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tdefl_write_image_to_png_file_in_memory_ex",
+                  "decoratedName": "tdefl_write_image_to_png_file_in_memory_ex",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3929,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3931,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3933,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3934,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3934,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3934,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3934,
+                            "startColumn": 34
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3935,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3936,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3937,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“!pComp”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3939,
+                            "startColumn": 3
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是“memset”中的输出(在 e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.39.33519\\include\\vcruntime_string.h:63 处声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3940,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3941,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3942,
+                            "startColumn": 12
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是对“malloc”的输入(在 d:\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt_malloc.h:101 处声明)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3942,
+                            "startColumn": 12
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“<分支条件>”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“z”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3948,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是“tdefl_output_buffer_putter”中的输出(在第 3829 行中声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“z”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3948,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是“tdefl_output_buffer_putter”中的输出(在第 3829 行中声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3947,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "继续此循环(假定“z”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3950,
+                            "startColumn": 3
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是“tdefl_init”中的输出(在第 879 行中声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3953,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3953,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此循环(假定“y<h”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3959,
+                            "startColumn": 59
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“<分支条件>”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3966,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3968,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3969,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3974,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3975,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3976,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3977,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3978,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3979,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3980,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3981,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3982,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3983,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3985,
+                            "startColumn": 38
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3985,
+                            "startColumn": 38
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3984,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3986,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "“out_buf”是“memcpy”的输入/输出参数(在 e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.39.33519\\include\\vcruntime_string.h:43 处声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3986,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "“_Old_14`41”等于 41"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+                          },
+                          "region": {
+                            "startLine": 3986,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "写入到“out_buf.m_pBuf”无效(位于其可写范围之外)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6385",
+          "message": {
+            "text": "正在从 \"local_header_ofs_array\" 读取无效数据。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                },
+                "region": {
+                  "startLine": 543,
+                  "startColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "zip_entry_finalize",
+                  "decoratedName": "zip_entry_finalize",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 521,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 522,
+                            "startColumn": 14
+                          }
+                        },
+                        "message": {
+                          "text": "“local_header_ofs_array”是一个数组"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 523,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“!local_header_ofs_array”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此循环(假定“i<n”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 528,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 529,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "“local_header_ofs_array”是“zip_sort”的输入/输出参数(在第 491 行中声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 531,
+                            "startColumn": 15
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“index!=i”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 534,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“i<n”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 528,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 529,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "“local_header_ofs_array”是“zip_sort”的输入/输出参数(在第 491 行中声明)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 531,
+                            "startColumn": 15
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“index!=i”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 534,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 527,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "继续此循环(假定“i<n”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 537,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 538,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“!length”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 542,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 542,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“i<n-1”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 543,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 542,
+                            "startColumn": 27
+                          }
+                        },
+                        "message": {
+                          "text": "“i”可能等于 1"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 542,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "继续此循环(假定“i<n-1”)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                          },
+                          "region": {
+                            "startLine": 543,
+                            "startColumn": 15
+                          }
+                        },
+                        "message": {
+                          "text": "从“local_header_ofs_array”中读取无效(位于其可读范围之外)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6308",
+          "message": {
+            "text": "“realloc”可能返回 null 指针: 将 null 指针赋给“pState->m_central_dir.m_p”(后者将作为参数传递给“realloc”)将导致原始内存块泄漏。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+                },
+                "region": {
+                  "startLine": 660,
+                  "startColumn": 33
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "zip_central_dir_move",
+                  "decoratedName": "zip_central_dir_move",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.39.33523.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/miniz.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "9c0ad30f5e56926e5996c89f468633ca970cbf0a7f1221111b8d996e1d9713d0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/Desktop/TheOtherRolesCE-new/TheOtherUpdater/include/zip/zip.c"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "e49fa4a8990f43a54bf7cc466ab84b924075e966247d6c1311640ba2a9cc63c8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/desktop/theotherrolesce-new/theotherupdater/include/zip/zip.h"
+          },
+          "hashes": {
+            "sha-256": "5942096bf1b5ad607123ea1d745a63284f42d63e7d9fe86857e293b656836e94"
+          }
+        }
+      ]
+    }
+  ]
+}

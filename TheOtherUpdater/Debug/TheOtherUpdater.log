@@ -1,0 +1,10 @@
+﻿cl : 命令行  warning D9025: 正在重写“/analyze-”(用“/analyze:projectdirectoryE:\Desktop\TheOtherRolesCE-new\TheOtherUpdater”)
+  zip.c
+E:\Desktop\TheOtherRolesCE-new\TheOtherUpdater\include\zip\miniz.h(3986): warning C6386: 写入 "out_buf.m_pBuf" 时缓冲区溢出。: Lines: 3929, 3931, 3933, 3934, 3935, 3936, 3937, 3939, 3940, 3941, 3942, 3947, 3948, 3947, 3948, 3947, 3950, 3953, 3959, 3966, 3968, 3969, 3974, 3975, 3976, 3977, 3978, 3979, 3980, 3981, 3982, 3983, 3984, 3985, 3984, 3985, 3984, 3986
+E:\Desktop\TheOtherRolesCE-new\TheOtherUpdater\include\zip\zip.c(543): warning C6385: 正在从 "local_header_ofs_array" 读取无效数据。: Lines: 521, 522, 523, 527, 528, 529, 531, 534, 527, 528, 529, 531, 534, 527, 537, 538, 542, 543, 542, 543
+E:\Desktop\TheOtherRolesCE-new\TheOtherUpdater\include\zip\zip.c(660): warning C6308: “realloc”可能返回 null 指针: 将 null 指针赋给“pState->m_central_dir.m_p”(后者将作为参数传递给“realloc”)将导致原始内存块泄漏。
+  TheOtherUpdater.cpp
+LINK : warning LNK4098: 默认库“MSVCRTD”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+TheOtherUpdater.obj : error LNK2019: 无法解析的外部符号 __imp___invalid_parameter，函数 "void * __cdecl std::_Allocate_manually_vector_aligned<struct std::_Default_allocate_traits>(unsigned int)" (??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPAXI@Z) 中引用了该符号
+TheOtherUpdater.obj : error LNK2019: 无法解析的外部符号 __imp___CrtDbgReport，函数 "void * __cdecl std::_Allocate_manually_vector_aligned<struct std::_Default_allocate_traits>(unsigned int)" (??$_Allocate_manually_vector_aligned@U_Default_allocate_traits@std@@@std@@YAPAXI@Z) 中引用了该符号
+E:\Desktop\TheOtherRolesCE-new\Debug\TheOtherUpdater.exe : fatal error LNK1120: 2 个无法解析的外部命令
