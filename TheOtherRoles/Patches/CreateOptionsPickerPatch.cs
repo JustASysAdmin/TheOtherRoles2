@@ -18,14 +18,22 @@ namespace TheOtherRoles.Patches {
                 return true;
             }
 
-            __instance.SetGameMode(GameModes.Normal);  //__instance.Refresh();
-
-            if ((int)mode == 3) {
+            __instance.SetGameMode(GameModes.Normal);
+            CustomGamemodes gm = (CustomGamemodes)((int)mode - 2);
+            if (gm == CustomGamemodes.Guesser)
+            {
                 __instance.GameModeText.text = "TOR Guesser";
                 MapOptionsTor.gameMode = CustomGamemodes.Guesser;
-            } else {
+            }
+            else if (gm == CustomGamemodes.HideNSeek)
+            {
                 __instance.GameModeText.text = "TOR Hide N Seek";
                 MapOptionsTor.gameMode = CustomGamemodes.HideNSeek;
+            }
+            else if (gm == CustomGamemodes.PropHunt)
+            {
+                __instance.GameModeText.text = "TOR Prop Hunt";
+                MapOptionsTor.gameMode = CustomGamemodes.PropHunt;
             }
             return false;
         }
@@ -39,6 +47,10 @@ namespace TheOtherRoles.Patches {
             else if (MapOptionsTor.gameMode == CustomGamemodes.HideNSeek) {
                 __instance.GameModeText.text = "TOR Hide N Seek";
             }
+            else if (MapOptionsTor.gameMode == CustomGamemodes.PropHunt)
+            {
+                __instance.GameModeText.text = "TOR Prop Hunt";
+            }
         }
     }
 
@@ -50,8 +62,8 @@ namespace TheOtherRoles.Patches {
             float num = ((float)Mathf.CeilToInt(4f / 10f) / 2f - 0.5f) * -2.5f;   // 4 for 4 buttons!
             __instance.controllerSelectable.Clear();
             int num2 = 0;
-            __instance.ButtonPool.poolSize = 4;
-            for (int i=0; i <= 4; i++) {
+            __instance.ButtonPool.poolSize = 5;
+            for (int i=0; i <= 5; i++) {
                     GameModes entry = (GameModes)i;
                 if (entry != GameModes.None) {
                     ChatLanguageButton chatLanguageButton = __instance.ButtonPool.Get<ChatLanguageButton>();
@@ -60,13 +72,15 @@ namespace TheOtherRoles.Patches {
                         chatLanguageButton.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(GameModesHelpers.ModeToName[entry], new Il2CppReferenceArray<Il2CppSystem.Object>(0));
                     else {
                         chatLanguageButton.Text.text = i == 3 ? "TOR Guesser" : "TOR Hide N Seek";
+                        if (i == 5)
+                            chatLanguageButton.Text.text = "TOR Prop Hunt";
                     }
                     chatLanguageButton.Button.OnClick.RemoveAllListeners();
                     chatLanguageButton.Button.OnClick.AddListener((System.Action)delegate {
                         __instance.ChooseOption(entry);
                     });
 
-                    bool isCurrentMode = i <= 2 && MapOptionsTor.gameMode == CustomGamemodes.Classic ? (long)entry == (long)((ulong)gameMode) : (i == 3 && MapOptionsTor.gameMode == CustomGamemodes.Guesser || i == 4 && MapOptionsTor.gameMode == CustomGamemodes.HideNSeek);
+                    bool isCurrentMode = i <= 2 && MapOptionsTor.gameMode == CustomGamemodes.Classic ? (long)entry == (long)((ulong)gameMode) : (i == 3 && MapOptionsTor.gameMode == CustomGamemodes.Guesser || i == 4 && MapOptionsTor.gameMode == CustomGamemodes.HideNSeek || i == 5 && MapOptionsTor.gameMode == CustomGamemodes.PropHunt);
                     chatLanguageButton.SetSelected(isCurrentMode);
                     __instance.controllerSelectable.Add(chatLanguageButton.Button);
                     if (isCurrentMode) {
