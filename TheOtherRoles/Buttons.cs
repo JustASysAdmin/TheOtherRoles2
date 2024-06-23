@@ -1436,7 +1436,7 @@ namespace TheOtherRoles
                 CustomButton.ButtonPositions.upperRowFarLeft,
                 __instance,
                 KeyCode.B,
-                buttonText:"KILL"
+                buttonText:"GIVE"
             );
             
             

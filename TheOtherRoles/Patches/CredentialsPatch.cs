@@ -19,10 +19,10 @@ $@"<size=130%><color=#ff351f>TheOtherRolesCE</color></size> v{TheOtherRolesPlugi
         public static string fullCredentials =
 $@"<size=130%><color=#ff351f>TheOtherRoles Community Edition</color></size> v{TheOtherRolesPlugin.Version.ToString()}
 <size=60%>
-Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color> and <color=#FCCE03FF>JustASysAdmin</color>.</size>";
+Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color>, <color=#FCCE03FF>JustASysAdmin</color> & <color=#00FFFF>FangKuai</color>.</size>";
 
         public static string mainMenuCredentials =
-    $@"Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color> and <color=#FCCE03FF>JustASysAdmin</color>.</size>";
+    $@"Modded by <color=#FCCE03FF>JustASysAdmin</color>, based on TheOtherRoles by <color=#FCCE03FF>Eisbison</color>.<br>Additional artwork by <color=#FCCE03FF>SvettyScribbles</color>, <color=#FCCE03FF>JustASysAdmin</color> & <color=#00FFFF>FangKuai</color>.</size>";
 
         public static string contributorsCredentials =
 $@"<size=60%> <color=#FCCE03FF>Special thanks to <color=#00FFFF>FangKuai<color=#FCCE03FF> & Smeggy</color></size>";

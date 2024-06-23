@@ -257,10 +257,24 @@ namespace TheOtherRoles {
 		}
 
 
-        public static void BlackmailShhh() {
-            Helpers.showFlash(new Color32(49, 28, 69, byte.MinValue), 3f, "", false, 0.75f);
+        public static IEnumerator BlackmailShhh()
+        {
+            yield return HudManager.Instance.CoFadeFullScreen(Color.clear, new Color(0f, 0f, 0f, 0.98f));
+            var TempPosition = HudManager.Instance.shhhEmblem.transform.localPosition;
+            var TempDuration = HudManager.Instance.shhhEmblem.HoldDuration;
+            HudManager.Instance.shhhEmblem.transform.localPosition = new Vector3(
+                HudManager.Instance.shhhEmblem.transform.localPosition.x,
+                HudManager.Instance.shhhEmblem.transform.localPosition.y,
+                HudManager.Instance.FullScreen.transform.position.z + 1f);
+            HudManager.Instance.shhhEmblem.TextImage.text = "YOU ARE BLACKMAILED";
+            HudManager.Instance.shhhEmblem.HoldDuration = 2.5f;
+            yield return HudManager.Instance.ShowEmblem(true);
+            HudManager.Instance.shhhEmblem.transform.localPosition = TempPosition;
+            HudManager.Instance.shhhEmblem.HoldDuration = TempDuration;
+            yield return HudManager.Instance.CoFadeFullScreen(new Color(0f, 0f, 0f, 0.98f), Color.clear);
+            yield return null;
         }
-        
+
         public static void Log(string e) {
             TheOtherRolesPlugin.Logger.LogMessage(e);
         }

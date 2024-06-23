@@ -2141,7 +2141,7 @@ namespace TheOtherRoles
         private static Sprite overlaySprite;
         public static Sprite getBlackmailOverlaySprite() {
             if (overlaySprite) return overlaySprite;
-            overlaySprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerOverlay.png", 115f);
+            overlaySprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerOverlay.png", 100f);
             return overlaySprite;
         }
 
