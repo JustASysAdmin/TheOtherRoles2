@@ -70,7 +70,7 @@ namespace TheOtherRoles
             ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
             var regions = new IRegionInfo[] {
                 new StaticHttpRegionInfo("Custom", StringNames.NoTranslation, Ip.Value, new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Custom", Ip.Value, Port.Value, false) })).CastFast<IRegionInfo>(),
-                new StaticHttpRegionInfo("<color=#00FFFF>FangKuai</color>(<color=#FF44FF>China, Beijing</color>)", StringNames.NoTranslation, "http://fangkuai.fun", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("FangKuai", "http://fangkuai.fun", 15566, false) })).CastFast<IRegionInfo>()
+                new StaticHttpRegionInfo("<color=#00FFFF>FangKuai</color>(<color=#FF44FF>China, Beijing</color>)", StringNames.NoTranslation, "https://player.fangkuai.fun", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("<color=#00FFFF>FangKuai</color>(<color=#FF44FF>China, Beijing</color>)", "https://player.fangkuai.fun", 443, false) })).CastFast<IRegionInfo>()
             };
             IRegionInfo currentRegion = serverManager.CurrentRegion;
             Logger.LogInfo($"Adding {regions.Length} regions");
@@ -92,6 +92,7 @@ namespace TheOtherRoles
         }
 
         public override void Load() {
+            //ModTranslation.Load();
             Logger = Log;
             Instance = this;
 

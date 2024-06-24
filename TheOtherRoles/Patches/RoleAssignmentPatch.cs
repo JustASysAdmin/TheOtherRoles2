@@ -459,6 +459,7 @@ namespace TheOtherRoles.Patches {
                 RoleId.Tunneler,
                 RoleId.Slueth,
                 RoleId.Blind,
+                RoleId.Disperser,
                 RoleId.EvilGuesser,
                 RoleId.NiceGuesser,
 				RoleId.Cursed,
@@ -603,7 +604,17 @@ namespace TheOtherRoles.Patches {
 				modifiers.RemoveAll(x => x == RoleId.EvilGuesser);
 				modifiers.RemoveAll(x => x == RoleId.NiceGuesser);
 			}
-			
+
+            if (modifiers.Contains(RoleId.Disperser))
+            {
+                List<PlayerControl> impPlayer = new List<PlayerControl>(playerList); //testing
+                impPlayer.RemoveAll(x => !x.Data.Role.IsImpostor);
+                playerId = setModifierToRandomPlayer((byte)RoleId.Disperser, impPlayer);
+                //   crewPlayer.RemoveAll(x => x.PlayerId == playerId);
+                playerList.RemoveAll(x => x.PlayerId == playerId);
+                modifiers.RemoveAll(x => x == RoleId.Disperser);
+            }
+
             if (modifiers.Contains(RoleId.EvilGuesser)) {
                 List<PlayerControl> impPlayer = new List<PlayerControl>(playerList);
                 impPlayer.RemoveAll(x => !x.Data.Role.IsImpostor);
@@ -698,6 +709,8 @@ namespace TheOtherRoles.Patches {
                     selection = CustomOptionHolder.modifierSlueth.getSelection(); break;
                 case RoleId.Blind:
                     selection = CustomOptionHolder.modifierBlind.getSelection(); break;
+                case RoleId.Disperser:
+                    selection = CustomOptionHolder.modifierDisperser.getSelection(); break;
                 case RoleId.Mini:
                     selection = CustomOptionHolder.modifierMini.getSelection(); break;
                 case RoleId.EvilGuesser:

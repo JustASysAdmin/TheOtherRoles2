@@ -82,7 +82,8 @@ namespace TheOtherRoles
         Crewmate,
         Impostor,
         // Modifier ---
-		Paranoid,
+        Disperser,
+        Paranoid,
         Lover,
         Bait,
         Bloody,
@@ -160,6 +161,7 @@ namespace TheOtherRoles
         ErasePlayerRoles,
         SetFutureErased,
         SetFutureShifted,
+        Disperse,
         SetFutureShielded,
         SetFutureSpelled,
         PlaceNinjaTrace,
@@ -517,6 +519,9 @@ namespace TheOtherRoles
                     break;
                 case RoleId.Sunglasses:
                     Sunglasses.sunglasses.Add(player);
+                    break;
+                case RoleId.Disperser:
+                    Disperser.disperser = player;
                     break;
                 case RoleId.Mini:
                     Mini.mini = player;
@@ -1604,6 +1609,7 @@ namespace TheOtherRoles
                 if (AntiTeleport.antiTeleport.Any(x => x.PlayerId == player.PlayerId)) AntiTeleport.antiTeleport.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (Sunglasses.sunglasses.Any(x => x.PlayerId == player.PlayerId)) Sunglasses.sunglasses.RemoveAll(x => x.PlayerId == player.PlayerId);
                 if (player == Tiebreaker.tiebreaker) Tiebreaker.clearAndReload();
+                if (player == Disperser.disperser) Disperser.clearAndReload();
                 if (player == Mini.mini) Mini.clearAndReload();
                 if (player == Cursed.cursed) Cursed.clearAndReload();
                 if (Vip.vip.Any(x => x.PlayerId == player.PlayerId)) Vip.vip.RemoveAll(x => x.PlayerId == player.PlayerId);
@@ -1806,6 +1812,41 @@ namespace TheOtherRoles
             position.x = BitConverter.ToSingle(buff, 0*sizeof(float));
             position.y = BitConverter.ToSingle(buff, 1*sizeof(float));
             new JackInTheBox(position);
+        }
+
+        public static void disperse()
+        {
+            AntiTeleport.setPosition();
+            Helpers.showFlash(Cleaner.color, 1f);
+            if (AntiTeleport.antiTeleport.FindAll(x => x.PlayerId == CachedPlayer.LocalPlayer.PlayerControl.PlayerId).Count == 0 && !CachedPlayer.LocalPlayer.Data.IsDead)
+            {
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
+                {
+                    if (MapBehaviour.Instance)
+                        MapBehaviour.Instance.Close();
+                    if (Minigame.Instance)
+                        Minigame.Instance.ForceClose();
+                    if (PlayerControl.LocalPlayer.inVent)
+                    {
+                        PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(Vent.currentVent.Id);
+                        PlayerControl.LocalPlayer.MyPhysics.ExitAllVents();
+                    }
+                    CachedPlayer.LocalPlayer.PlayerControl.transform.position = FindVentPoss()[rnd.Next(FindVentPoss().Count)];
+                }
+                Disperser.remainingDisperses--;
+            }
+        }
+
+        public static List<Vector3> FindVentPoss()
+        {
+            var poss = new List<Vector3>();
+            foreach (var vent in DestroyableSingleton<ShipStatus>.Instance.AllVents)
+            {
+                var Transform = vent.transform;
+                var position = Transform.position;
+                poss.Add(new Vector3(position.x, position.y + 0.2f, position.z - 50));
+            }
+            return poss;
         }
 
         public static void lightsOut() {
@@ -2622,6 +2663,9 @@ namespace TheOtherRoles
                     break;
                 case (byte)CustomRPC.SetFutureShifted:
                     RPCProcedure.setFutureShifted(reader.ReadByte());
+                    break;
+                case (byte)CustomRPC.Disperse:
+                    RPCProcedure.disperse();
                     break;
                 case (byte)CustomRPC.SetFutureShielded:
                     RPCProcedure.setFutureShielded(reader.ReadByte());

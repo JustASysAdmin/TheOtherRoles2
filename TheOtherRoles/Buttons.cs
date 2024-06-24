@@ -30,6 +30,7 @@ namespace TheOtherRoles
         private static CustomButton bomber2KillButton;
         private static CustomButton cultistTurnButton;
         private static CustomButton shifterShiftButton;
+        private static CustomButton disperserDisperseButton;
         private static CustomButton morphlingButton;
         private static CustomButton camouflagerButton;
         public static CustomButton portalmakerPlacePortalButton;
@@ -108,6 +109,8 @@ namespace TheOtherRoles
         public static TMPro.TMP_Text portalmakerButtonText1;
         public static TMPro.TMP_Text portalmakerButtonText2;
         public static TMPro.TMP_Text huntedShieldCountText;
+        public static TMPro.TMP_Text disperserChargesText;
+        public static TMPro.TMP_Text minerMineButtonText;
 
         public static void setCustomButtonCooldowns() {
             if (!initialized) {
@@ -127,6 +130,7 @@ namespace TheOtherRoles
             veterenAlertButton.MaxTimer = Veteren.cooldown;
             medicShieldButton.MaxTimer = 0f;
             shifterShiftButton.MaxTimer = 0f;
+            disperserDisperseButton.MaxTimer = 0f;
             morphlingButton.MaxTimer = Morphling.cooldown;
             bomber2BombButton.MaxTimer = Bomber2.cooldown;
             camouflagerButton.MaxTimer = Camouflager.cooldown;
@@ -136,7 +140,8 @@ namespace TheOtherRoles
             hackerButton.MaxTimer = Hacker.cooldown;
             hackerVitalsButton.MaxTimer = Hacker.cooldown;
             hackerAdminTableButton.MaxTimer = Hacker.cooldown;
-			
+            disperserDisperseButton.MaxTimer = Disperser.cooldown;
+
             vampireKillButton.MaxTimer = Vampire.cooldown;
             trackerTrackPlayerButton.MaxTimer = 0f;
             bodyGuardGuardButton.MaxTimer = 0f;
@@ -1294,48 +1299,70 @@ namespace TheOtherRoles
 
 
 
+            //Miner button
             minerMineButton = new CustomButton(
-                () => { /* On Use */ 
+                () =>
+                {
+                    Miner.useNumber--;
+                    /* On Use */
                     minerMineButton.Timer = minerMineButton.MaxTimer;
 
-                    var writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte) CustomRPC.Mine, SendOption.Reliable, -1);
+                    var writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId,
+                        (byte)CustomRPC.Mine, SendOption.Reliable);
                     var pos = CachedPlayer.LocalPlayer.PlayerControl.transform.position;
-                    byte[] buff = new byte[sizeof(float) * 2];
-                    Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0*sizeof(float), sizeof(float));
-                    Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1*sizeof(float), sizeof(float));
-                    
+                    var buff = new byte[sizeof(float) * 2];
+                    Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
+                    Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
+
                     var id = Helpers.getAvailableId();
                     writer.Write(id);
                     writer.Write(CachedPlayer.LocalPlayer.PlayerId);
-                    
-                    
+
+
                     writer.WriteBytesAndSize(buff);
-                    
-                    
+
+
                     writer.Write(0.01f);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.Mine(id, Miner.miner, buff, 0.01f);
                 },
-                () => { /* Can See */ return Miner.miner != null && Miner.miner == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
-                () => {  /* Can Use */ 
-                    var hits = Physics2D.OverlapBoxAll(CachedPlayer.LocalPlayer.PlayerControl.transform.position, Miner.VentSize, 0);
-                    hits = hits.ToArray().Where(c =>(c.name.Contains("Vent") || !c.isTrigger) && c.gameObject.layer != 8 && c.gameObject.layer != 5).ToArray();
-                    return (hits.Count == 0 && CachedPlayer.LocalPlayer.PlayerControl.CanMove);
+                () =>
+                {
+                    /* Can See */
+                    return Miner.miner != null && Miner.miner == CachedPlayer.LocalPlayer.PlayerControl &&
+                           !CachedPlayer.LocalPlayer.Data.IsDead;
                 },
-                () => {  /* On Meeting End */
+                () =>
+                {
+                    /* Can Use */
+                    if (minerMineButtonText != null) minerMineButtonText.text = $"{Miner.useNumber}";
+                    var hits = Physics2D.OverlapBoxAll(CachedPlayer.LocalPlayer.PlayerControl.transform.position,
+                        Miner.VentSize, 0);
+                    hits = hits.ToArray().Where(c =>
+                        (c.name.Contains("Vent") || !c.isTrigger) && c.gameObject.layer != 8 && c.gameObject.layer != 5).ToArray();
+                    return hits.Count == 0 && CachedPlayer.LocalPlayer.PlayerControl.CanMove && Miner.useNumber > 0;
+                },
+                () =>
+                {
+                    /* On Meeting End */
                     minerMineButton.Timer = minerMineButton.MaxTimer;
                 },
                 Miner.getMineButtonSprite(),
-                CustomButton.ButtonPositions.upperRowLeft,
+                CustomButton.ButtonPositions.upperRowLeft, //brb
                 __instance,
-                KeyCode.V,
-                buttonText:"MINE"
+                KeyCode.F,
+                buttonText:"mine"
             );
+            minerMineButtonText = GameObject.Instantiate(minerMineButton.actionButton.cooldownTimerText, minerMineButton.actionButton.cooldownTimerText.transform.parent);
+            minerMineButtonText.text = "";
+            minerMineButtonText.enableWordWrapping = false;
+            minerMineButtonText.transform.localScale = Vector3.one * 0.5f;
+            minerMineButtonText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
 
 
 
-			// Swooper Kill
-			swooperKillButton = new CustomButton(
+            // Swooper Kill
+            swooperKillButton = new CustomButton(
 				() => {
 					if (Helpers.checkAndDoVetKill(Swooper.currentTarget)) return;
 					if (Helpers.checkMuderAttemptAndKill(Swooper.swooper, Swooper.currentTarget) == MurderAttemptResult.SuppressKill) return;
@@ -2686,6 +2713,37 @@ namespace TheOtherRoles
                GameOptionsManager.Instance.currentNormalGameOptions.MapId == 3,
                "ADMIN"
            );
+
+            // Disperser disperse
+            disperserDisperseButton = new CustomButton(
+                () => {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.Disperse, Hazel.SendOption.Reliable, -1);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.disperse();
+                    SoundEffectsManager.play("disperserDisperse");
+
+                    disperserDisperseButton.Timer = disperserDisperseButton.MaxTimer;
+                },
+                () => { return Disperser.disperser != null && Disperser.disperser == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
+                () => {
+                    if (disperserChargesText != null) disperserChargesText.text = $"{Disperser.remainingDisperses}";
+                    return Disperser.remainingDisperses > 0 && CachedPlayer.LocalPlayer.PlayerControl.CanMove;
+                },
+                () => {
+                    if (Disperser.remainingDisperses > 0) disperserDisperseButton.Timer = disperserDisperseButton.MaxTimer;
+                },
+                Disperser.getButtonSprite(),
+                new Vector3(0, 1f, 0),
+                __instance,
+                KeyCode.G,
+                true,
+                buttonText: "DISPERSE"
+            );
+            disperserChargesText = GameObject.Instantiate(disperserDisperseButton.actionButton.cooldownTimerText, disperserDisperseButton.actionButton.cooldownTimerText.transform.parent);
+            disperserChargesText.text = "";
+            disperserChargesText.enableWordWrapping = false;
+            disperserChargesText.transform.localScale = Vector3.one * 0.5f;
+            disperserChargesText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
 
             zoomOutButton = new CustomButton(
                 () => { Helpers.toggleZoom();

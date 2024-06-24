@@ -115,6 +115,7 @@ namespace TheOtherRoles
         public static RoleInfo tunneler  = new RoleInfo("Tunneler", Color.yellow, "Complete your tasks to gain the ability to vent", "Finish work so you can play", RoleId.Tunneler, false, true);
         public static RoleInfo goodGuesser = new RoleInfo("Guesser", Color.yellow, "Guess and shoot", "Guess and shoot", RoleId.NiceGuesser, false, true);
         public static RoleInfo paranoid  = new RoleInfo("Paranoid", Color.yellow, "Watch your six!", "Use your paranoia to your advantage and see through tasks!", RoleId.Paranoid, false, true);
+        public static RoleInfo disperser = new RoleInfo("Disperser", Color.red, "Separate the Crew", "Separate the Crew", RoleId.Disperser, false, true);
         public static RoleInfo badGuesser = new RoleInfo("Guesser", Color.yellow, "Guess and shoot", "Guess and shoot", RoleId.EvilGuesser, false, true);
 
         public static RoleInfo chameleon = new RoleInfo("Chameleon", Color.yellow, "You're hard to see when not moving", "You're hard to see when not moving", RoleId.Chameleon, false, true);
@@ -196,7 +197,8 @@ namespace TheOtherRoles
 			paranoid,
             invert,
             chameleon,
-            shifter
+            shifter,
+            disperser
         };
 
         public static List<RoleInfo> getRoleInfoForPlayer(PlayerControl p, bool showModifier = true, bool onlyMods = false) {
@@ -240,6 +242,7 @@ namespace TheOtherRoles
             if (p == Werewolf.werewolf) infos.Add(werewolf);
             if (p == Prosecutor.prosecutor) infos.Add(prosecutor);
             if (p == Swooper.swooper) infos.Add(swooper);
+            if (p == Disperser.disperser) infos.Add(disperser);
             if (p == Mayor.mayor) infos.Add(mayor);
             if (p == Portalmaker.portalmaker) infos.Add(portalmaker);
             if (p == Engineer.engineer) infos.Add(engineer);

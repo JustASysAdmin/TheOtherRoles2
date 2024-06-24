@@ -35,7 +35,8 @@ namespace TheOtherRoles {
         
         public static CustomOption minerSpawnRate;
 		public static CustomOption minerCooldown;
-		
+        public static CustomOption minerUseNumber;
+
         public static CustomOption mafiaSpawnRate;
         public static CustomOption janitorCooldown;
 
@@ -333,6 +334,10 @@ namespace TheOtherRoles {
         public static CustomOption yoyoSilhouetteVisibility;
 
         public static CustomOption modifiersAreHidden;
+
+        public static CustomOption modifierDisperser;
+        public static CustomOption modifierDisperserCooldown;
+        public static CustomOption modifierDisperserNumberOfUses;
 
         public static CustomOption modifierBait;
         public static CustomOption modifierBaitQuantity;
@@ -662,11 +667,12 @@ namespace TheOtherRoles {
             swooperSpawnRate = CustomOption.Create(1110, Types.Neutral, cs(Swooper.color, "Swooper"), rates, null, true); //jackalSpawnRate);
             swooperAsWell = CustomOption.Create(1113, Types.Neutral, "Spawn as Alternate Jackal", false, swooperSpawnRate);
             swooperCooldown = CustomOption.Create(1111, Types.Neutral, "Swoop Cooldown", 30f, 10f, 60f, 2.5f, swooperSpawnRate);
-            swooperDuration = CustomOption.Create(1112, Types.Neutral, "Swoop Duration", 10f, 1f, 20f, 0.5f, swooperSpawnRate);
+            swooperDuration = CustomOption.Create(1112, Types.Neutral, "Swoop Duration", 10f, 2.5f, 20f, 0.5f, swooperSpawnRate);
             swooperHasImpVision = CustomOption.Create(1114, Types.Neutral, "Swooper Has Impostor Vision", true, swooperSpawnRate);
 			
             minerSpawnRate = CustomOption.Create(1120, Types.Impostor, cs(Miner.color, "Miner"), rates, null, true); //jackalSpawnRate);
             minerCooldown = CustomOption.Create(1121, Types.Impostor, "Mine Cooldown", 25f, 10f, 60f, 2.5f, minerSpawnRate);
+            minerUseNumber = CustomOption.Create(1122, Types.Impostor, "Number Of Uses", 1, 1, 20, 1, minerSpawnRate);
 
             vultureSpawnRate = CustomOption.Create(340, Types.Neutral, cs(Vulture.color, "Vulture"), rates, null, true);
             vultureCooldown = CustomOption.Create(341, Types.Neutral, "Vulture Cooldown", 15f, 10f, 60f, 2.5f, vultureSpawnRate);
@@ -829,6 +835,10 @@ namespace TheOtherRoles {
 
             // Modifier (1000 - 1999)
             modifiersAreHidden = CustomOption.Create(1009, Types.Modifier, cs(Color.yellow, "Hide After Death Modifiers"), true, null, true);
+
+            modifierDisperser = CustomOption.Create(2200, Types.Modifier, cs(Color.red, "Disperser"), rates, null, true);
+            modifierDisperserCooldown = CustomOption.Create(2201, Types.Modifier, "Disperser Cooldown", 30f, 10f, 60f, 2.5f, modifierDisperser);
+            modifierDisperserNumberOfUses = CustomOption.Create(2202, Types.Modifier, "Number Of Uses", 1, 1, 20, 1, modifierDisperser);
 
             modifierParanoid = CustomOption.Create(8831, Types.Modifier, cs(Color.yellow, "Paranoid"), rates, null, true);
 
