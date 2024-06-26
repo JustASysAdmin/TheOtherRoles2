@@ -43,6 +43,7 @@ namespace TheOtherRoles
         Amnisiac,
 		Cursed,
         Medic,
+        Escapist,
         Swapper,
         Seer,
         Morphling,
@@ -471,7 +472,6 @@ namespace TheOtherRoles
                         List<PlayerControl> impostors = PlayerControl.AllPlayerControls.ToArray().ToList().OrderBy(x => Guid.NewGuid()).ToList();
                         impostors.RemoveAll(x => !x.Data.Role.IsImpostor);
                         Helpers.turnToCrewmate(impostors,player);
-
                         break;
                     case RoleId.Thief:
                         Thief.thief = player;
@@ -1021,12 +1021,14 @@ namespace TheOtherRoles
                     break;
 
                 case RoleId.Bomber:
+                    Helpers.turnToImpostor(Amnisiac.amnisiac);
                     if (Amnisiac.resetRole) Bomber.clearAndReload();
                     Bomber.bomber = amnisiac;
                     Amnisiac.clearAndReload();
                     break;
 
                 case RoleId.Yoyo:
+                    Helpers.turnToImpostor(Amnisiac.amnisiac);
                     if (Amnisiac.resetRole) Yoyo.clearAndReload();
                     Yoyo.yoyo = amnisiac;
                     Amnisiac.clearAndReload();
