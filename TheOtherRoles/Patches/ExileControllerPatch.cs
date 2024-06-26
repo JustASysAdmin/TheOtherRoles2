@@ -38,12 +38,11 @@ namespace TheOtherRoles.Patches {
             // Eraser erase
             if (Eraser.eraser != null && AmongUsClient.Instance.AmHost && Eraser.futureErased != null) {  // We need to send the RPC from the host here, to make sure that the order of shifting and erasing is correct (for that reason the futureShifted and futureErased are being synced)
                 foreach (PlayerControl target in Eraser.futureErased) {
-                    if (target != null && target.canBeErased()) {
-                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ErasePlayerRoles, Hazel.SendOption.Reliable, -1);
-                        writer.Write(target.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.erasePlayerRoles(target.PlayerId);
-                    }
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ErasePlayerRoles, Hazel.SendOption.Reliable, -1);
+                    writer.Write(target.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.erasePlayerRoles(target.PlayerId);
+                    Eraser.alreadyErased.Add(target.PlayerId);
                 }
             }
             Eraser.futureErased = new List<PlayerControl>();
@@ -65,15 +64,27 @@ namespace TheOtherRoles.Patches {
                 foreach (PlayerControl target in Witch.futureSpelled) {
                     if (target != null && !target.Data.IsDead && Helpers.checkMuderAttempt(Witch.witch, target, true) == MurderAttemptResult.PerformKill)
                     {
-                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.UncheckedExilePlayer, Hazel.SendOption.Reliable, -1);
-                        writer.Write(target.PlayerId);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.uncheckedExilePlayer(target.PlayerId);
+                        if (exiled != null && Lawyer.lawyer != null && (target == Lawyer.lawyer || target == Lovers.otherLover(Lawyer.lawyer)) && Lawyer.target != null && Lawyer.isProsecutor && Lawyer.target.PlayerId == exiled.PlayerId)
+                            continue;
                         if (target == Lawyer.target && Lawyer.lawyer != null) {
                             MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.LawyerPromotesToPursuer, Hazel.SendOption.Reliable, -1);
                             AmongUsClient.Instance.FinishRpcImmediately(writer2);
                             RPCProcedure.lawyerPromotesToPursuer();
                         }
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.UncheckedExilePlayer, Hazel.SendOption.Reliable, -1);
+                        writer.Write(target.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.uncheckedExilePlayer(target.PlayerId);
+
+                        MessageWriter writer3 = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareGhostInfo, Hazel.SendOption.Reliable, -1);
+                        writer3.Write(CachedPlayer.LocalPlayer.PlayerId);
+                        writer3.Write((byte)RPCProcedure.GhostInfoTypes.DeathReasonAndKiller);
+                        writer3.Write(target.PlayerId);
+                        writer3.Write((byte)DeadPlayer.CustomDeathReason.WitchExile);
+                        writer3.Write(Witch.witch.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer3);
+
+                        GameHistory.overrideDeathReasonAndKiller(target, DeadPlayer.CustomDeathReason.WitchExile, killer: Witch.witch);
                     }
                 }
             }
@@ -91,15 +102,25 @@ namespace TheOtherRoles.Patches {
 
             foreach (Vent vent in MapOptionsTor.ventsToSeal) {
                 PowerTools.SpriteAnim animator = vent.GetComponent<PowerTools.SpriteAnim>(); 
-                animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
-                vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                Sprite newSprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                SpriteRenderer rend = vent.myRend;
+                if (Helpers.isFungle())
+                {
+                    newSprite = SecurityGuard.getFungleVentSealedSprite();
+                    rend = vent.transform.GetChild(3).GetComponent<SpriteRenderer>();
+                    animator = vent.transform.GetChild(3).GetComponent<PowerTools.SpriteAnim>();
+                }
+                animator?.Stop();
+                rend.sprite = newSprite;
                 if (SubmergedCompatibility.IsSubmerged && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
                 if (SubmergedCompatibility.IsSubmerged && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
-                vent.myRend.color = Color.white;
+                rend.color = Color.white;
                 vent.name = "SealedVent_" + vent.name;
             }
             MapOptionsTor.ventsToSeal = new List<Vent>();
+
+            EventUtility.meetingEndsUpdate();
 
             // 1 = reset per turn
             if (MapOptionsTor.restrictDevices == 1)
@@ -128,6 +149,14 @@ namespace TheOtherRoles.Patches {
         // Workaround to add a "postfix" to the destroying of the exile controller (i.e. cutscene) and SpwanInMinigame of submerged
         [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj) {
+            // Nightvision:
+            if (obj != null && obj.name != null && obj.name.Contains("FungleSecurity"))
+            {
+                SurveillanceMinigamePatch.resetNightVision();
+                return;
+            }
+
+            // submerged
             if (!SubmergedCompatibility.IsSubmerged) return;
             if (obj.name.Contains("ExileCutscene")) {
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
@@ -138,17 +167,16 @@ namespace TheOtherRoles.Patches {
         }
 
         static void WrapUpPostfix(GameData.PlayerInfo exiled) {
+            // Prosecutor win condition
+            if (exiled != null && Lawyer.lawyer != null && Lawyer.target != null && Lawyer.isProsecutor && Lawyer.target.PlayerId == exiled.PlayerId && !Lawyer.lawyer.Data.IsDead)
+                Lawyer.triggerProsecutorWin = true;
             // Mini exile lose condition
-            if (exiled != null && Mini.mini != null && Mini.mini.PlayerId == exiled.PlayerId && !Mini.isGrownUp() && !Mini.mini.Data.Role.IsImpostor && !RoleInfo.getRoleInfoForPlayer(Mini.mini).Any(x => x.isNeutral)) {
+            else if (exiled != null && Mini.mini != null && Mini.mini.PlayerId == exiled.PlayerId && !Mini.isGrownUp() && !Mini.mini.Data.Role.IsImpostor && !RoleInfo.getRoleInfoForPlayer(Mini.mini).Any(x => x.isNeutral)) {
                 Mini.triggerMiniLose = true;
             }
             // Jester win condition
             else if (exiled != null && Jester.jester != null && Jester.jester.PlayerId == exiled.PlayerId) {
                 Jester.triggerJesterWin = true;
-            }
-            // Prosecutor win condition
-            else if (exiled != null && Prosecutor.prosecutor != null && Prosecutor.target.PlayerId == exiled.PlayerId && !Prosecutor.prosecutor.Data.IsDead) {
-                Prosecutor.triggerProsecutorWin = true;
             }
 
             // Reset custom button timers where necessary
@@ -229,8 +257,10 @@ namespace TheOtherRoles.Patches {
                     Medium.souls = new List<SpriteRenderer>();
                 }
 
-                if (Medium.featureDeadBodies != null) {
-                    foreach ((DeadPlayer db, Vector3 ps) in Medium.featureDeadBodies) {
+                if (Medium.futureDeadBodies != null)
+                {
+                    foreach ((DeadPlayer db, Vector3 ps) in Medium.futureDeadBodies)
+                    {
                         GameObject s = new GameObject();
                         //s.transform.position = ps;
                         s.transform.position = new Vector3(ps.x, ps.y, ps.y / 1000 - 1f);
@@ -240,8 +270,8 @@ namespace TheOtherRoles.Patches {
                         rend.sprite = Medium.getSoulSprite();
                         Medium.souls.Add(rend);
                     }
-                    Medium.deadBodies = Medium.featureDeadBodies;
-                    Medium.featureDeadBodies = new List<Tuple<DeadPlayer, Vector3>>();
+                    Medium.deadBodies = Medium.futureDeadBodies;
+                    Medium.futureDeadBodies = new List<Tuple<DeadPlayer, Vector3>>();
                 }
             }
 
@@ -421,6 +451,8 @@ namespace TheOtherRoles.Patches {
             FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown / 2 + 2, new Action<float>((p) => {
             if (p == 1f) foreach (Trap trap in Trap.traps) trap.triggerable = true;
             })));
+            if (!Yoyo.markStaysOverMeeting)
+                Silhouette.clearSilhouettes();
         }
     }
 

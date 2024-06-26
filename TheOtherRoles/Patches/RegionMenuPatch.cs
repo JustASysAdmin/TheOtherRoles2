@@ -30,26 +30,31 @@ using System;
 using TheOtherRoles.Utilities;
 using UnityEngine.Events;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch(typeof(RegionMenu), nameof(RegionMenu.Open))]
     public static class RegionMenuOpenPatch
     {
         private static TextBoxTMP ipField;
         private static TextBoxTMP portField;
 
-        public static void Postfix(RegionMenu __instance) {
+        public static void Postfix(RegionMenu __instance)
+        {
             if (!__instance.TryCast<RegionMenu>()) return;
             bool isCustomRegion = FastDestroyableSingleton<ServerManager>.Instance.CurrentRegion.Name == "Custom";
             if (!isCustomRegion)
             {
-                if (ipField != null && ipField.gameObject != null) {
+                if (ipField != null && ipField.gameObject != null)
+                {
                     ipField.gameObject.SetActive(false);
 
                 }
-                if (portField != null && portField.gameObject != null) {
+                if (portField != null && portField.gameObject != null)
+                {
                     portField.gameObject.SetActive(false);
                 }
-            } else
+            }
+            else
             {
                 if (ipField != null && ipField.gameObject != null)
                 {
@@ -63,22 +68,25 @@ namespace TheOtherRoles.Patches {
             }
             var template = FastDestroyableSingleton<JoinGameButton>.Instance;
             var joinGameButtons = GameObject.FindObjectsOfType<JoinGameButton>();
-            foreach (var t in joinGameButtons) {  // The correct button has a background, the other 2 dont
-                if (t.GameIdText != null && t.GameIdText.Background != null) {
+            foreach (var t in joinGameButtons)
+            {  // The correct button has a background, the other 2 dont
+                if (t.GameIdText != null && t.GameIdText.Background != null)
+                {
                     template = t;
                     break;
                 }
             }
             if (template == null || template.GameIdText == null) return;
 
-            if (ipField == null || ipField.gameObject == null) {
+            if (ipField == null || ipField.gameObject == null)
+            {
                 ipField = UnityEngine.Object.Instantiate(template.GameIdText, __instance.transform);
                 ipField.gameObject.name = "IpTextBox";
                 var arrow = ipField.transform.FindChild("arrowEnter");
                 if (arrow == null || arrow.gameObject == null) return;
                 UnityEngine.Object.DestroyImmediate(arrow.gameObject);
 
-                ipField.transform.localPosition = new Vector3(0.225f, -1f, -100f);
+                ipField.transform.localPosition = new Vector3(3.225f, -0.8f, -100f);
                 ipField.characterLimit = 30;
                 ipField.AllowSymbols = true;
                 ipField.ForceUppercase = false;
@@ -88,36 +96,38 @@ namespace TheOtherRoles.Patches {
                     ipField.SetText(TheOtherRolesPlugin.Ip.Value);
                 })));
 
-                ipField.ClearOnFocus = false; 
+                ipField.ClearOnFocus = false;
                 ipField.OnEnter = ipField.OnChange = new Button.ButtonClickedEvent();
                 ipField.OnFocusLost = new Button.ButtonClickedEvent();
                 ipField.OnChange.AddListener((UnityAction)onEnterOrIpChange);
                 ipField.OnFocusLost.AddListener((UnityAction)onFocusLost);
                 ipField.gameObject.SetActive(isCustomRegion);
 
-                void onEnterOrIpChange() {
+                void onEnterOrIpChange()
+                {
                     TheOtherRolesPlugin.Ip.Value = ipField.text;
                 }
 
-                void onFocusLost() {
+                void onFocusLost()
+                {
                     TheOtherRolesPlugin.UpdateRegions();
-                    __instance.ChooseOption(ServerManager.DefaultRegions[ServerManager.DefaultRegions.Length - 1]);
                 }
             }
 
-            if (portField == null || portField.gameObject == null) {
+            if (portField == null || portField.gameObject == null)
+            {
                 portField = UnityEngine.Object.Instantiate(template.GameIdText, __instance.transform);
                 portField.gameObject.name = "PortTextBox";
                 var arrow = portField.transform.FindChild("arrowEnter");
                 if (arrow == null || arrow.gameObject == null) return;
                 UnityEngine.Object.DestroyImmediate(arrow.gameObject);
 
-                portField.transform.localPosition = new Vector3(0.225f, -1.75f, -100f);
+                portField.transform.localPosition = new Vector3(3.225f, -1.55f, -100f);
                 portField.characterLimit = 5;
                 portField.SetText(TheOtherRolesPlugin.Port.Value.ToString());
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) => {
                     portField.outputText.SetText(TheOtherRolesPlugin.Port.Value.ToString());
-                    portField.SetText(TheOtherRolesPlugin.Port.Value.ToString()); 
+                    portField.SetText(TheOtherRolesPlugin.Port.Value.ToString());
                 })));
 
 
@@ -128,21 +138,43 @@ namespace TheOtherRoles.Patches {
                 portField.OnFocusLost.AddListener((UnityAction)onFocusLost);
                 portField.gameObject.SetActive(isCustomRegion);
 
-                void onEnterOrPortFieldChange() {
+                void onEnterOrPortFieldChange()
+                {
                     ushort port = 0;
-                    if (ushort.TryParse(portField.text, out port)) {
+                    if (ushort.TryParse(portField.text, out port))
+                    {
                         TheOtherRolesPlugin.Port.Value = port;
                         portField.outputText.color = Color.white;
-                    } else {
+                    }
+                    else
+                    {
                         portField.outputText.color = Color.red;
                     }
                 }
-                
-                void onFocusLost() {
+
+                void onFocusLost()
+                {
                     TheOtherRolesPlugin.UpdateRegions();
-                    __instance.ChooseOption(ServerManager.DefaultRegions[ServerManager.DefaultRegions.Length - 1]);
                 }
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(RegionMenu), nameof(RegionMenu.ChooseOption))]
+    public static class RegionMenuChooseOptionPatch
+    {
+        public static bool Prefix(RegionMenu __instance, IRegionInfo region)
+        {
+            if (region.Name != "Custom" || FastDestroyableSingleton<ServerManager>.Instance.CurrentRegion.Name == "Custom") return true;
+            DestroyableSingleton<ServerManager>.Instance.SetRegion(region);
+            __instance.RegionText.text = "Custom";
+            foreach (var Button in __instance.ButtonPool.activeChildren)
+            {
+                ServerListButton serverListButton = Button.TryCast<ServerListButton>();
+                if (serverListButton != null) serverListButton.SetSelected(serverListButton.Text.text == "Custom");
+            }
+            __instance.Open();
+            return false;
         }
     }
 }

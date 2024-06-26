@@ -14,7 +14,7 @@ namespace TheOtherRoles.Modules {
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendChat))]
         private static class SendChatPatch {
             static bool Prefix(ChatController __instance) {
-                string text = __instance.TextArea.text;
+                string text = __instance.freeChatField.Text;
                 bool handled = false;
                 if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) {
                     if (text.ToLower().StartsWith("/size ")) { // Unfortunately server holds this - need to do more trickery
@@ -27,7 +27,7 @@ namespace TheOtherRoles.Modules {
                                     if (LobbyLimit != GameOptionsManager.Instance.currentNormalGameOptions.MaxPlayers) {
                                         GameOptionsManager.Instance.currentNormalGameOptions.MaxPlayers = LobbyLimit;
                                         FastDestroyableSingleton<GameStartManager>.Instance.LastPlayerCount = LobbyLimit;
-                                        CachedPlayer.LocalPlayer.PlayerControl.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.currentGameOptions));  // TODO Maybe simpler?? 
+                                        CachedPlayer.LocalPlayer.PlayerControl.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.currentGameOptions, false));  // TODO Maybe simpler?? 
                                         __instance.AddChat(CachedPlayer.LocalPlayer.PlayerControl, $"Lobby Size changed to {LobbyLimit} players");
                                     } else {
                                         __instance.AddChat(CachedPlayer.LocalPlayer.PlayerControl, $"Lobby Size is already {LobbyLimit}");
@@ -37,8 +37,8 @@ namespace TheOtherRoles.Modules {
                         }
                 }
                 if (handled) {
-                    __instance.TextArea.Clear();
-                    __instance.quickChatMenu.ResetGlyphs();
+                    __instance.freeChatField.Clear();
+                    __instance.quickChatMenu.Clear();
                 }
                 return !handled;
             }

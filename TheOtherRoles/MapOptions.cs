@@ -11,7 +11,7 @@ namespace TheOtherRoles{
         public static bool hidePlayerNames = false;
         public static bool ghostsSeeRoles = true;
         public static bool ghostsSeeModifier = true;
-        public static bool ghostsSeeTasks = true;
+        public static bool ghostsSeeInformation = true;
         public static bool ghostsSeeVotes = true;
         public static bool showRoleSummary = true;
         public static bool disableMedscanWalking = false;
@@ -36,6 +36,7 @@ namespace TheOtherRoles{
 
         public static bool enableHorseMode = false;
         public static bool shieldFirstKill = false;
+        public static bool ShowVentsOnMap = true;
         public static CustomGamemodes gameMode = CustomGamemodes.Classic;
 
         // Updating values
@@ -73,7 +74,7 @@ namespace TheOtherRoles{
         public static void reloadPluginOptions() {
             ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value;
             ghostsSeeModifier = TheOtherRolesPlugin.GhostsSeeModifier.Value;
-            ghostsSeeTasks = TheOtherRolesPlugin.GhostsSeeTasks.Value;
+            ghostsSeeInformation = TheOtherRolesPlugin.GhostsSeeInformation.Value;
             ghostsSeeVotes = TheOtherRolesPlugin.GhostsSeeVotes.Value;
             showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value;
             showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value;
@@ -82,6 +83,7 @@ namespace TheOtherRoles{
 
             enableSoundEffects = TheOtherRolesPlugin.EnableSoundEffects.Value;
             enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
+            ShowVentsOnMap = TheOtherRolesPlugin.ShowVentsOnMap.Value;
             //Patches.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }
 
