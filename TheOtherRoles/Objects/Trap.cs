@@ -39,6 +39,7 @@ namespace TheOtherRoles.Objects {
             trapRenderer.sprite = getTrapSprite();
             trap.SetActive(false);
             if (CachedPlayer.LocalPlayer.PlayerId == Trapper.trapper.PlayerId) trap.SetActive(true);
+            trapRenderer.color = Color.white * new Vector4(1, 1, 1, 0.5f);
             this.instanceId = ++instanceCounter;
             traps.Add(this);
             arrow.Update(position);
@@ -46,6 +47,7 @@ namespace TheOtherRoles.Objects {
             FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(5, new Action<float>((x) => {
                 if (x == 1f) {
                     this.triggerable = true;
+                    trapRenderer.color = Color.white;
                 }
             })));
         }
@@ -79,7 +81,7 @@ namespace TheOtherRoles.Objects {
             t.triggerable = false;
             if (playerId == CachedPlayer.LocalPlayer.PlayerId || playerId == Trapper.trapper.PlayerId) {
                 t.trap.SetActive(true);
-                SoundEffectsManager.play("trapperTrap");
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trapperTrap, false, 0.8f);
             }
             player.moveable = false;
             player.NetTransform.Halt();

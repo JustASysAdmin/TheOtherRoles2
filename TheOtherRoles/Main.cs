@@ -21,6 +21,9 @@ using Il2CppSystem.Security.Cryptography;
 using Il2CppSystem.Text;
 using Reactor.Networking.Attributes;
 using AmongUs.Data;
+using TheOtherRoles.Modules.CustomHats;
+using TownOfRoles.Modules;
+using TownOfRoles;
 
 namespace TheOtherRoles
 {
@@ -31,7 +34,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "me.eisbison.theotherroles";
-        public const string VersionString = "5.8.1";
+        public const string VersionString = "5.9.0";
         public static uint betaDays = 0;  // amount of days for the build to be usable (0 for infinite!)
 
         public static Version Version = Version.Parse(VersionString);
@@ -43,7 +46,7 @@ namespace TheOtherRoles
         public static int optionsPage = 2;
 
         public static ConfigEntry<string> DebugMode { get; private set; }
-        public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
+        public static ConfigEntry<bool> GhostsSeeInformation { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeModifier { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes{ get; set; }
@@ -51,6 +54,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> EnableSoundEffects { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
+        public static ConfigEntry<bool> ShowVentsOnMap { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
         public static ConfigEntry<ushort> Port { get; set; }
         public static ConfigEntry<string> ShowPopUpVersion { get; set; }
@@ -67,8 +71,8 @@ namespace TheOtherRoles
         public static void UpdateRegions() {
             ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
             var regions = new IRegionInfo[] {
-                new DnsRegionInfo(Ip.Value, "Custom", StringNames.NoTranslation, Ip.Value, Port.Value, false).CastFast<IRegionInfo>(),
-                new DnsRegionInfo("play.scumscyb.org", "Scoom", StringNames.NoTranslation, "play.scumscyb.org", 22023, false).CastFast<IRegionInfo>()
+                new StaticHttpRegionInfo("Custom", StringNames.NoTranslation, Ip.Value, new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Custom", Ip.Value, Port.Value, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("<color=#00FFFF>FangKuai</color>(<color=#FF44FF>China, Beijing</color>)", StringNames.NoTranslation, "https://player.fangkuai.fun", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("<color=#00FFFF>FangKuai</color>(<color=#FF44FF>China, Beijing</color>)", "https://player.fangkuai.fun", 443, false) })).CastFast<IRegionInfo>()
             };
             IRegionInfo currentRegion = serverManager.CurrentRegion;
             Logger.LogInfo($"Adding {regions.Length} regions");
@@ -90,13 +94,16 @@ namespace TheOtherRoles
         }
 
         public override void Load() {
+            //ModTranslation.Load();
             Logger = Log;
             Instance = this;
+            AssetsLoad.Load();
 
             _ = Helpers.checkBeta(); // Exit if running an expired beta
+            _ = Patches.CredentialsPatch.MOTD.loadMOTDs();
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", "false");
-            GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
+            GhostsSeeInformation = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
             GhostsSeeRoles = Config.Bind("Custom", "Ghosts See Roles", true);
             GhostsSeeModifier = Config.Bind("Custom", "Ghosts See Modifier", true);
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
@@ -107,7 +114,8 @@ namespace TheOtherRoles
             EnableSoundEffects = Config.Bind("Custom", "Enable Sound Effects", true);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            
+            ShowVentsOnMap = Config.Bind("Custom", "Show vent positions on minimap", false);
+
 
             Ip = Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = Config.Bind("Custom", "Custom Server Port", (ushort)22023);
@@ -119,22 +127,22 @@ namespace TheOtherRoles
             Harmony.PatchAll();
             CustomOptionHolder.Load();
             CustomColors.Load();
+            CustomHatManager.LoadHats();
             if (ToggleCursor.Value) {
                 Helpers.enableCursor(true);
             }
+            AddComponent<ModUpdater>();
 
             if (BepInExUpdater.UpdateRequired)
             {
                 AddComponent<BepInExUpdater>();
                 return;
             }
+            EventUtility.Load();
+            MainMenuPatch.addSceneChangeCallbacks();
             SubmergedCompatibility.Initialize();
-            AddComponent<ModUpdateBehaviour>();
-            Modules.MainMenuPatch.addSceneChangeCallbacks();
-        }
-        public static Sprite GetModStamp() {
-            if (ModStamp) return ModStamp;
-            return ModStamp = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ModStamp.png", 150f);
+            _ = RoleInfo.loadReadme();
+            AddToKillDistanceSetting.addKillDistance();
         }
     }
 
@@ -209,5 +217,9 @@ namespace TheOtherRoles
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+    }
+    public static class CustomMain
+    {
+        public static CustomAssets customAssets = new CustomAssets();
     }
 }

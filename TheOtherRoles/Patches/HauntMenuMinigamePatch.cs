@@ -2,6 +2,9 @@
 using AmongUs.GameOptions;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using TheOtherRoles.Players;
+using TheOtherRoles.CustomGameModes;
 
 namespace TheOtherRoles.Patches {
     [HarmonyPatch]
@@ -20,7 +23,7 @@ namespace TheOtherRoles.Patches {
                 return;
             }
             __instance.FilterText.text = roleString;
-            TheOtherRolesPlugin.Logger.LogMessage(roleString);
+            //TheOtherRolesPlugin.Logger.LogMessage(roleString);
             return;
         }
 
@@ -55,6 +58,33 @@ namespace TheOtherRoles.Patches {
 			    }
             }
             return false;
+        }
+        // Moves the haunt menu a bit further down
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(HauntMenuMinigame), nameof(HauntMenuMinigame.FixedUpdate))]
+        public static void UpdatePostfix(HauntMenuMinigame __instance)
+        {
+            if (GameOptionsManager.Instance.currentGameOptions.GameMode != GameModes.Normal) return;
+            if (CachedPlayer.LocalPlayer.Data.Role.IsImpostor && Vampire.vampire != CachedPlayer.LocalPlayer.PlayerControl)
+                __instance.gameObject.transform.localPosition = new UnityEngine.Vector3(-6f, -1.1f, __instance.gameObject.transform.localPosition.z);
+            return;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AbilityButton), nameof(AbilityButton.Update))]
+        public static void showOrHideAbilityButtonPostfix(AbilityButton __instance)
+        {
+            bool isGameMode = GameOptionsManager.Instance.currentGameOptions.GameMode == GameModes.HideNSeek || PropHunt.isPropHuntGM || HideNSeek.isHideNSeekGM;
+            if (CachedPlayer.LocalPlayer.Data.IsDead && (CustomOptionHolder.finishTasksBeforeHauntingOrZoomingOut.getBool() || isGameMode))
+            {
+                // player has haunt button.
+                var (playerCompleted, playerTotal) = TasksHandler.taskInfo(CachedPlayer.LocalPlayer.Data);
+                int numberOfLeftTasks = playerTotal - playerCompleted;
+                if (numberOfLeftTasks <= 0 || isGameMode)
+                    __instance.Show();
+                else
+                    __instance.Hide();
+            }
         }
     }
 }
