@@ -251,8 +251,8 @@ namespace TheOtherRoles {
                 return true;
             } catch (Exception e) {
                 TheOtherRolesPlugin.Logger.LogWarning($"{e}: tried to paste invalid settings!");
-                SoundEffectsManager.Load();
-                SoundEffectsManager.play("fail");
+                //SoundEffectsManager.Load();
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
                 return false;
             }
         }

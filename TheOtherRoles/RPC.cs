@@ -710,8 +710,8 @@ namespace TheOtherRoles
 
         public static void timeMasterRewindTime() {
             TimeMaster.shieldActive = false; // Shield is no longer active when rewinding
-            SoundEffectsManager.stop("timemasterShield");  // Shield sound stopped when rewinding
-            if(TimeMaster.timeMaster != null && TimeMaster.timeMaster == CachedPlayer.LocalPlayer.PlayerControl) {
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);// Shield sound stopped when rewinding
+            if (TimeMaster.timeMaster != null && TimeMaster.timeMaster == CachedPlayer.LocalPlayer.PlayerControl) {
                 resetTimeMasterButton();
             }
             FastDestroyableSingleton<HudManager>.Instance.FullScreen.color = new Color(0f, 0.5f, 0.8f, 0.3f);
@@ -2254,7 +2254,7 @@ namespace TheOtherRoles
 
         public static void huntedRewindTime(byte playerId) {
             Hunted.timeshieldActive.Remove(playerId); // Shield is no longer active when rewinding
-            SoundEffectsManager.stop("timemasterShield");  // Shield sound stopped when rewinding
+            SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);  // Shield sound stopped when rewinding
             if (playerId == CachedPlayer.LocalPlayer.PlayerControl.PlayerId) {
                 resetHuntedRewindButton();
             }
@@ -2314,7 +2314,7 @@ namespace TheOtherRoles
 
         public static void propHuntSetRevealed(byte playerId)
         {
-            SoundEffectsManager.play("morphlingMorph");
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
             PropHunt.isCurrentlyRevealed.Add(playerId, PropHunt.revealDuration);
             PropHunt.timer -= PropHunt.revealPunish;
         }
@@ -2402,7 +2402,7 @@ namespace TheOtherRoles
         {
             try
             {
-                SoundEffectsManager.playAtPosition("bombDefused", Bomber.bomb.bomb.transform.position, range: Bomber.hearRange);
+                Bomb.playAtPositionBomb(CustomMain.customAssets.bombDefused, Bomber.bomb.bomb.transform.position, range: Bomber.hearRange);
             }
             catch { }
             Bomber.clearBomb();

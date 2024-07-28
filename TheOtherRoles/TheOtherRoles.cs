@@ -470,7 +470,7 @@ namespace TheOtherRoles
                 if (playerId == CachedPlayer.LocalPlayer.PlayerId)
                 {
                     HudManagerStartPatch.setAllButtonsHandcuffedStatus(active);
-                    SoundEffectsManager.play("deputyHandcuff");
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.deputyHandcuff, false, 0.8f);
                 }
 
             }
@@ -2273,7 +2273,7 @@ namespace TheOtherRoles
             }
             isPlanted = false;
             isActive = false;
-            if (flag) SoundEffectsManager.stop("bombFuseBurning");
+            if (flag) SoundManager.Instance.StopSound(CustomMain.customAssets.bombFuseBurning);
         }
 
         public static void clearAndReload()

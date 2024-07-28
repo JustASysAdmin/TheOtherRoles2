@@ -929,7 +929,7 @@ namespace TheOtherRoles {
                 writer.Write(killer.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.shieldedMurderAttempt(killer.PlayerId);
-                SoundEffectsManager.play("fail");
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
                 return MurderAttemptResult.SuppressKill;
             }
 

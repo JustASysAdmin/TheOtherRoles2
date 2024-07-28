@@ -137,7 +137,7 @@ namespace TheOtherRoles.Patches {
                 writer.Write(isEnter ? byte.MaxValue : (byte)0);
                 writer.EndMessage();
                 RPCProcedure.useUncheckedVent(__instance.Id, CachedPlayer.LocalPlayer.PlayerId, isEnter ? byte.MaxValue : (byte)0);
-                SoundEffectsManager.play("tricksterUseBoxVent");
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.tricksterUseBoxVent, false, 0.8f);
                 return false;
             }
 

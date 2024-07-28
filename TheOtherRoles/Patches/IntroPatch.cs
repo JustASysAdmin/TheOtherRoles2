@@ -103,7 +103,7 @@ namespace TheOtherRoles.Patches
             }
 
             // Force Reload of SoundEffectHolder
-            SoundEffectsManager.Load();
+            //SoundEffectsManager.Load();
 
             if (CustomOptionHolder.randomGameStartPosition.getBool())
             { //Random spawn on game start

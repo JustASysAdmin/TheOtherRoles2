@@ -64,7 +64,7 @@ namespace TheOtherRoles.Objects {
                 if (x == 1f && this != null) {
                     bomb.SetActive(true);
                     background.SetActive(true);
-                    SoundEffectsManager.playAtPosition("bombFuseBurning", p, Bomber.destructionTime, Bomber.hearRange, true);
+                    playAtPositionBomb(CustomMain.customAssets.bombFuseBurning, p, Bomber.destructionTime, Bomber.hearRange, true);
                     Bomber.isActive = true;
 
                     FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Bomber.destructionTime, new Action<float>((x) => { // can you feel the pain?
@@ -78,6 +78,30 @@ namespace TheOtherRoles.Objects {
             })));
 
         }
+        public static void playAtPositionBomb(AudioClip audioClip, Vector2 position, float maxDuration = 15f, float range = 5f, bool loop = false)
+        {
+            if (!MapOptionsTor.enableSoundEffects || !Constants.ShouldPlaySfx()) return;
+
+            AudioSource source = SoundManager.Instance.PlaySound(audioClip, false, 1f);
+            source.loop = loop;
+            HudManager.Instance.StartCoroutine(Effects.Lerp(maxDuration, new Action<float>((p) => {
+                if (source != null)
+                {
+                    if (p == 1)
+                    {
+                        source.Stop();
+                    }
+                    float distance, volume;
+                    distance = Vector2.Distance(position, Players.CachedPlayer.LocalPlayer.PlayerControl.GetTruePosition());
+                    if (distance < range)
+                        volume = (1f - distance / range);
+                    else
+                        volume = 0f;
+                    source.volume = volume;
+                }
+            })));
+        }
+
         public static void explode(Bomb b) {
             if (b == null) return;
             if (Bomber.bomber != null) {
@@ -94,7 +118,7 @@ namespace TheOtherRoles.Objects {
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     GameHistory.overrideDeathReasonAndKiller(CachedPlayer.LocalPlayer, DeadPlayer.CustomDeathReason.Bomb, killer: Bomber.bomber);
                 }
-                SoundEffectsManager.playAtPosition("bombExplosion", position, range: Bomber.hearRange) ;
+                playAtPositionBomb(CustomMain.customAssets.bombExplosion, position, range: Bomber.hearRange);
             }
             Bomber.clearBomb();
             canDefuse = false;

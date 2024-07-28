@@ -249,7 +249,7 @@ namespace TheOtherRoles.CustomGameModes
                         isCurrentlyRevealed.Remove(pc.PlayerId);
                         revealRenderer.Remove(pc.PlayerId);
                         poolablePlayer.gameObject.SetActive(true);
-                        SoundEffectsManager.play("morphlingMorph");
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
                     }
                 }
             }

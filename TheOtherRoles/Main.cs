@@ -22,6 +22,8 @@ using Il2CppSystem.Text;
 using Reactor.Networking.Attributes;
 using AmongUs.Data;
 using TheOtherRoles.Modules.CustomHats;
+using TownOfRoles.Modules;
+using TownOfRoles;
 
 namespace TheOtherRoles
 {
@@ -95,6 +97,7 @@ namespace TheOtherRoles
             //ModTranslation.Load();
             Logger = Log;
             Instance = this;
+            AssetsLoad.Load();
 
             _ = Helpers.checkBeta(); // Exit if running an expired beta
             _ = Patches.CredentialsPatch.MOTD.loadMOTDs();
@@ -214,5 +217,9 @@ namespace TheOtherRoles
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+    }
+    public static class CustomMain
+    {
+        public static CustomAssets customAssets = new CustomAssets();
     }
 }

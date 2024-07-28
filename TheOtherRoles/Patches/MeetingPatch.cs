@@ -373,7 +373,7 @@ namespace TheOtherRoles.Patches {
                 var mayorPVA = __instance.playerStates.FirstOrDefault(x => x.TargetPlayerId == Mayor.mayor.PlayerId);
                 if (mayorPVA != null && mayorPVA.DidVote)
                 {
-                    SoundEffectsManager.play("fail");
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
                     return;
                 }
             }
@@ -496,7 +496,7 @@ namespace TheOtherRoles.Patches {
                             MessageWriter murderAttemptWriter = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShieldedMurderAttempt, Hazel.SendOption.Reliable, -1);
                             AmongUsClient.Instance.FinishRpcImmediately(murderAttemptWriter);
                             RPCProcedure.shieldedMurderAttempt(0);
-                            SoundEffectsManager.play("fail");
+                            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
                             return;
                         }
                         
@@ -508,7 +508,7 @@ namespace TheOtherRoles.Patches {
                             MessageWriter murderAttemptWriter = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShieldedMurderAttempt, Hazel.SendOption.Reliable, -1);
                             AmongUsClient.Instance.FinishRpcImmediately(murderAttemptWriter);
                             RPCProcedure.shieldedMurderAttempt(0);
-                            SoundEffectsManager.play("fail");
+                            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
                             return;
                         }
 
@@ -823,7 +823,7 @@ namespace TheOtherRoles.Patches {
                 Helpers.toggleZoom(reset: true);
 
                 // Stop all playing sounds
-                SoundEffectsManager.stopAll();
+                SoundManager.Instance.StopAllSound();
 
                 // Close In-Game Settings Display if open
                 HudManagerUpdate.CloseSettings();

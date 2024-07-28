@@ -81,7 +81,7 @@ namespace TheOtherRoles.Objects {
             t.triggerable = false;
             if (playerId == CachedPlayer.LocalPlayer.PlayerId || playerId == Trapper.trapper.PlayerId) {
                 t.trap.SetActive(true);
-                SoundEffectsManager.play("trapperTrap");
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trapperTrap, false, 0.8f);
             }
             player.moveable = false;
             player.NetTransform.Halt();
