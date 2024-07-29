@@ -42,7 +42,7 @@ namespace TheOtherRoles.Modules {
             SpriteRenderer buttonSpriteDiscord = buttonDiscord.transform.FindChild("Inactive").GetComponent<SpriteRenderer>();
 
             passiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
-            passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://discord.gg/77RkMJHWsM")));
+            passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://discord.gg/AFWJVn87Bd")));
 
             Color discordColor = new Color32(88, 101, 242, byte.MaxValue);
             buttonSpriteDiscord.color = textDiscord.color = discordColor;
@@ -86,7 +86,7 @@ namespace TheOtherRoles.Modules {
 Alex2911    amsyarasyiq    MaximeGillot
 Psynomit    probablyadnf    JustASysAdmin
 
-[https://discord.gg/77RkMJHWsM]Discord[] Moderators:
+[https://discord.gg/AFWJVn87Bd]Discord[] Moderators:
 Streamblox    Draco Cordraconis
 Thanks to all our discord helpers!
 
@@ -110,6 +110,7 @@ ExtraRolesAmongUs - Idea for the Engineer and Medic role came from NotHunter101.
 Among-Us-Sheriff-Mod - Idea for the Sheriff role came from Woodi-dev
 TooManyRolesMods - Idea for the Detective and Time Master roles comes from Hardel-DW. Also some code snippets from their implementation were used.
 TownOfUs - Idea for the Swapper, Shifter, Arsonist and a similar Mayor role came from Slushiegoose
+TownOfUs-R - Idea for the Veteran, Disperser, Doomsayer role came from eDonnes124
 Ottomated - Idea for the Morphling, Snitch and Camouflager role came from Ottomated
 Crowded-Mod - Our implementation for 10+ player lobbies was inspired by the one from the Crowded Mod Team
 Goose-Goose-Duck - Idea for the Vulture role came from Slushiegoose
@@ -125,7 +126,7 @@ TheEpicRoles - Idea for the first kill shield (partly) and the tabbed option men
                     ShortTitle = "TOR CE Credits",
                     SubTitle = "",
                     PinState = false,
-                    Date = "06.22.2024",
+                    Date = "07.29.2024",
                     Text = creditsString,
                 };
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>

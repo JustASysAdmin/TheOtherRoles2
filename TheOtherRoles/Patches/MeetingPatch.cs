@@ -429,6 +429,13 @@ namespace TheOtherRoles.Patches {
 
             foreach (RoleInfo roleInfo in RoleInfo.allRoleInfos) {
                 RoleId guesserRole = (Guesser.niceGuesser != null && CachedPlayer.LocalPlayer.PlayerId == Guesser.niceGuesser.PlayerId) ? RoleId.NiceGuesser :  RoleId.EvilGuesser;
+                if (Doomsayer.doomsayer != null && CachedPlayer.LocalPlayer.PlayerId == Doomsayer.doomsayer.PlayerId) guesserRole = RoleId.Doomsayer;
+                switch (guesserRole)
+                {
+                    case RoleId.Doomsayer when !Doomsayer.canGuessImpostor && CachedPlayer.LocalPlayer.PlayerControl.Data.Role.IsImpostor:
+                    case RoleId.Doomsayer when !Doomsayer.canGuessNeutral && roleInfo.isNeutral:
+                        continue;
+                }
                 if (CustomOptionHolder.allowModGuess.getBool() && roleInfo.isModifier) {
                     // Allow Guessing the following mods: Bait, TieBreaker, Bloody, and VIP
                     if (roleInfo.roleId != RoleId.Bait &&
@@ -487,7 +494,7 @@ namespace TheOtherRoles.Patches {
                         buttons.ForEach(x => x.GetComponent<SpriteRenderer>().color = x == selectedButton ? Color.red : Color.white);
                     } else {
                         PlayerControl focusedTarget = Helpers.playerById((byte)__instance.playerStates[buttonTarget].TargetPlayerId);
-                        if (!(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted) || focusedTarget == null || HandleGuesser.remainingShots(CachedPlayer.LocalPlayer.PlayerId) <= 0 ) return;
+                        if (!(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted) || focusedTarget == null || HandleGuesser.remainingShots(CachedPlayer.LocalPlayer.PlayerId) <= 0 || (CachedPlayer.LocalPlayer.PlayerControl == Doomsayer.doomsayer && !Doomsayer.CanShoot)) return;
 
                         if (!HandleGuesser.killsThroughShield && focusedTarget == Medic.shielded) { // Depending on the options, shooting the shielded player will not allow the guess, notifiy everyone about the kill attempt and close the window
                             __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true)); 
@@ -517,6 +524,8 @@ namespace TheOtherRoles.Patches {
                         var modRoleInfo = RoleInfo.getRoleInfoForPlayer(focusedTarget, true, true).FirstOrDefault();
 
                         PlayerControl dyingTarget = (mainRoleInfo == roleInfo || modRoleInfo == roleInfo) ? focusedTarget : CachedPlayer.LocalPlayer.PlayerControl;
+                        if (dyingTarget == CachedPlayer.LocalPlayer.PlayerControl == Doomsayer.doomsayer)
+                            Doomsayer.CanShoot = false;
                         // Reset the GUI
                         __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true));
                         UnityEngine.Object.Destroy(container.gameObject);
@@ -657,6 +666,7 @@ namespace TheOtherRoles.Patches {
             int remainingShots = HandleGuesser.remainingShots(CachedPlayer.LocalPlayer.PlayerId);
 
             if (isGuesser && !CachedPlayer.LocalPlayer.Data.IsDead && remainingShots > 0) {
+                Doomsayer.CanShoot = true;
                 for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
                     if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == CachedPlayer.LocalPlayer.PlayerId) continue;
@@ -675,6 +685,33 @@ namespace TheOtherRoles.Patches {
                 }
             }
         }
+        public static void updateMeetingText(MeetingHud __instance)
+        {
+            if (PlayerControl.LocalPlayer.Data.IsDead) return;
+
+            if (MeetingHud.Instance.state is
+                not MeetingHud.VoteStates.Voted and
+                not MeetingHud.VoteStates.NotVoted and
+                not MeetingHud.VoteStates.Discussion) return;
+            var meetingInfoText = "";
+            int numGuesses = HandleGuesser.isGuesser(CachedPlayer.LocalPlayer.PlayerControl.PlayerId)
+                && CachedPlayer.LocalPlayer.PlayerControl != Doomsayer.doomsayer
+                ? HandleGuesser.remainingShots(CachedPlayer.LocalPlayer.PlayerControl.PlayerId) : 0;
+            if (numGuesses > 0)
+            {
+                meetingInfoText = string.Format($"Guesses Left: {0}", numGuesses);
+            }
+
+            if (CachedPlayer.LocalPlayer.PlayerControl == Doomsayer.doomsayer)
+            {
+                meetingInfoText = string.Format($"Need Guess {0} To Win", Doomsayer.killToWin - Doomsayer.killedToWin);
+            }
+
+            if (meetingInfoText == "") return;
+
+            __instance.TimerText.text = $"{meetingInfoText}\n" + __instance.TimerText.text;
+        }
+
 
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.ServerStart))]
         class MeetingServerStartPatch {
@@ -845,6 +882,8 @@ namespace TheOtherRoles.Patches {
                     // Remove first kill shield
                     MapOptionsTor.firstKillPlayer = null;
                 }
+
+                updateMeetingText(__instance);
 
                 if (Blackmailer.blackmailer != null && Blackmailer.blackmailed != null)
                 {

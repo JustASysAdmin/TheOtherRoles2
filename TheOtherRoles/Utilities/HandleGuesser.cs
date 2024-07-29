@@ -19,9 +19,11 @@ namespace TheOtherRoles.Utilities {
             return targetSprite;
         }
 
-        public static bool isGuesser(byte playerId) {
-            if (isGuesserGm) return GuesserGM.isGuesser(playerId);
-            return Guesser.isGuesser(playerId);
+        public static bool isGuesser(byte playerId)
+        {
+            if (Doomsayer.doomsayer != null && Doomsayer.doomsayer.PlayerId == playerId) return true;
+
+            return isGuesserGm ? GuesserGM.isGuesser(playerId) : Guesser.isGuesser(playerId);
         }
 
         public static void clear(byte playerId) {
@@ -29,9 +31,11 @@ namespace TheOtherRoles.Utilities {
             else Guesser.clear(playerId);
         }
 
-        public static int remainingShots(byte playerId, bool shoot = false) {
-            if (isGuesserGm) return GuesserGM.remainingShots(playerId, shoot);
-            return Guesser.remainingShots(playerId, shoot);
+        public static int remainingShots(byte playerId, bool shoot = false)
+        {
+            if (Doomsayer.doomsayer != null && Doomsayer.doomsayer.PlayerId == playerId) return 15;
+
+            return isGuesserGm ? GuesserGM.remainingShots(playerId, shoot) : Guesser.remainingShots(playerId, shoot);
         }
 
         public static void clearAndReload() {

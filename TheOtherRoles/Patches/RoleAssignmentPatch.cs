@@ -137,6 +137,7 @@ namespace TheOtherRoles.Patches {
             neutralSettings.Add((byte)RoleId.Amnisiac, CustomOptionHolder.amnisiacSpawnRate.getSelection());
             neutralSettings.Add((byte)RoleId.Arsonist, CustomOptionHolder.arsonistSpawnRate.getSelection());
             neutralSettings.Add((byte)RoleId.Jackal, CustomOptionHolder.jackalSpawnRate.getSelection());
+            neutralSettings.Add((byte)RoleId.Doomsayer, CustomOptionHolder.doomsayerSpawnRate.getSelection());
             // Don't assign Swooper unless Both option is on
             if (!CustomOptionHolder.swooperAsWell.getBool()) 
                 neutralSettings.Add((byte)RoleId.Swooper, CustomOptionHolder.swooperSpawnRate.getSelection());
@@ -473,8 +474,10 @@ namespace TheOtherRoles.Patches {
                 byte firstLoverId;
                 List<PlayerControl> impPlayer = new List<PlayerControl>(players);
                 List<PlayerControl> crewPlayer = new List<PlayerControl>(players);
+                var neutralPlayer = PlayerControl.AllPlayerControls.ToArray().ToList().OrderBy(x => Guid.NewGuid()).ToList();
                 impPlayer.RemoveAll(x => !x.Data.Role.IsImpostor);
                 crewPlayer.RemoveAll(x => x.Data.Role.IsImpostor || x == Lawyer.lawyer);
+                neutralPlayer.RemoveAll(x => !Helpers.isNeutral(x) || x == Doomsayer.doomsayer);
 
                 if (isEvilLover) firstLoverId = setModifierToRandomPlayer((byte)RoleId.Lover, impPlayer);
                 else firstLoverId = setModifierToRandomPlayer((byte)RoleId.Lover, crewPlayer);

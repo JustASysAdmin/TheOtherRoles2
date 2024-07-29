@@ -163,7 +163,12 @@ namespace TheOtherRoles.Patches {
             Medic.currentTarget = setTarget();
             if (!Medic.usedShield) setPlayerOutline(Medic.currentTarget, Medic.shieldedColor);
         }
-        
+        static void doomsayerSetTarget()
+        {
+            if (Doomsayer.doomsayer == null || Doomsayer.doomsayer != CachedPlayer.LocalPlayer.PlayerControl) return;
+            Doomsayer.currentTarget = setTarget();
+        }
+
         static void bomber2SetTarget() {
             setBomber2BombTarget();
             if (Bomber2.bomber == null || Bomber2.bomber != CachedPlayer.LocalPlayer.PlayerControl) return;
@@ -1244,22 +1249,21 @@ namespace TheOtherRoles.Patches {
                 // BountyHunter
                 bountyHunterUpdate();
                 // Arsonist
-		arsonistUpdate();
-		// Vulture
+                arsonistUpdate();
+                // Vulture
                 vultureUpdate();
-                
                 //Cultist
                 cultistSetFollower();
-		// Amnisiac
-		amnisiacUpdate();
+                // Amnisiac
+                amnisiacUpdate();
                 // Medium
                 mediumSetTarget();
                 // Morphling and Camouflager
                 morphlingAndCamouflagerUpdate();
                 // Lawyer
                 lawyerUpdate();
-		// Prosecutor
-		prosecutorCheckPromotion();
+                // Prosecutor
+                prosecutorCheckPromotion();
                 // Pursuer
                 pursuerSetTarget();
                 // Blackmailer
@@ -1270,7 +1274,7 @@ namespace TheOtherRoles.Patches {
                 ninjaSetTarget();
                 NinjaTrace.UpdateAll();
                 ninjaUpdate();
-				swooperUpdate();
+                swooperUpdate();
                 // Thief
                 thiefSetTarget();
                 hackerUpdate();
@@ -1281,6 +1285,8 @@ namespace TheOtherRoles.Patches {
                 trapperUpdate();
                 // yoyo
                 Silhouette.UpdateAll();
+                //Doomsayer
+                doomsayerSetTarget();
 
                 // -- MODIFIER--
                 // Bait

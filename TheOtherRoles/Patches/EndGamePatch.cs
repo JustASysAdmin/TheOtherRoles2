@@ -473,6 +473,7 @@ namespace TheOtherRoles.Patches {
             if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
                 return true;
             var statistics = new PlayerStatistics(__instance);
+            if (CheckAndEndGameForDoomsayerWin(__instance)) return false;
             if (CheckAndEndGameForMiniLose(__instance)) return false;
             if (CheckAndEndGameForJesterWin(__instance)) return false;
             if (CheckAndEndGameForProsecutorWin(__instance)) return false;
@@ -486,6 +487,15 @@ namespace TheOtherRoles.Patches {
 			if (CheckAndEndGameForSwooperWin(__instance, statistics)) return false;
             if (CheckAndEndGameForImpostorWin(__instance, statistics)) return false;
             if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return false;
+            return false;
+        }
+        private static bool CheckAndEndGameForDoomsayerWin(ShipStatus __instance)
+        {
+            if (Doomsayer.triggerDoomsayerrWin)
+            {
+                GameManager.Instance.RpcEndGame((GameOverReason)CustomGameOverReason.DoomsayerWin, false);
+                return true;
+            }
             return false;
         }
 

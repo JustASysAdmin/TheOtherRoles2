@@ -953,8 +953,8 @@ namespace TheOtherRoles
                     break;
 
                 case RoleId.Doomsayer:
+                    if (Amnisiac.resetRole) Doomsayer.clearAndReload();
                     Doomsayer.doomsayer = amnisiac;
-                    Doomsayer.doomsayer.Add(target);
                     Amnisiac.clearAndReload();
                     break;
 

@@ -4,7 +4,7 @@ using Sentry.Internal.Extensions;
 using TheOtherRoles;
 using Reactor.Utilities.Extensions;
 
-namespace TownOfRoles.Modules
+namespace TheOtherRoles.Modules
 {
     public static class AssetsLoad
     {

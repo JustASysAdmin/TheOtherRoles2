@@ -22,8 +22,6 @@ using Il2CppSystem.Text;
 using Reactor.Networking.Attributes;
 using AmongUs.Data;
 using TheOtherRoles.Modules.CustomHats;
-using TownOfRoles.Modules;
-using TownOfRoles;
 
 namespace TheOtherRoles
 {

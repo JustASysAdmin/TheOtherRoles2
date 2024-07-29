@@ -14,25 +14,25 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 The **The Other Roles CE**, is a mod for [Among Us](https://store.steampowered.com/app/945360/Among_Us) which adds many new roles, new [Settings](#settings) and new [Custom Hats](#custom-hats) to the game.
 Even more roles are coming soon. :)
 
-| Impostors | Crewmates | Neutral | Modifier |
+| Impostor | Crewmate | Neutral | Modifier | Gamemode |
 |----------|-------------|-----------------|----------------|
-| [Godfather (Mafia)](#mafia) | [Shifter](#shifter) | [Jester](#jester) | [Bloody](#bloody) |
-| [Mafioso (Mafia)](#mafia) | [Mayor](#mayor) | [Arsonist](#arsonist) | [Anti Teleport](#anti-teleport) |
-| [Janitor (Mafia)](#mafia) | [Engineer](#engineer) | [Jackal](#jackal) | [Tie Breaker](#tie-breaker) |
-| [Morphling](#morphling) | [Sheriff](#sheriff) | [Sidekick](#sidekick) | [Bait](#bait) |
-| [Camouflager](#camouflager) | [Deputy](#deputy) | [Vulture](#vulture) | [Lovers](#lovers) |
+| [Godfather (Mafia)](#mafia) | [Shifter](#shifter) | [Jester](#jester) | [Bloody](#bloody) | [Classic](#roles) |
+| [Mafioso (Mafia)](#mafia) | [Mayor](#mayor) | [Arsonist](#arsonist) | [Anti Teleport](#anti-teleport) | [Guesser Modifier](#guesser-modifier) |
+| [Janitor (Mafia)](#mafia) | [Engineer](#engineer) | [Jackal](#jackal) | [Tie Breaker](#tie-breaker) | [Hide 'n' Seek](#hide-n-seek) |
+| [Morphling](#morphling) | [Sheriff](#sheriff) | [Sidekick](#sidekick) | [Bait](#bait) | [Vanilla Hide 'n' Seek](https://www.innersloth.com/new-game-mode-hide-n-seek-is-here-emergency-meeting-35/) |
+| [Camouflager](#camouflager) | [Deputy](#deputy) | [Vulture](#vulture) | [Lovers](#lovers) | [PropHunt](#prophunt) |
 | [Vampire](#vampire) | [Lighter](#lighter) | [Lawyer](#lawyer) | [Sunglasses](#sunglasses) |
 | [Eraser](#eraser) | [Detective](#detective) | [Executioner](#executioner) | [Mini](#mini) |
 | [Trickster](#trickster) | [Time Master](#time-master) | [Amnesiac](#amnesiac) | [VIP](#vip) |
 | [Cleaner](#cleaner) | [Medic](#medic) | [Swooper](#swooper) | [Invert](#invert) |
-| [Warlock](#warlock) | [Swapper](#swapper) | | [Fanatic](#fanatic)
-| [Bounty Hunter](#bounty-hunter) | [Seer](#seer) |  | [Tunneler](#tunneler)
-| [Witch](#witch) | [Hacker](#hacker) |  |   [Guesser](#guesser)
-| [Ninja](#ninja) | [Tracker](#tracker) |  |  [Indomitable](#indomitable)
-| [Miner](#miner) | [Snitch](#snitch) |  |  [Blind](#blind)
-| [Blackmailer](#blackmailer) | [Spy](#spy) |  |  [Slueth](#slueth)
-|  | [Portalmaker](#portalmaker) |  |  |
-|  | [Security Guard](#security-guard) |  |  |
+| [Warlock](#warlock) | [Swapper](#swapper) | [Doomsayer](#doomsayer) | [Fanatic](#fanatic) |
+| [Bounty Hunter](#bounty-hunter) | [Seer](#seer) |  | [Tunneler](#tunneler) |
+| [Witch](#witch) | [Hacker](#hacker) |  |   [Guesser](#guesser) |
+| [Ninja](#ninja) | [Tracker](#tracker) |  |  [Indomitable](#indomitable) |
+| [Miner](#miner) | [Snitch](#snitch) |  |  [Blind](#blind) |
+| [Blackmailer](#blackmailer) | [Spy](#spy) |  |  [Slueth](#slueth) |
+| [Bomber2](#bomber) | [Portalmaker](#portalmaker) |  | [Disperser](#disperser) |
+| [Yo-Yo](#yoyo) | [Security Guard](#security-guard) |  |  |
 |  | [Medium](#medium) |  |  |
 | | [Body Guard](#bodyguard)
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
@@ -1005,6 +1005,58 @@ Depending on the options, the Guesser can't guess the shielded player and depend
 
 -----------------------
 
+## Bomber
+### **Team: Impostors**
+The Bomber is an Impostor who has the ability to be very explosive. They have the ability to plant bombs to spread grouping Crewmates and also kill them.\
+The Bomber also has the ability to perform a normal kill like all Impostors.\
+The plant time of the bomb can be different to the kill cooldown depending on the settings.\
+Crewmates can defuse a bomb depending on the settings.
+
+**NOTE:**
+- The bomb won't kill a shielded player (Medic, First Kill Shield)
+- The bomb won't kill a Mini until it's grown up
+- The bomb can kill the bomber as well as their teammate(s)
+- The hearing range can be higher/lower than the actual destruction range, depending on the settings, and has a visual indicator
+- The visual indicator slowly fades into red until the bomb explodes and it does not show the explosion range (only hearing range)!
+- The bomb can be defused by standing on it and snipping the fuse (button)
+
+### Game Options
+| Name | Description |
+|----------|:-------------:|
+| Bomber Spawn Chance | -
+| Bomb Destruction Time | -
+| Bomb Destruction Range | -
+| Bomb Hear Range | -
+| Bomb Defuse Duration | -
+| Bomb Cooldown | -
+| Bomb Is Active After |
+-----------------------
+
+## YoYo
+### **Team: Impostors**
+The Yo-Yo is an Impostor who has the ability mark a position and later blink (teleport) to this position.\
+After the initial blink, the Yo-Yo has a fixed amount of time (option) to do whatever they want, before automatically blinking back to the starting point of the first blink.\
+Each blink leaves behind a silhouette with configurable transparency. The silhouette is very hard to see.\
+The Yo-Yo may also have access to a mobile admin table, depending on the settings.
+
+**NOTE:**
+
+- The marked position for the first jump's target is displayed to the Yo-Yo and ghosts only.
+- The silhouette of the first blink stays (almost) until the Yo-Yo returns
+- The silhouette of the second blink (return) stays for 5 seconds
+
+### Game Options
+| Name | Description |
+|----------|:-------------:|
+| Yo-Yo Spawn Chance | -
+| Blink Duration | -
+| Mark Location Cooldown | -
+| Marked Location Stays After Meeting | -
+| Has Admin Table | -
+| Admin Table Cooldown | -
+| Silhouette Visibility | -
+-----------------------
+
 ## Jester
 ### **Team: Neutral**
 The Jester does not have any tasks. They win the game as a solo, if they get voted out during a meeting.
@@ -1199,6 +1251,24 @@ The Swooper uses the [Jackal](#jackal) kill cooldown.
 
 -----------------------
 
+## Doomsayer
+### **Team: Neutral**
+The Doomsayer is a Neutral role with its own win condition.\
+Their goal is to assassinate a certain number of players.\
+Once done so they win the game.\
+They have an additional observe ability that hints towards certain player's roles.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Doomsayer | The percentage probability of the Doomsayer appearing | Percentage | 0% |
+| Observe Cooldown | The Cooldown of the Doomsayer's Observe button | Time | 25s |
+| Can Continue  | Doommayer can continue guessing after guess | Toggle | False |
+| Doomsayer Can Guess  | Doomsayer can Guess | Option | Impostor Roles or Neutral Roles |
+| Obtain Roles |Obtain the opened roles| Toggle | False |
+| Number Of Doomsayer Kills To Win | The amount of kills in order for the Doomsayer to win | Number | 3 |
+| Obtain Roles | Obtain Roles Number | Time | 15 |
+
+-----------------------
 -----------------------
 
 ## Shifter
@@ -3611,7 +3681,23 @@ can only use them, if the previous player did not use them before)
 | Shifter Spawn Chance | -
 -----------------------
 
+## Disperser
+### **Applied to: Impostors**
+The Disperser is an Impostor who has a 1 time use ability to send all players to a random vent.\
+This includes miner vents.\
+Does not appear on Airship or Submerged.
+### Game Options
+| Name | Description | Type | Default |
+|----------|:-------------:|:------:|:------:|
+| Disperser | The percentage probability of the Disperser appearing | Percentage | 0% |
+| Cooldown | Disperser Cooldown | TIme | 60s |
+
+-----------------------
+
 # Gamemodes
+Gamemodes can be switched when creating a lobby or inside the lobby by using a command in the chat:
+`/gm <gamemode>`. Use the following gamemodes: `guess` or `gm`,`prophunt` or `ph`, `hidenseek` or `hns`. If `/gm` is used without argument or the argument can't be parsed, the lobby will switch to classic mode.
+
 
 ## Guesser Modifier
 The **Guesser-Gamemode** is an extension to the Classic-Gamemode and gives you a multitude of new options for Guessers.\
@@ -3627,6 +3713,8 @@ Players can additionally have a modifier, if enabled (e.g. Medic Guesser Mini).
 | Number of Neutral Guessers | -
 | Number of Impostor Guessers | -
 | Force Jackal Guesser | If set to "On", the first neutral role who will be Guesser is the Jackal. 
+| Sidekick Is Always Guesser | The converted sidekick will become a guesser | -
+| Force Thief Guesser | If set to "On", the first (or second if Force Jackal Guesser) neutral role who will be Guesser is the Thief.
 | Guessers Can Have A Modifier | -
 | Guesser Number Of Shots | -
 | Guesser Can Shoot Multiple Times Per Meeting | -
@@ -3669,14 +3757,57 @@ Each Hunter action or finished Crew task will lower the timer by a configurable 
 | Kill Cooldown | -                      | Hunter Light Vision | -                    | Hunted Rewind Time | -
 | Hunter Vision | -                      | Hunter Light Punish in Sec | -             | Hunted Shield Number | -
 | Hunted Vision | -                      | Hunter Admin Cooldown | -
-| Common Tasks | -                       | Hunter Admin Duration | -
-| Short Tasks | -                        | Hunter Admin Punish In Sec | -
-| Long Tasks | -                         | Hunter Arrow Cooldown | -
-| Timer In Min | -                       | Hunter Arrow Duration | -
+|  | -                       | Hunter Admin Duration | -
+|  | -                        | Hunter Admin Punish In Sec | -
+|  | -                         | Hunter Arrow Cooldown | -
+|  | -                       | Hunter Arrow Duration | -
 | Task Win Is Possible | -               | Hunter Arrow Punish In Sec | -
 | Finish Tasks Punish In Sec | -
 | Enable Sabotages | -
 | Time The Hunter Needs To Wait | -
+
+## PropHunt
+The **Prop-Gamemode** is a standalone Gamemode where Hunters have to find the disguised players ("Props").\
+The Hunters and Props who are still alive are displayed to everyone in the bottom left corner (similar to the Arsonist display).\
+When the game starts, the Hunter's movement is disabled for x-seconds (depends on the settings), and their screen is blacked out.\
+There is a time-limit for each round, if the timer runs out and at least one Prop is still alive, the remaining Props win.\
+If the Hunters kill all players before the timer runs out the Hunters win.\
+When a Prop dies, they will either join the Hunter team or die (setting).
+
+#### Shared Abilities:
+- Unstuck: By pressing this button, you can travel through walls for a short time. This is needed, because props sometimes get stuck in walls, due to their changed colliders. Don't use it to cheat!
+
+#### Hunter Abilities:
+- Reveal: A random players current prop is revealed to all players for x seconds (according to settings). The timer will be reduced by *punish* s.
+- Mobile Admin table (like Hacker) - Normal Admin table shares the cooldown
+- Find: Display the DangerMeter known from Vanilla HideNSeek for x seconds. The dangerlevel is rising the closer the Hunter gets to the neares prop.  
+#### Prop Abilities:
+- Invisibility: As a disguised Prop, become invisible for x seconds.
+- Speedboost: Move faster for x seconds.
+- Disguise: While near a usable object, press the button to disguise as the displayed object!
+
+**NOTE:**
+- The Report button lights up, but cannot be pressed.
+- Hunters can vent
+- The Kill Button and Vent Button are permanently enabled, so that you cannot use them to check if there is a prop nearby
+- The Kill Button can always be pressed, but you can also miss if no Prop is nearby. The cooldown can be configured for hits and misses seperately.
+- Usable prop objects are: All task consoles as well as many objects (rocks, snowpeople, barriers, beds, tables, ...)
+- Any object on **LevelImposter** maps, that contains `liprop` in its name and has a `SpriteRenderer` (+ Sprite) will be usable as a prop too!
+
+
+### Game Options
+| General | Description | Hunter | Description | Hunted | Description |
+|----------|:-------------:|----------|:-------------:|----------|:-------------:|
+| Map | -                     | Number of Hunters | -                  | Props Become Hunters When Found | -
+| Timer in Min | -            | Initial Blackout Duration | -          | Invisibility Enabled | -
+| Unstuck Cooldown | -        | Kill Cooldown After Miss | -           | Invisibility Cooldown | -
+| Unstuck Duration | -        | Kill Cooldown After Hit | -            | Invisibility Duration | -
+| Hunter Vision | -           | Reveal Prop Cooldown | -               | Speedboost Enabled | -
+| Prop Vision | -             | Reveal Prop Duration | -               | Speedboost Cooldown | -
+|  | -             | Reveal Time Punish | deducted from rem. timer | Speedboost Duration | - 
+|  | -                         |  Hunter Admin Cooldown | - | Speedboost Ratio | Factor with which speed is multiplied 
+|  | -                       | Find Cooldown | -
+|  | -               | Find Duration | -
 
 # Source code
 You can use parts of the code but don't copy paste the whole thing. Make sure you give credits to the other developers, because some parts of the code are based on theirs.

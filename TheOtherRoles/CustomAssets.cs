@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TownOfRoles;
+namespace TheOtherRoles;
 public class CustomAssets
 {
     public AudioClip lobbyMusic;
