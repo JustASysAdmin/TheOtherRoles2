@@ -6,10 +6,12 @@ using static TheOtherRoles.TheOtherRoles;
 using UnityEngine;
 using TheOtherRoles.Utilities;
 using TheOtherRoles.CustomGameModes;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace TheOtherRoles
 {
-    class RoleInfo {
+    public class RoleInfo {
         public Color color;
         public string name;
         public string introDescription;
@@ -19,7 +21,7 @@ namespace TheOtherRoles
 		public bool isGuessable;
         public bool isModifier;
 
-        RoleInfo(string name, Color color, string introDescription, string shortDescription, RoleId roleId, bool isNeutral = false, bool isModifier = false, bool isGuessable = false) {
+        public RoleInfo(string name, Color color, string introDescription, string shortDescription, RoleId roleId, bool isNeutral = false, bool isModifier = false, bool isGuessable = false) {
             this.color = color;
             this.name = name;
             this.introDescription = introDescription;
@@ -46,8 +48,10 @@ namespace TheOtherRoles
         public static RoleInfo mafioso = new RoleInfo("Mafioso", Mafioso.color, "Work with the <color=#FF1919FF>Mafia</color> to kill the Crewmates", "Kill all Crewmates", RoleId.Mafioso);
         public static RoleInfo janitor = new RoleInfo("Janitor", Janitor.color, "Work with the <color=#FF1919FF>Mafia</color> by hiding dead bodies", "Hide dead bodies", RoleId.Janitor);
         public static RoleInfo morphling = new RoleInfo("Morphling", Morphling.color, "Change your look to not get caught", "Change your look", RoleId.Morphling);
-        public static RoleInfo bomber = new RoleInfo("Bomber", Bomber.color, "Give bombs to players", "Bomb Everyone", RoleId.Bomber);
-		public static RoleInfo poucher = new RoleInfo("Poucher", Poucher.color, "Keep info on the players you kill", "Investigate the kills", RoleId.Poucher);
+        public static RoleInfo bomber2 = new RoleInfo("Bomber", Bomber2.color, "Give bombs to players", "Bomb Everyone", RoleId.Bomber2);
+        public static RoleInfo bomber = new RoleInfo("Bomber", Bomber.color, "Bomb all Crewmates", "Bomb all Crewmates", RoleId.Bomber);
+        public static RoleInfo yoyo = new RoleInfo("Yo-Yo", Yoyo.color, "Blink to a marked location and Back", "Blink to a location", RoleId.Yoyo);
+        public static RoleInfo poucher = new RoleInfo("Poucher", Poucher.color, "Keep info on the players you kill", "Investigate the kills", RoleId.Poucher);
 		public static RoleInfo mimic = new RoleInfo("Mimic", Mimic.color, "Pose as a crewmate by killing one", "Pose as a crewmate", RoleId.Mimic);
         public static RoleInfo camouflager = new RoleInfo("Camouflager", Camouflager.color, "Camouflage and kill the Crewmates", "Hide among others", RoleId.Camouflager);
         public static RoleInfo miner = new RoleInfo("Miner", Miner.color, "Make new Vents", "Create Vents", RoleId.Miner);
@@ -86,9 +90,12 @@ namespace TheOtherRoles
         public static RoleInfo ninja = new RoleInfo("Ninja", Ninja.color, "Surprise and assassinate your foes", "Surprise and assassinate your foes", RoleId.Ninja);
         public static RoleInfo blackmailer = new RoleInfo("Blackmailer", Blackmailer.color, "Blackmail those who seek to hurt you", "Blackmail those who seek to hurt you", RoleId.Blackmailer);
         public static RoleInfo thief = new RoleInfo("Thief", Thief.color, "Steal a killers role by killing them", "Steal a killers role", RoleId.Thief, true);
+        public static RoleInfo doomsayer = new RoleInfo("Doomsayer", Doomsayer.color, "Guess People's Roles To Win!", "Win by guessing player's roles", RoleId.Doomsayer, true);
 
         public static RoleInfo hunter = new RoleInfo("Hunter", Palette.ImpostorRed, Helpers.cs(Palette.ImpostorRed, "Seek and kill everyone"), "Seek and kill everyone", RoleId.Impostor);
         public static RoleInfo hunted = new RoleInfo("Hunted", Color.white, "Hide", "Hide", RoleId.Crewmate);
+
+        public static RoleInfo prop = new RoleInfo("Prop", Color.white, "Disguise As An Object and Survive", "Disguise As An Object", RoleId.Crewmate);
 
 
 
@@ -109,6 +116,7 @@ namespace TheOtherRoles
         public static RoleInfo tunneler  = new RoleInfo("Tunneler", Color.yellow, "Complete your tasks to gain the ability to vent", "Finish work so you can play", RoleId.Tunneler, false, true);
         public static RoleInfo goodGuesser = new RoleInfo("Guesser", Color.yellow, "Guess and shoot", "Guess and shoot", RoleId.NiceGuesser, false, true);
         public static RoleInfo paranoid  = new RoleInfo("Paranoid", Color.yellow, "Watch your six!", "Use your paranoia to your advantage and see through tasks!", RoleId.Paranoid, false, true);
+        public static RoleInfo disperser = new RoleInfo("Disperser", Color.red, "Separate the Crew", "Separate the Crew", RoleId.Disperser, false, true);
         public static RoleInfo badGuesser = new RoleInfo("Guesser", Color.yellow, "Guess and shoot", "Guess and shoot", RoleId.EvilGuesser, false, true);
 
         public static RoleInfo chameleon = new RoleInfo("Chameleon", Color.yellow, "You're hard to see when not moving", "You're hard to see when not moving", RoleId.Chameleon, false, true);
@@ -122,6 +130,7 @@ namespace TheOtherRoles
             janitor,
             morphling,
             bomber,
+            yoyo,
             camouflager,
             vampire,
             eraser,
@@ -134,6 +143,7 @@ namespace TheOtherRoles
             bountyHunter,
             witch,
             ninja,
+            bomber,
             bodyguard,
             blackmailer,
             miner,
@@ -188,8 +198,10 @@ namespace TheOtherRoles
 			paranoid,
             invert,
             chameleon,
-            shifter
-        };
+            shifter,
+            disperser,
+            doomsayer
+};
 
         public static List<RoleInfo> getRoleInfoForPlayer(PlayerControl p, bool showModifier = true, bool onlyMods = false) {
             List<RoleInfo> infos = new List<RoleInfo>();
@@ -232,6 +244,7 @@ namespace TheOtherRoles
             if (p == Werewolf.werewolf) infos.Add(werewolf);
             if (p == Prosecutor.prosecutor) infos.Add(prosecutor);
             if (p == Swooper.swooper) infos.Add(swooper);
+            if (p == Disperser.disperser) infos.Add(disperser);
             if (p == Mayor.mayor) infos.Add(mayor);
             if (p == Portalmaker.portalmaker) infos.Add(portalmaker);
             if (p == Engineer.engineer) infos.Add(engineer);
@@ -249,7 +262,9 @@ namespace TheOtherRoles
             if (p == Trickster.trickster) infos.Add(trickster);
             if (p == Cleaner.cleaner) infos.Add(cleaner);
             if (p == Undertaker.undertaker) infos.Add(undertaker);
+            if (p == Bomber2.bomber) infos.Add(bomber);
             if (p == Bomber.bomber) infos.Add(bomber);
+            if (p == Yoyo.yoyo) infos.Add(yoyo);
             if (p == Mimic.mimic) infos.Add(mimic);
             if (p == Poucher.poucher) infos.Add(poucher);
             if (p == PrivateInvestigator.privateInvestigator) infos.Add(privateInvestigator);
@@ -285,25 +300,139 @@ namespace TheOtherRoles
             if (p == Trapper.trapper) infos.Add(trapper);
             if (p == Pursuer.pursuer) infos.Add(pursuer);
             if (p == Thief.thief) infos.Add(thief);
+            if (p == Doomsayer.doomsayer) infos.Add(doomsayer);
 
-            // Default roles (just impostor, just crewmate, or hunter / hunted for hide n seek
+            // Default roles (just impostor, just crewmate, or hunter / hunted for hide n seek, prop hunt prop ...
             if (infos.Count == count) {
                 if (p.Data.Role.IsImpostor)
-                    infos.Add(MapOptionsTor.gameMode == CustomGamemodes.HideNSeek ? RoleInfo.hunter : RoleInfo.impostor);
+                    infos.Add(MapOptionsTor.gameMode == CustomGamemodes.HideNSeek || MapOptionsTor.gameMode == CustomGamemodes.PropHunt ? RoleInfo.hunter : RoleInfo.impostor);
                 else
-                    infos.Add(MapOptionsTor.gameMode == CustomGamemodes.HideNSeek ? RoleInfo.hunted : RoleInfo.crewmate);
+                    infos.Add(MapOptionsTor.gameMode == CustomGamemodes.HideNSeek ? RoleInfo.hunted : MapOptionsTor.gameMode == CustomGamemodes.PropHunt ? RoleInfo.prop : RoleInfo.crewmate);
             }
 
             return infos;
         }
 
-        public static String GetRolesString(PlayerControl p, bool useColors, bool showModifier = true) {
+        public static String GetRolesString(PlayerControl p, bool useColors, bool showModifier = true, bool suppressGhostInfo = false)
+        {
             string roleName;
             roleName = String.Join(" ", getRoleInfoForPlayer(p, showModifier).Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
             if (Lawyer.target != null && p.PlayerId == Lawyer.target.PlayerId && CachedPlayer.LocalPlayer.PlayerControl != Lawyer.target) 
                 roleName += (useColors ? Helpers.cs(Pursuer.color, " §") : " §");
             if (HandleGuesser.isGuesserGm && HandleGuesser.isGuesser(p.PlayerId)) roleName += " (Guesser)";
+            if (!suppressGhostInfo && p != null)
+            {
+                if (p == Shifter.shifter && (CachedPlayer.LocalPlayer.PlayerControl == Shifter.shifter || Helpers.shouldShowGhostInfo()) && Shifter.futureShift != null)
+                    roleName += Helpers.cs(Color.yellow, " ← " + Shifter.futureShift.Data.PlayerName);
+                if (p == Vulture.vulture && (CachedPlayer.LocalPlayer.PlayerControl == Vulture.vulture || Helpers.shouldShowGhostInfo()))
+                    roleName = roleName + Helpers.cs(Vulture.color, $" ({Vulture.vultureNumberToWin - Vulture.eatenBodies} left)");
+                if (Helpers.shouldShowGhostInfo())
+                {
+                    if (Eraser.futureErased.Contains(p))
+                        roleName = Helpers.cs(Color.gray, "(erased) ") + roleName;
+                    if (Vampire.vampire != null && !Vampire.vampire.Data.IsDead && Vampire.bitten == p && !p.Data.IsDead)
+                        roleName = Helpers.cs(Vampire.color, $"(bitten {(int)HudManagerStartPatch.vampireKillButton.Timer + 1}) ") + roleName;
+                    if (Deputy.handcuffedPlayers.Contains(p.PlayerId))
+                        roleName = Helpers.cs(Color.gray, "(cuffed) ") + roleName;
+                    if (Deputy.handcuffedKnows.ContainsKey(p.PlayerId))  // Active cuff
+                        roleName = Helpers.cs(Deputy.color, "(cuffed) ") + roleName;
+                    if (p == Warlock.curseVictim)
+                        roleName = Helpers.cs(Warlock.color, "(cursed) ") + roleName;
+                    if (p == Ninja.ninjaMarked)
+                        roleName = Helpers.cs(Ninja.color, "(marked) ") + roleName;
+                    if (Pursuer.blankedList.Contains(p) && !p.Data.IsDead)
+                        roleName = Helpers.cs(Pursuer.color, "(blanked) ") + roleName;
+                    if (Witch.futureSpelled.Contains(p) && !MeetingHud.Instance) // This is already displayed in meetings!
+                        roleName = Helpers.cs(Witch.color, "☆ ") + roleName;
+                    if (BountyHunter.bounty == p)
+                        roleName = Helpers.cs(BountyHunter.color, "(bounty) ") + roleName;
+                    if (Arsonist.dousedPlayers.Contains(p))
+                        roleName = Helpers.cs(Arsonist.color, "♨ ") + roleName;
+                    if (p == Arsonist.arsonist)
+                        roleName = roleName + Helpers.cs(Arsonist.color, $" ({CachedPlayer.AllPlayers.Count(x => { return x.PlayerControl != Arsonist.arsonist && !x.Data.IsDead && !x.Data.Disconnected && !Arsonist.dousedPlayers.Any(y => y.PlayerId == x.PlayerId); })} left)");
+                    if (p == Jackal.fakeSidekick)
+                        roleName = Helpers.cs(Sidekick.color, $" (fake SK)") + roleName;
+                    // Death Reason on Ghosts
+                    if (p.Data.IsDead)
+                    {
+                        string deathReasonString = "";
+                        var deadPlayer = GameHistory.deadPlayers.FirstOrDefault(x => x.player.PlayerId == p.PlayerId);
+
+                        Color killerColor = new();
+                        if (deadPlayer != null && deadPlayer.killerIfExisting != null)
+                        {
+                            killerColor = RoleInfo.getRoleInfoForPlayer(deadPlayer.killerIfExisting, false).FirstOrDefault().color;
+                        }
+
+                        if (deadPlayer != null)
+                        {
+                            switch (deadPlayer.deathReason)
+                            {
+                                case DeadPlayer.CustomDeathReason.Disconnect:
+                                    deathReasonString = " - disconnected";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Exile:
+                                    deathReasonString = " - voted out";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Kill:
+                                    deathReasonString = $" - killed by {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Guess:
+                                    if (deadPlayer.killerIfExisting.Data.PlayerName == p.Data.PlayerName)
+                                        deathReasonString = $" - failed guess";
+                                    else
+                                        deathReasonString = $" - guessed by {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Shift:
+                                    deathReasonString = $" - {Helpers.cs(Color.yellow, "shifted")} {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.WitchExile:
+                                    deathReasonString = $" - {Helpers.cs(Witch.color, "witched")} by {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.LoverSuicide:
+                                    deathReasonString = $" - {Helpers.cs(Lovers.color, "lover died")}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.LawyerSuicide:
+                                    deathReasonString = $" - {Helpers.cs(Lawyer.color, "bad Lawyer")}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Bomb:
+                                    deathReasonString = $" - bombed by {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                                case DeadPlayer.CustomDeathReason.Arson:
+                                    deathReasonString = $" - burnt by {Helpers.cs(killerColor, deadPlayer.killerIfExisting.Data.PlayerName)}";
+                                    break;
+                            }
+                            roleName = roleName + deathReasonString;
+                        }
+                    }
+                }
+            }
             return roleName;
+        }
+
+
+        static string ReadmePage = "";
+        public static async Task loadReadme()
+        {
+            if (ReadmePage == "")
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync("https://raw.githubusercontent.com/TheOtherRolesAU/TheOtherRoles/main/README.md");
+                response.EnsureSuccessStatusCode();
+                string httpres = await response.Content.ReadAsStringAsync();
+                ReadmePage = httpres;
+            }
+        }
+        public static string GetRoleDescription(RoleInfo roleInfo)
+        {
+            while (ReadmePage == "")
+            {
+            }
+
+            int index = ReadmePage.IndexOf($"## {roleInfo.name}");
+            int endindex = ReadmePage.Substring(index).IndexOf("### Game Options");
+            return ReadmePage.Substring(index, endindex);
+
         }
     }
 }

@@ -1,281 +1,309 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading.Tasks;
-using AmongUs.Data;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using BepInEx;
-using BepInEx.Bootstrap;
-using BepInEx.Unity.IL2CPP;
 using BepInEx.Unity.IL2CPP.Utils;
-using Mono.Cecil;
-using Newtonsoft.Json.Linq;
-using TMPro;
-using Twitch;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 using UnityEngine.UI;
-using Action = System.Action;
-using IntPtr = System.IntPtr;
-using Version = SemanticVersioning.Version;
+using UnityEngine.SceneManagement;
+using AmongUs.Data;
+using Assets.InnerNet;
+using Twitch;
+using static StarGen;
 
-namespace TheOtherRoles.Modules 
+namespace TheOtherRoles.Modules
 {
-    public class ModUpdateBehaviour : MonoBehaviour
+    public class ModUpdater : MonoBehaviour
     {
-        public static readonly bool CheckForSubmergedUpdates = true;
-        public static bool showPopUp = true;
-        public static bool updateInProgress = false;
+        public const string RepositoryOwner = "JustASysAdmin";
+        public const string RepositoryName = "TheOtherRoles2";
+        public static ModUpdater Instance { get; private set; }
 
-        public static ModUpdateBehaviour Instance { get; private set; }
-        public ModUpdateBehaviour(IntPtr ptr) : base(ptr) { }
-        public class UpdateData
-        {
-            public string Content;
-            public string Tag;
-            public JObject Request;
-            public Version Version => Version.Parse(Tag);
-            
-            public UpdateData(JObject data)
-            {
-                Tag = data["tag_name"]?.ToString().TrimStart('v');
-                Content = data["body"]?.ToString();
-                Request = data;
-            }
+        public ModUpdater(IntPtr ptr) : base(ptr) { }
 
-            public bool IsNewer(Version version)
-            {
-                if (!Version.TryParse(Tag, out var myVersion)) return false;
-                return myVersion.BaseVersion() > version.BaseVersion();
-            }
-        }
+        private bool _busy;
+        private bool showPopUp = true;
+        public List<GithubRelease> Releases;
 
-        public UpdateData TORUpdate;
-        public UpdateData SubmergedUpdate;
-
-        [HideFromIl2Cpp]
-        public UpdateData RequiredUpdateData => TORUpdate ?? SubmergedUpdate;
-        
         public void Awake()
         {
-            if (Instance) Destroy(this);
+            if (Instance) Destroy(Instance);
             Instance = this;
-            
-            SceneManager.add_sceneLoaded((System.Action<Scene, LoadSceneMode>) (OnSceneLoaded));
-            this.StartCoroutine(CoCheckUpdates());
-            
             foreach (var file in Directory.GetFiles(Paths.PluginPath, "*.old"))
             {
                 File.Delete(file);
             }
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void Start()
         {
-            if (updateInProgress || scene.name != "MainMenu") return;
-            if (RequiredUpdateData is null) {
-                showPopUp = false;
-                return;
-            }
-            
-            var template = GameObject.Find("ExitGameButton");
-            if (!template) return;
-            
-            var button = Instantiate(template, null);
-            var buttonTransform = button.transform;
-            var pos = buttonTransform.localPosition;
-            pos.y += 1.2f;
-            buttonTransform.localPosition = pos;
-
-            PassiveButton passiveButton = button.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();
-            passiveButton.OnClick = new Button.ButtonClickedEvent();
-            passiveButton.OnClick.AddListener((Action) (() =>
-            {
-                this.StartCoroutine(CoUpdate());
-                button.SetActive(false);
-            }));
-
-            var text = button.transform.GetChild(0).GetComponent<TMP_Text>();
-            string t = "Update";
-            if (TORUpdate is null && SubmergedUpdate is not null) t = SubmergedCompatibility.Loaded ? $"Update\nSubmerged" : $"Download\nSubmerged";
-
-            StartCoroutine(Effects.Lerp(0.1f, (System.Action<float>)(p => text.SetText(t))));
-
-            buttonSprite.color = text.color = Color.red;
-            passiveButton.OnMouseOut.AddListener((Action)(() => buttonSprite.color = text.color = Color.red));
-
-            var isSubmerged = TORUpdate == null;
-            var announcement = $"<size=150%>A new <color=#FC0303>{(isSubmerged ? "Submerged" : "THE OTHER ROLES")}</color> update to {(isSubmerged ? SubmergedUpdate.Tag : TORUpdate.Tag)} is available</size>\n{(isSubmerged ? SubmergedUpdate.Content : TORUpdate.Content)}";
-            var mgr = FindObjectOfType<MainMenuManager>(true);
-
-            if (!isSubmerged) {
-                try {
-                    string updateVersion = TORUpdate.Content[^5..];
-                    if (Version.Parse(TheOtherRolesPlugin.VersionString).BaseVersion() < Version.Parse(updateVersion).BaseVersion()) {
-                        passiveButton.OnClick.RemoveAllListeners();
-                        passiveButton.OnClick = new Button.ButtonClickedEvent();
-                        passiveButton.OnClick.AddListener((Action)(() => {
-                            mgr.StartCoroutine(CoShowAnnouncement($"<size=150%><color=#FC0303>A MANUAL UPDATE IS REQUIRED</color></size>"));
-                        }));
-                    }
-                } catch {  
-                    TheOtherRolesPlugin.Logger.LogError("parsing version for auto updater failed :(");
-                }
-
-            }
-
-            if (isSubmerged && !SubmergedCompatibility.Loaded) showPopUp = false;
-            if (showPopUp) mgr.StartCoroutine(CoShowAnnouncement(announcement));
-            showPopUp = false;
+            if (_busy) return;
+            this.StartCoroutine(CoCheckForUpdate());
+            SceneManager.add_sceneLoaded((System.Action<Scene, LoadSceneMode>)(OnSceneLoaded));
         }
-        
+
+
         [HideFromIl2Cpp]
-        public IEnumerator CoUpdate()
+        public void StartDownloadRelease(GithubRelease release)
         {
-            updateInProgress = true;
-            var isSubmerged = TORUpdate is null;
-            var updateName = (isSubmerged ? "Submerged" : "The Other Roles");
-            
+            if (_busy) return;
+            this.StartCoroutine(CoDownloadRelease(release));
+        }
+
+        [HideFromIl2Cpp]
+        private IEnumerator CoCheckForUpdate()
+        {
+            _busy = true;
+            var www = new UnityWebRequest();
+            www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);
+            www.SetUrl($"https://api.github.com/repos/{RepositoryOwner}/{RepositoryName}/releases");
+            www.downloadHandler = new DownloadHandlerBuffer();
+            var operation = www.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                yield break;
+            }
+
+            Releases = JsonSerializer.Deserialize<List<GithubRelease>>(www.downloadHandler.text);
+            www.downloadHandler.Dispose();
+            www.Dispose();
+            Releases.Sort(SortReleases);
+            _busy = false;
+        }
+
+        [HideFromIl2Cpp]
+        private IEnumerator CoDownloadRelease(GithubRelease release)
+        {
+            _busy = true;
+
             var popup = Instantiate(TwitchManager.Instance.TwitchPopup);
             popup.TextAreaTMP.fontSize *= 0.7f;
             popup.TextAreaTMP.enableAutoSizing = false;
-            
+
             popup.Show();
 
             var button = popup.transform.GetChild(2).gameObject;
             button.SetActive(false);
-            popup.TextAreaTMP.text = $"Updating {updateName}\nPlease wait...";
-            
-            var download = Task.Run(DownloadUpdate);
-            while (!download.IsCompleted) yield return null;
-            
-            button.SetActive(true);
-            popup.TextAreaTMP.text = download.Result ? $"{updateName}\nupdated successfully\nPlease restart the game." : "Update wasn't successful\nTry again later,\nor update manually.";
-        }
+            popup.TextAreaTMP.text = $"Updating TOR\nPlease wait...";
 
-        [HideFromIl2Cpp]
-        public IEnumerator CoShowAnnouncement(string announcement)
-        {
-            var popUp = Instantiate(FindObjectOfType<AnnouncementPopUp>(true));
-            popUp.gameObject.SetActive(true);
-            yield return popUp.Init();
-            var last = DataManager.Announcements.LastViewedAnnouncement;
-            last.Id = 1;
-            last.Text = announcement;
-            SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, name);
-            popUp.AnnounceTextMeshPro.text = announcement;
-        }
+            var asset = release.Assets.Find(FilterPluginAsset);
+            var www = new UnityWebRequest();
+            www.SetMethod(UnityWebRequest.UnityWebRequestMethod.Get);
+            www.SetUrl(asset.DownloadUrl);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            var operation = www.SendWebRequest();
 
-        [HideFromIl2Cpp]
-        public static IEnumerator CoCheckUpdates()
-        {
-            var torUpdateCheck = Task.Run(() => Instance.GetGithubUpdate("JustASysAdmin", "TheOtherRoles2"));
-            while (!torUpdateCheck.IsCompleted) yield return null;
-            Announcement.updateData = torUpdateCheck.Result;
-            if (torUpdateCheck.Result != null && torUpdateCheck.Result.IsNewer(Version.Parse(TheOtherRolesPlugin.VersionString)))
+            while (!operation.isDone)
             {
-                Instance.TORUpdate = torUpdateCheck.Result;
+                int stars = Mathf.CeilToInt(www.downloadProgress * 10);
+                string progress = $"Updating TOR\nPlease wait...\nDownloading...\n{new String((char)0x25A0, stars) + new String((char)0x25A1, 10 - stars)}";
+                popup.TextAreaTMP.text = progress;
+                yield return new WaitForEndOfFrame();
             }
 
-            if (CheckForSubmergedUpdates)
+            if (www.isNetworkError || www.isHttpError)
             {
-                var submergedUpdateCheck = Task.Run(() => Instance.GetGithubUpdate("SubmergedAmongUs", "Submerged"));
-                while (!submergedUpdateCheck.IsCompleted) yield return null;
-                if (submergedUpdateCheck.Result != null && (!SubmergedCompatibility.Loaded || submergedUpdateCheck.Result.IsNewer(SubmergedCompatibility.Version)))
-                {
-                    Instance.SubmergedUpdate = submergedUpdateCheck.Result;
-                    if (Instance.SubmergedUpdate.Tag.Equals("2022.10.26")) Instance.SubmergedUpdate = null;
-                }
+                popup.TextAreaTMP.text = "Update wasn't successful\nTry again later,\nor update manually.";
+                yield break;
             }
-            
-            Instance.OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
-        }
+            popup.TextAreaTMP.text = $"Updating TOR\nPlease wait...\n\nDownload complete\ncopying file...";
 
-        [HideFromIl2Cpp]
-        public async Task<UpdateData> GetGithubUpdate(string owner, string repo)
-        {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
+            var filePath = Path.Combine(Paths.PluginPath, asset.Name);
 
-            try {
-                var req = await client.GetAsync($"https://api.github.com/repos/{owner}/{repo}/releases/latest", HttpCompletionOption.ResponseContentRead);
-
-                if (!req.IsSuccessStatusCode) return null;
-
-                var dataString = await req.Content.ReadAsStringAsync();
-                JObject data = JObject.Parse(dataString);
-                return new UpdateData(data);
-            } catch (HttpRequestException) {
-                return null;
-            }
-        }
-
-        private bool TryUpdateSubmergedInternally()
-        {
-            if (SubmergedUpdate == null) return false;
-            try
-            {
-                if (!SubmergedCompatibility.LoadedExternally) return false;
-                var thisAsm = Assembly.GetCallingAssembly();
-                var resourceName = thisAsm.GetManifestResourceNames().FirstOrDefault(s => s.EndsWith("Submerged.dll"));
-                if (resourceName == default) return false;
-
-                using var submergedStream = thisAsm.GetManifestResourceStream(resourceName)!;
-                var asmDef = AssemblyDefinition.ReadAssembly(submergedStream, TypeLoader.ReaderParameters);
-                var pluginType = asmDef.MainModule.Types.FirstOrDefault(t => t.IsSubtypeOf(typeof(BasePlugin)));
-                var info = IL2CPPChainloader.ToPluginInfo(pluginType, "");
-                if (SubmergedUpdate.IsNewer(info.Metadata.Version)) return false;
-                File.Delete(SubmergedCompatibility.Assembly.Location);
-
-            }
-            catch (Exception e)
-            {
-                TheOtherRolesPlugin.Logger.LogError(e);
-                return false;
-            }
-            return true;
-        }
-            
-        
-        [HideFromIl2Cpp]
-        public async Task<bool> DownloadUpdate()
-        {
-            var isSubmerged = TORUpdate is null;
-            if (isSubmerged && TryUpdateSubmergedInternally()) return true;
-            var data = isSubmerged ? SubmergedUpdate : TORUpdate;
-            
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
-            
-            JToken assets = data.Request["assets"];
-            string downloadURI = "";
-            for (JToken current = assets.First; current != null; current = current.Next) 
-            {
-                string browser_download_url = current["browser_download_url"]?.ToString();
-                if (browser_download_url != null && current["content_type"] != null) {
-                    if (current["content_type"].ToString().Equals("application/x-msdownload") &&
-                        browser_download_url.EndsWith(".dll")) {
-                        downloadURI = browser_download_url;
-                        break;
-                    }
-                }
-            }
-
-            if (downloadURI.Length == 0) return false;
-
-            var res = await client.GetAsync(downloadURI, HttpCompletionOption.ResponseContentRead);
-            string filePath = Path.Combine(Paths.PluginPath, isSubmerged ? "Submerged.dll" : "TheOtherRoles.dll");
-            if (File.Exists(filePath + ".old")) File.Delete(filePath + ".old");
+            if (File.Exists(filePath + ".old")) File.Delete(filePath + "old");
             if (File.Exists(filePath)) File.Move(filePath, filePath + ".old");
 
-            await using var responseStream = await res.Content.ReadAsStreamAsync();
-            await using var fileStream = File.Create(filePath);
-            await responseStream.CopyToAsync(fileStream);
+            var persistTask = File.WriteAllBytesAsync(filePath, www.downloadHandler.data);
+            var hasError = false;
+            while (!persistTask.IsCompleted)
+            {
+                if (persistTask.Exception != null)
+                {
+                    hasError = true;
+                    break;
+                }
 
-            return true;
+                yield return new WaitForEndOfFrame();
+            }
+
+            www.downloadHandler.Dispose();
+            www.Dispose();
+
+            if (!hasError)
+            {
+                popup.TextAreaTMP.text = $"TheOtherRoles\nupdated successfully\nPlease restart the game.";
+            }
+            button.SetActive(true);
+            _busy = false;
         }
+
+        [HideFromIl2Cpp]
+        private static bool FilterLatestRelease(GithubRelease release)
+        {
+            return release.IsNewer(TheOtherRolesPlugin.Version) && release.Assets.Any(FilterPluginAsset);
+        }
+
+        [HideFromIl2Cpp]
+        private static bool FilterPluginAsset(GithubAsset asset)
+        {
+            return asset.Name == "TheOtherRoles.dll";
+        }
+
+        [HideFromIl2Cpp]
+        private static int SortReleases(GithubRelease a, GithubRelease b)
+        {
+            if (a.IsNewer(b.Version)) return -1;
+            if (b.IsNewer(a.Version)) return 1;
+            return 0;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (_busy || scene.name != "MainMenu") return;
+            var latestRelease = Releases.FirstOrDefault();
+            if (latestRelease == null || latestRelease.Version <= TheOtherRolesPlugin.Version)
+                return;
+
+            var template = GameObject.Find("ExitGameButton");
+            if (!template) return;
+
+            var button = Instantiate(template, null);
+            var buttonTransform = button.transform;
+            //buttonTransform.localPosition = new Vector3(-2f, -2f);
+            button.GetComponent<AspectPosition>().anchorPoint = new Vector2(0.458f, 0.124f);
+
+            PassiveButton passiveButton = button.GetComponent<PassiveButton>();
+            passiveButton.OnClick = new Button.ButtonClickedEvent();
+            passiveButton.OnClick.AddListener((Action)(() =>
+            {
+                StartDownloadRelease(latestRelease);
+                button.SetActive(false);
+            }));
+            SpriteRenderer buttonSprite = button.transform.FindChild("Inactive").GetComponent<SpriteRenderer>();
+            Color buttonColor = new Color32(255, 0, 0, byte.MaxValue);
+            buttonSprite.color = buttonSprite.color = buttonColor;
+            passiveButton.OnMouseOut.AddListener((System.Action)delegate
+            {
+                buttonSprite.color = buttonSprite.color = buttonColor;
+            });
+
+            var text = button.transform.GetComponentInChildren<TMPro.TMP_Text>();
+            string t = "Update";
+            StartCoroutine(Effects.Lerp(0.1f, (System.Action<float>)(p => text.SetText(t))));
+            passiveButton.OnMouseOut.AddListener((Action)(() => text.color = Color.red));
+            passiveButton.OnMouseOver.AddListener((Action)(() => text.color = Color.white));
+            var announcement = $"<size=150%>A new THE OTHER ROLES COMMUNITY EDITION update to {latestRelease.Tag} is available</size>\n{latestRelease.Description}";
+            var mgr = FindObjectOfType<MainMenuManager>(true);
+            if (showPopUp) mgr.StartCoroutine(CoShowAnnouncement(announcement, shortTitle: "TOR Update", date: latestRelease.PublishedAt));
+            showPopUp = false;
+
+        }
+
+        [HideFromIl2Cpp]
+        public IEnumerator CoShowAnnouncement(string announcement, bool show = true, string shortTitle = "TOR Update", string title = "", string date = "")
+        {
+            var mgr = FindObjectOfType<MainMenuManager>(true);
+            var popUpTemplate = UnityEngine.Object.FindObjectOfType<AnnouncementPopUp>(true);
+            if (popUpTemplate == null)
+            {
+                TheOtherRolesPlugin.Logger.LogError("couldnt show credits, popUp is null");
+                yield return null;
+            }
+            var popUp = UnityEngine.Object.Instantiate(popUpTemplate);
+
+            popUp.gameObject.SetActive(true);
+
+            Assets.InnerNet.Announcement creditsAnnouncement = new()
+            {
+                Id = "torAnnouncement",
+                Language = 0,
+                Number = 6969,
+                Title = title == "" ? "The Other Roles Announcement" : title,
+                ShortTitle = shortTitle,
+                SubTitle = "",
+                PinState = false,
+                Date = date == "" ? DateTime.Now.Date.ToString() : date,
+                Text = announcement,
+            };
+            mgr.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) => {
+                if (p == 1)
+                {
+                    var backup = DataManager.Player.Announcements.allAnnouncements;
+                    DataManager.Player.Announcements.allAnnouncements = new();
+                    popUp.Init(false);
+                    DataManager.Player.Announcements.SetAnnouncements(new Announcement[] { creditsAnnouncement });
+                    popUp.CreateAnnouncementList();
+                    popUp.UpdateAnnouncementText(creditsAnnouncement.Number);
+                    popUp.visibleAnnouncements[0].PassiveButton.OnClick.RemoveAllListeners();
+                    DataManager.Player.Announcements.allAnnouncements = backup;
+                }
+            })));
+        }
+    }
+
+    public class GithubRelease
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("tag_name")]
+        public string Tag { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("draft")]
+        public bool Draft { get; set; }
+
+        [JsonPropertyName("prerelease")]
+        public bool Prerelease { get; set; }
+
+        [JsonPropertyName("created_at")]
+        public string CreatedAt { get; set; }
+
+        [JsonPropertyName("published_at")]
+        public string PublishedAt { get; set; }
+
+        [JsonPropertyName("body")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("assets")]
+        public List<GithubAsset> Assets { get; set; }
+
+        public Version Version => Version.Parse(Tag.Replace("v", string.Empty));
+
+        public bool IsNewer(Version version)
+        {
+            return Version > version;
+        }
+    }
+
+    public class GithubAsset
+    {
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
+
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("size")]
+        public int Size { get; set; }
+
+        [JsonPropertyName("browser_download_url")]
+        public string DownloadUrl { get; set; }
     }
 }
