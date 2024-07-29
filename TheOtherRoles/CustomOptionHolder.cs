@@ -695,8 +695,8 @@ namespace TheOtherRoles {
             doomsayerHasMultipleShotsPerMeeting = CustomOption.Create(492, Types.Neutral, "Doommayer Can Continue Guessing After Guess", true, doomsayerSpawnRate);
             doomsayerCanGuessImpostor = CustomOption.Create(493, Types.Neutral, $"Doomsayer can Guess {cs(Palette.ImpostorRed, "Impostor Roles")}", true, doomsayerSpawnRate);
             doomsayerCanGuessNeutral = CustomOption.Create(494, Types.Neutral,$"Doomsayer can Guess {cs(Color.grey, "Neutral Roles")}", true, doomsayerSpawnRate);
-            doomsayerOnlineTarger = CustomOption.Create(495, Types.Neutral, "Number Of Roles Need Doomsayer Guess", false, doomsayerSpawnRate);
-            doomsayerObtainRoles = CustomOption.Create(496, Types.Neutral, "Obtain Enable Roles", 3f, 1f, 10f, 1f, doomsayerSpawnRate);
+            doomsayerOnlineTarger = CustomOption.Create(495, Types.Neutral, "Obtain Enable Roles", false, doomsayerSpawnRate);
+            doomsayerObtainRoles = CustomOption.Create(496, Types.Neutral, "Number Of Roles Need Doomsayer Guess", 3f, 1f, 10f, 1f, doomsayerSpawnRate);
             doomsayerDormationNum = CustomOption.Create(497, Types.Neutral, "Obtain Roles Number", 5f, 1f, 10f, 1f, doomsayerSpawnRate);
 
             lawyerSpawnRate = CustomOption.Create(350, Types.Neutral, cs(Lawyer.color, "Lawyer"), rates, null, true);

@@ -699,12 +699,12 @@ namespace TheOtherRoles.Patches {
                 ? HandleGuesser.remainingShots(CachedPlayer.LocalPlayer.PlayerControl.PlayerId) : 0;
             if (numGuesses > 0)
             {
-                meetingInfoText = string.Format($"Guesses Left: {0}", numGuesses);
+                meetingInfoText = $"Guesses Left: {numGuesses}";
             }
 
             if (CachedPlayer.LocalPlayer.PlayerControl == Doomsayer.doomsayer)
             {
-                meetingInfoText = string.Format($"Need Guess {0} To Win", Doomsayer.killToWin - Doomsayer.killedToWin);
+                meetingInfoText = $"Need Guess {Doomsayer.killToWin - Doomsayer.killedToWin} To Win";
             }
 
             if (meetingInfoText == "") return;

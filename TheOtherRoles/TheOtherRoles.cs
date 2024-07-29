@@ -2153,13 +2153,13 @@ namespace TheOtherRoles
 
         public static Sprite getBlackmailLetterSprite() {
             if (overlaySprite) return overlaySprite;
-            overlaySprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerLetter.png", 115f);
+            overlaySprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerLetter.png", 110f);
             return overlaySprite;
         }
 
         public static Sprite getBlackmailButtonSprite() {
             if (blackmailButtonSprite) return blackmailButtonSprite;
-            blackmailButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerBlackmailButton.png", 115f);
+            blackmailButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.BlackmailerBlackmailButton.png", 100f);
             return blackmailButtonSprite;
         }
 
@@ -2368,7 +2368,7 @@ namespace TheOtherRoles
         public static Sprite getButtonSprite()
         {
             if (buttonSprite) return buttonSprite;
-            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.DoomsayerButton.png", 150f);
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.DoomsayerButton.png", 100f);
             return buttonSprite;
         }
 
@@ -2383,7 +2383,7 @@ namespace TheOtherRoles
                 allRoleInfo.Remove(RoleInfo.doomsayer);
                 allRoleInfo.Remove(roleInfoTarget);
 
-                if (allRoleInfo.Count < formationNum + 2) return string.Format($"There are fewer than {0} players.", formationNum + 2);
+                if (allRoleInfo.Count < formationNum + 2) return $"There are fewer than {formationNum + 2} players.";
 
                 var formation = formationNum;
                 var x = random.Next(0, formation);
@@ -2391,7 +2391,7 @@ namespace TheOtherRoles
                 var tempNumList = Enumerable.Range(0, allRoleInfo.Count).ToList();
                 var temp = (tempNumList.Count > formation ? tempNumList.Take(formation) : tempNumList).OrderBy(_ => random.Next()).ToList();
 
-                message.AppendLine(string.Format($"The occupation of {0} may be\n", target.Data.PlayerName));
+                message.AppendLine($"The occupation of {target.Data.PlayerName} may be\n");
 
                 for (int num = 0, tempNum = 0; num < formation; num++, tempNum++)
                 {
@@ -2585,7 +2585,7 @@ namespace TheOtherRoles
         public static Sprite getButtonSprite()
         {
             if (buttonSprite) return buttonSprite;
-            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Disperse.png", 115f);
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Disperse.png", 100f);
             return buttonSprite;
         }
         public static void clearAndReload()

@@ -1807,6 +1807,7 @@ namespace TheOtherRoles
                     CachedPlayer.LocalPlayer.PlayerControl.transform.position = FindVentPoss()[rnd.Next(FindVentPoss().Count)];
                 }
                 Disperser.remainingDisperses--;
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.disperserDisperse, false, 0.8f);
             }
         }
 
@@ -2050,7 +2051,7 @@ namespace TheOtherRoles
                 {
                     if (CachedPlayer.LocalPlayer.Data.IsDead)
                     {
-                        var msg = string.Format($"{0} guess {1}'s roles is {2}!", guesser.Data.PlayerName, guessedTarget.Data.PlayerName, roleInfo?.name ?? "");
+                        var msg = $"{guesser.Data.PlayerName} guess {guessedTarget.Data.PlayerName}'s roles is {roleInfo?.name ?? ""}!";
                         if (AmongUsClient.Instance.AmClient && FastDestroyableSingleton<HudManager>.Instance)
                             FastDestroyableSingleton<HudManager>.Instance!.Chat.AddChat(guesser, msg);
                         if (msg.Contains("who", StringComparison.OrdinalIgnoreCase))
