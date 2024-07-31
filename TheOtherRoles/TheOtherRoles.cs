@@ -1249,7 +1249,7 @@ namespace TheOtherRoles
         public static bool wasTeamRed;
         public static bool wasImpostor;
         public static bool wasSpy;
-        public static bool canSabotageLights;
+        //public static bool canSabotageLights;
         public static bool canSabotage = false;
         public static bool killFakeImpostor = false;
 
@@ -1284,7 +1284,7 @@ namespace TheOtherRoles
             formerJackals.Clear();
             hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
             wasTeamRed = wasImpostor = wasSpy = false;
-            canSabotageLights = CustomOptionHolder.jackalCanSabotageLights.getBool();
+            //canSabotageLights = CustomOptionHolder.jackalCanSabotageLights.getBool();
             canSabotage = CustomOptionHolder.jackalCanUseSabo.getBool();
             killFakeImpostor = CustomOptionHolder.jackalKillFakeImpostor.getBool();
         }
@@ -1307,7 +1307,7 @@ namespace TheOtherRoles
         public static bool canKill = true;
         public static bool promotesToJackal = true;
         public static bool hasImpostorVision = false;
-        public static bool canSabotageLights;
+        //public static bool canSabotageLights;
 
         public static void clearAndReload()
         {
@@ -1319,7 +1319,7 @@ namespace TheOtherRoles
             promotesToJackal = CustomOptionHolder.sidekickPromotesToJackal.getBool();
             hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
             wasTeamRed = wasImpostor = wasSpy = false;
-            canSabotageLights = CustomOptionHolder.sidekickCanSabotageLights.getBool();
+            //canSabotageLights = CustomOptionHolder.sidekickCanSabotageLights.getBool();
         }
     }
 

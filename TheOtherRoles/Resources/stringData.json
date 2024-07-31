@@ -1,0 +1,328 @@
+{
+    "Opt-General,1": {
+        "0": "TheOtherRoles Community Edition Settings"
+    },
+    "Opt-General,2": {
+        "0": "Impostor Roles Settings"
+    },
+    "Opt-General,3": {
+        "0": "Neutral Roles Settings"
+    },
+    "Opt-General,4": {
+        "0": "Crewmate Roles Settings"
+    },
+    "Opt-General,5": {
+        "0": "Modifier Settings"
+    },
+    "Opt-General,6": {
+        "0": "Guesser Mode Settings"
+    },
+    "Opt-General,7": {
+        "0": "Hide 'N Seek Settings"
+    },
+    "Opt-General,8": {
+        "0": "Prop Hunt Settings"
+    },
+    "Opt-General,9": {
+        "0": "<color=#CCCCCCFF>Off</color>",
+        "13": "<color=#CCCCCCFF>\u5173\u95ed</color>"
+    },
+    "Opt-General,10": {
+        "0": "<color=#FFFF00FF>On</color>",
+        "13": "<color=#FFFF00FF>\u5f00\u542f</color>"
+    },
+    "Opt-General,11": {
+        "0": "Preset"
+    },
+    "Opt-General,12": {
+        "0": "Evil:"
+    },
+    "Opt-General,13": {
+        "0": "Crewmate Roles"
+    },
+    "Opt-General,14": {
+        "0": "Neutral Roles"
+    },
+    "Opt-General,15": {
+        "0": "Impostor Roles"
+    },
+    "Opt-General,16": {
+        "0": "Modifiers"
+    },
+    "Opt-General,17": {
+        "0": "Fill:"
+    },
+    "Opt-General,18": {
+        "0": "Page 1: Hide N Seek Settings"
+    },
+    "Opt-General,19": {
+        "0": "Page 2: Hide N Seek Role Settings"
+    },
+    "Opt-General,20": {
+        "0": "Page 1: Prop Hunt Settings"
+    },
+    "Opt-General,21": {
+        "0": "Page 1: Vanilla Settings"
+    },
+    "Opt-General,22": {
+        "0": "Page 2: TheOtherRoles Community Edition Settings"
+    },
+    "Opt-General,23": {
+        "0": "Page 3: Role and Modifier Rates"
+    },
+    "Opt-General,24": {
+        "0": "Page 4: Impostor Role Settings"
+    },
+    "Opt-General,25": {
+        "0": "Page 5: Neutral Role Settings"
+    },
+    "Opt-General,26": {
+        "0": "Page 6: Crewmate Role Settings"
+    },
+    "Opt-General,27": {
+        "0": "Page 7: Modifier Settings"
+    },
+    "Opt-General,28": {
+        "0": "Press TAB or Page Number for more..."
+    },
+    "Opt-General,29": {
+        "0": "Very Short"
+    },
+    "Opt-General,30": {
+        "0": "Short"
+    },
+    "Opt-General,31": {
+        "0": "Medium"
+    },
+    "Opt-General,32": {
+        "0": "Long"
+    },
+    "Opt-General,33": {
+        "0": "Enable Mod Roles And Block Vanilla Roles",
+        "13": "\u542f\u7528MOD\u804c\u4e1a\u5e76\u7981\u7528\u539f\u7248\u804c\u4e1a"
+    },
+    "Opt-General,34": {
+        "0": "Any Player Can Stop The Start",
+        "13": "\u4efb\u4f55\u73a9\u5bb6\u90fd\u53ef\u4ee5\u7ec8\u6b62\u5f00\u59cb\u5012\u8ba1\u65f6"
+    },
+    "Opt-General,35": {
+        "0": "Enable Special Mode",
+        "13": "\u542f\u7528\u611a\u4eba\u8282\u6076\u641e\u6a21\u5f0f"
+    },
+    "Opt-General,36": {
+        "0": "Minimum Crewmate Roles",
+        "13": "\u6700\u5c0f\u8239\u5458\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,37": {
+        "0": "Maximum Crewmate Roles",
+        "13": "\u6700\u5927\u8239\u5458\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,38": {
+        "0": "Fill Crewmate Roles\n(Ignores Min/Max)",
+        "13": "\u586b\u5145\u8239\u5458\u804c\u4e1a\n(\u65e0\u89c6\u804c\u4e1a\u5927\u5c0f\u6570\u91cf\u9650\u5236)"
+    },
+    "Opt-General,39": {
+        "0": "Minimum Neutral Roles",
+        "13": "\u6700\u5c0f\u72ec\u7acb\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,40": {
+        "0": "Maximum Neutral Roles",
+        "13": "\u6700\u5927\u72ec\u7acb\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,41": {
+        "0": "Minimum Impostor Roles",
+        "13": "\u6700\u5c0f\u4f2a\u88c5\u8005\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,42": {
+        "0": "Maximum Impostor Roles",
+        "13": "\u6700\u5927\u4f2a\u88c5\u8005\u9635\u8425\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,43": {
+        "0": "Minimum Modifiers",
+        "13": "\u6700\u5c0f\u9644\u52a0\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-General,44": {
+        "0": "Maximum Modifiers",
+        "13": "\u6700\u5927\u9644\u52a0\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-Mafia,1": {
+        "0": "Janitor Cooldown"
+    },
+    "Opt-Morphling,1": {
+        "0": "Morphling Cooldown"
+    },
+    "Opt-Morphling,2": {
+        "0": "Morph Duration"
+    },
+    "Opt-Bomber2,1": {
+        "0": "Bomber Cooldown"
+    },
+    "Opt-Bomber2,2": {
+        "0": "Bomb Delay"
+    },
+    "Opt-Bomber2,3": {
+        "0": "Bomb Timer"
+    },
+    "Opt-Undertaker,1": {
+        "0": "Draging delay after kill"
+    },
+    "Opt-Undertaker,2": {
+        "0": "Can Vent while dragging"
+    },
+    "Opt-Camouflager,1": {
+        "0": "Camouflager Cooldown"
+    },
+    "Opt-Camouflager,2": {
+        "0": "Camo Duration"
+    },
+    "Opt-Vampire,1": {
+        "0": "Vampire Kill Delay"
+    },
+    "Opt-Vampire,2": {
+        "0": "Vampire Cooldown"
+    },
+    "Opt-Vampire,3": {
+        "0": "Enable Garlic"
+    },
+    "Opt-Vampire,4": {
+        "0": "Vampire Can Kill Near Garlics"
+    },
+    "Opt-Eraser,1": {
+        "0": "Eraser Cooldown"
+    },
+    "Opt-Eraser,2": {
+        "0": "Eraser Can Erase Anyone"
+    },
+    "Opt-Trickster,1": {
+        "0": "Trickster Box Cooldown"
+    },
+    "Opt-Trickster,2": {
+        "0": "Trickster Lights Out Cooldown"
+    },
+    "Opt-Trickster,3": {
+        "0": "Trickster Lights Out Duration"
+    },
+    "Opt-Cleaner,1": {
+        "0": "Cleaner Cooldown"
+    },
+    "Opt-Warlock,1": {
+        "0": "Warlock Cooldown"
+    },
+    "Opt-Warlock,2": {
+        "0": "Warlock Root Time"
+    },
+    "Opt-BountyHunter,1": {
+        "0": "Duration After Which Bounty Changes"
+    },
+    "Opt-BountyHunter,2": {
+        "0": "Cooldown After Killing Bounty"
+    },
+    "Opt-BountyHunter,3": {
+        "0": "Additional Cooldown After Killing Others"
+    },
+    "Opt-BountyHunter,4": {
+        "0": "Show Arrow Pointing Towards The Bounty"
+    },
+    "Opt-BountyHunter,5": {
+        "0": "Arrow Update Intervall"
+    },
+    "Opt-Witch,1": {
+        "0": "Witch Spell Casting Cooldown"
+    },
+    "Opt-Witch,2": {
+        "0": "Witch Additional Cooldown"
+    },
+    "Opt-Witch,3": {
+        "0": "Witch Can Spell Anyone"
+    },
+    "Opt-Witch,4": {
+        "0": "Spell Casting Duration"
+    },
+    "Opt-Witch,5": {
+        "0": "Trigger Both Cooldowns"
+    },
+    "Opt-Witch,6": {
+        "0": "Voting The Witch Saves All The Targets"
+    },
+    "Opt-Ninja,1": {
+        "0": "Ninja Mark Cooldown"
+    },
+    "Opt-Ninja,2": {
+        "0": "Ninja Knows Location Of Target"
+    },
+    "Opt-Ninja,3": {
+        "0": "Trace Duration"
+    },
+    "Opt-Ninja,4": {
+        "0": "Time Till Trace Color Has Faded"
+    },
+    "Opt-Ninja,5": {
+        "0": "Time The Ninja Is Invisible"
+    },
+    "Opt-Bomber,1": {
+        "0": "Bomb Destruction Time"
+    },
+    "Opt-Bomber,2": {
+        "0": "Bomb Destruction Range"
+    },
+    "Opt-Bomber,3": {
+        "0": "Bomb Hear Range"
+    },
+    "Opt-Bomber,4": {
+        "0": "Bomb Defuse Duration"
+    },
+    "Opt-Bomber,5": {
+        "0": "Bomb Cooldown"
+    },
+    "Opt-Bomber,6": {
+        "0": "Bomb Is Active After"
+    },
+    "Opt-Yoyo,1": {
+        "0": "Blink Duration"
+    },
+    "Opt-Yoyo,2": {
+        "0": "Mark Location Cooldown"
+    },
+    "Opt-Yoyo,3": {
+        "0": "Marked Location Stays After Meeting"
+    },
+    "Opt-Yoyo,4": {
+        "0": "Has Admin Table"
+    },
+    "Opt-Yoyo,5": {
+        "0": "Admin Table Cooldown"
+    },
+    "Opt-Yoyo,6": {
+        "0": "Silhouette Visibility"
+    },
+    "Opt-Miner,1": {
+        "0": "Mine Cooldown"
+    },
+    "Opt-Miner,2": {
+        "0": "Number Of Uses"
+    },
+    "Opt-Blackmailer,1": {
+        "0": "Blackmail Cooldown"
+    },
+    "Opt-Jester,1": {
+        "0": "Jester Can Call Emergency Meeting"
+    },
+    "Opt-Jester,2": {
+        "0": "Jester Can Hide in Vent"
+    },
+    "Opt-Jester,3": {
+        "0": "Jester Has Impostor Vision"
+    },
+    "Opt-Amnesiac,1": {
+        "0": "Show arrows to dead bodies"
+    },
+    "Opt-Amnesiac,2": {
+        "0": "Reset role when taken"
+    },
+    "Opt-Arsonist,1": {
+        "0": "Arsonist Cooldown"
+    },
+    "Opt-Arsonist,2": {
+        "0": "Arsonist Douse Duration"
+    }
+}

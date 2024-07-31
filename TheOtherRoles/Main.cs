@@ -91,7 +91,7 @@ namespace TheOtherRoles
         }
 
         public override void Load() {
-            //ModTranslation.Load();
+            ModTranslation.Load();
             Logger = Log;
             Instance = this;
             AssetsLoad.Load();

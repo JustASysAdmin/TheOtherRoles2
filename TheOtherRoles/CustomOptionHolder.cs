@@ -5,9 +5,9 @@ using Types = TheOtherRoles.CustomOption.CustomOptionType;
 
 namespace TheOtherRoles {
     public class CustomOptionHolder {
-        public static string[] rates = new string[]{"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
-        public static string[] ratesModifier = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
-        public static string[] presets = new string[]{"Preset 1", "Preset 2", "Random Preset Skeld", "Random Preset Mira HQ", "Random Preset Polus", "Random Preset Airship", "Random Preset Fungle", "Random Preset Submerged" };
+        public static TranslationInfo[] rates = new[] { new TranslationInfo("0%"), new TranslationInfo("10%"), new TranslationInfo("20%"), new TranslationInfo("30%"), new TranslationInfo("40%"), new TranslationInfo("50%"), new TranslationInfo("60%"), new TranslationInfo("70%"), new TranslationInfo("80%"), new TranslationInfo("90%"), new TranslationInfo("100%") };
+        public static TranslationInfo[] ratesModifier = new[] { new TranslationInfo("1"), new TranslationInfo("2"), new TranslationInfo("3") };
+        public static TranslationInfo[] presets = new[] { new TranslationInfo("Opt-General", 45), new TranslationInfo("Opt-General", 46), new TranslationInfo("Opt-General", 47), new TranslationInfo("Opt-General", 48), new TranslationInfo("Opt-General", 45), new TranslationInfo("Opt-General", 49), new TranslationInfo("Opt-General", 50), new TranslationInfo("Opt-General", 51) };
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
@@ -102,7 +102,7 @@ namespace TheOtherRoles {
         public static CustomOption jackalSpawnRate;
         public static CustomOption jackalKillCooldown;
         public static CustomOption jackalCreateSidekickCooldown;
-        public static CustomOption jackalCanSabotageLights;
+        //public static CustomOption jackalCanSabotageLights;
         public static CustomOption jackalKillFakeImpostor;
         public static CustomOption jackalCanUseVents;
         public static CustomOption jackalCanUseSabo;
@@ -111,7 +111,7 @@ namespace TheOtherRoles {
         public static CustomOption sidekickPromotesToJackal;
         public static CustomOption sidekickCanKill;
         public static CustomOption sidekickCanUseVents;
-        public static CustomOption sidekickCanSabotageLights;
+        //public static CustomOption sidekickCanSabotageLights;
         public static CustomOption jackalPromotedFromSidekickCanCreateSidekick;
         public static CustomOption jackalCanCreateSidekickFromImpostor;
         public static CustomOption jackalAndSidekickHaveImpostorVision;
@@ -533,217 +533,222 @@ namespace TheOtherRoles {
             CustomOption.vanillaSettings = TheOtherRolesPlugin.Instance.Config.Bind("Preset0", "VanillaOptions", "");
 
             // Role Options
-            presetSelection = CustomOption.Create(0, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Preset"), presets, null, true);
-            activateRoles = CustomOption.Create(1, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Enable Mod Roles And Block Vanilla Roles"), true, null, true);
-            anyPlayerCanStopStart = CustomOption.Create(2, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Any Player Can Stop The Start"), false, null, false);
+            presetSelection = CustomOption.Create(0, Types.General, new TranslationInfo("Opt-General", 11, new Color(204f / 255f, 204f / 255f, 0, 1f)), presets, null, true);
+            activateRoles = CustomOption.Create(1, Types.General, new TranslationInfo("Opt-General", 33, new Color(204f / 255f, 204f / 255f, 0, 1f)), true, null, true);
+            anyPlayerCanStopStart = CustomOption.Create(2, Types.General, new TranslationInfo("Opt-General", 34, new Color(204f / 255f, 204f / 255f, 0, 1f)), false, null, false);
 
-            if (Utilities.EventUtility.canBeEnabled) enableEventMode = CustomOption.Create(10423, Types.General, cs(Color.green, "Enable Special Mode"), true, null, true);
+            if (Utilities.EventUtility.canBeEnabled) enableEventMode = CustomOption.Create(10423, Types.General, new TranslationInfo("Opt-General", 35, Color.green), true, null, true);
 
             // Using new id's for the options to not break compatibilty with older versions
-            crewmateRolesCountMin = CustomOption.Create(300, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Minimum Crewmate Roles"), 15f, 0f, 15f, 1f, null, true);
-            crewmateRolesCountMax = CustomOption.Create(301, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Crewmate Roles"), 15f, 0f, 15f, 1f);
-            crewmateRolesFill = CustomOption.Create(308, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Fill Crewmate Roles\n(Ignores Min/Max)"), false);
-            neutralRolesCountMin = CustomOption.Create(302, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Minimum Neutral Roles"), 15f, 0f, 15f, 1f);
-            neutralRolesCountMax = CustomOption.Create(303, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Neutral Roles"), 15f, 0f, 15f, 1f);
-            impostorRolesCountMin = CustomOption.Create(304, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Minimum Impostor Roles"), 15f, 0f, 15f, 1f);
-            impostorRolesCountMax = CustomOption.Create(305, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Impostor Roles"), 15f, 0f, 15f, 1f);
-            modifiersCountMin = CustomOption.Create(306, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Minimum Modifiers"), 15f, 0f, 15f, 1f);
-            modifiersCountMax = CustomOption.Create(307, Types.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "Maximum Modifiers"), 15f, 0f, 15f, 1f);
+            crewmateRolesCountMin = CustomOption.Create(300, Types.General, new TranslationInfo("Opt-General", 36, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f, null, true);
+            crewmateRolesCountMax = CustomOption.Create(301, Types.General, new TranslationInfo("Opt-General", 37, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            crewmateRolesFill = CustomOption.Create(308, Types.General, new TranslationInfo("Opt-General", 38, new Color(204f / 255f, 204f / 255f, 0, 1f)), false);
+            neutralRolesCountMin = CustomOption.Create(302, Types.General, new TranslationInfo("Opt-General", 39, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            neutralRolesCountMax = CustomOption.Create(303, Types.General, new TranslationInfo("Opt-General", 40, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            impostorRolesCountMin = CustomOption.Create(304, Types.General, new TranslationInfo("Opt-General", 41, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            impostorRolesCountMax = CustomOption.Create(305, Types.General, new TranslationInfo("Opt-General", 42, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            modifiersCountMin = CustomOption.Create(306, Types.General, new TranslationInfo("Opt-General", 43, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
+            modifiersCountMax = CustomOption.Create(307, Types.General, new TranslationInfo("Opt-General", 44, new Color(204f / 255f, 204f / 255f, 0, 1f)), 15f, 0f, 15f, 1f);
 
-            mafiaSpawnRate = CustomOption.Create(10, Types.Impostor, cs(Janitor.color, "Mafia"), rates, null, true);
-            janitorCooldown = CustomOption.Create(11, Types.Impostor, "Janitor Cooldown", 30f, 10f, 60f, 2.5f, mafiaSpawnRate);
+            mafiaSpawnRate = CustomOption.Create(10, Types.Impostor, new TranslationInfo(RoleId.Mafioso, Janitor.color), rates, null, true);
+            janitorCooldown = CustomOption.Create(11, Types.Impostor, new TranslationInfo("Opt-Mafia", 1), 30f, 10f, 60f, 2.5f, mafiaSpawnRate);
 
-            morphlingSpawnRate = CustomOption.Create(20, Types.Impostor, cs(Morphling.color, "Morphling"), rates, null, true);
-            morphlingCooldown = CustomOption.Create(21, Types.Impostor, "Morphling Cooldown", 30f, 10f, 60f, 2.5f, morphlingSpawnRate);
-            morphlingDuration = CustomOption.Create(22, Types.Impostor, "Morph Duration", 10f, 1f, 20f, 0.5f, morphlingSpawnRate);
+            morphlingSpawnRate = CustomOption.Create(20, Types.Impostor, new TranslationInfo(RoleId.Morphling, Morphling.color), rates, null, true);
+            morphlingCooldown = CustomOption.Create(21, Types.Impostor, new TranslationInfo("Opt-Morphling", 1), 30f, 10f, 60f, 2.5f, morphlingSpawnRate);
+            morphlingDuration = CustomOption.Create(22, Types.Impostor, new TranslationInfo("Opt-Morphling", 2), 10f, 1f, 20f, 0.5f, morphlingSpawnRate);
         
-            bomber2SpawnRate = CustomOption.Create(8840, Types.Impostor, cs(Bomber2.color, "Bomber [BETA]"), rates, null, true);
-            bomber2BombCooldown = CustomOption.Create(8841, Types.Impostor, "Bomber Cooldown", 30f, 25f, 60f, 2.5f, bomber2SpawnRate);
-            bomber2Delay = CustomOption.Create(8842, Types.Impostor, "Bomb Delay", 10f, 1f, 20f, 0.5f, bomber2SpawnRate);
-            bomber2Timer = CustomOption.Create(8843, Types.Impostor, "Bomb Timer", 10f, 5f, 30f, 5f, bomber2SpawnRate);
+            bomber2SpawnRate = CustomOption.Create(8840, Types.Impostor, new TranslationInfo(RoleId.Bomber2, Bomber2.color), rates, null, true);
+            bomber2BombCooldown = CustomOption.Create(8841, Types.Impostor, new TranslationInfo("Opt-Bomber2", 1), 30f, 25f, 60f, 2.5f, bomber2SpawnRate);
+            bomber2Delay = CustomOption.Create(8842, Types.Impostor, new TranslationInfo("Opt-Bomber2", 2), 10f, 1f, 20f, 0.5f, bomber2SpawnRate);
+            bomber2Timer = CustomOption.Create(8843, Types.Impostor, new TranslationInfo("Opt-Bomber2", 3), 10f, 5f, 30f, 5f, bomber2SpawnRate);
 
-            undertakerSpawnRate = CustomOption.Create(1201, Types.Impostor, cs(Undertaker.color, "Undertaker"), rates, null, true);
-            undertakerDragingDelaiAfterKill = CustomOption.Create(1202, Types.Impostor, "Draging delay after kill", 0f, 0f, 15, 1f, undertakerSpawnRate);                     
-            undertakerCanDragAndVent = CustomOption.Create(1203, Types.Impostor, "Can Vent while dragging", true, undertakerSpawnRate);
+            undertakerSpawnRate = CustomOption.Create(1201, Types.Impostor, new TranslationInfo(RoleId.Undertaker, Undertaker.color), rates, null, true);
+            undertakerDragingDelaiAfterKill = CustomOption.Create(1202, Types.Impostor, new TranslationInfo("Opt-Undertaker", 1), 0f, 0f, 15, 1f, undertakerSpawnRate);                     
+            undertakerCanDragAndVent = CustomOption.Create(1203, Types.Impostor, new TranslationInfo("Opt-Undertaker", 2), true, undertakerSpawnRate);
 
 
-            camouflagerSpawnRate = CustomOption.Create(30, Types.Impostor, cs(Camouflager.color, "Camouflager"), rates, null, true);
-            camouflagerCooldown = CustomOption.Create(31, Types.Impostor, "Camouflager Cooldown", 30f, 10f, 60f, 2.5f, camouflagerSpawnRate);
-            camouflagerDuration = CustomOption.Create(32, Types.Impostor, "Camo Duration", 10f, 1f, 20f, 0.5f, camouflagerSpawnRate);
+            camouflagerSpawnRate = CustomOption.Create(30, Types.Impostor, new TranslationInfo(RoleId.Camouflager, Camouflager.color), rates, null, true);
+            camouflagerCooldown = CustomOption.Create(31, Types.Impostor, new TranslationInfo("Opt-Camouflager", 1), 30f, 10f, 60f, 2.5f, camouflagerSpawnRate);
+            camouflagerDuration = CustomOption.Create(32, Types.Impostor, new TranslationInfo("Opt-Camouflager", 2), 10f, 1f, 20f, 0.5f, camouflagerSpawnRate);
 
-            vampireSpawnRate = CustomOption.Create(40, Types.Impostor, cs(Vampire.color, "Vampire"), rates, null, true);
-            vampireKillDelay = CustomOption.Create(41, Types.Impostor, "Vampire Kill Delay", 10f, 1f, 20f, 1f, vampireSpawnRate);
-            vampireCooldown = CustomOption.Create(42, Types.Impostor, "Vampire Cooldown", 30f, 10f, 60f, 2.5f, vampireSpawnRate);
-            vampireGarlicButton = CustomOption.Create(43, Types.Impostor, "Enable Garlic", true, vampireSpawnRate);
-            vampireCanKillNearGarlics = CustomOption.Create(44, Types.Impostor, "Vampire Can Kill Near Garlics", true, vampireGarlicButton);
+            vampireSpawnRate = CustomOption.Create(40, Types.Impostor, new TranslationInfo(RoleId.Vampire, Vampire.color), rates, null, true);
+            vampireKillDelay = CustomOption.Create(41, Types.Impostor, new TranslationInfo("Opt-Vampire", 1), 10f, 1f, 20f, 1f, vampireSpawnRate);
+            vampireCooldown = CustomOption.Create(42, Types.Impostor, new TranslationInfo("Opt-Vampire", 2), 30f, 10f, 60f, 2.5f, vampireSpawnRate);
+            vampireGarlicButton = CustomOption.Create(43, Types.Impostor, new TranslationInfo("Opt-Vampire", 3), true, vampireSpawnRate);
+            vampireCanKillNearGarlics = CustomOption.Create(44, Types.Impostor, new TranslationInfo("Opt-Vampire", 4), true, vampireGarlicButton);
 
-            eraserSpawnRate = CustomOption.Create(230, Types.Impostor, cs(Eraser.color, "Eraser"), rates, null, true);
-            eraserCooldown = CustomOption.Create(231, Types.Impostor, "Eraser Cooldown", 30f, 10f, 120f, 5f, eraserSpawnRate);
-            eraserCanEraseAnyone = CustomOption.Create(232, Types.Impostor, "Eraser Can Erase Anyone", false, eraserSpawnRate);
+            eraserSpawnRate = CustomOption.Create(230, Types.Impostor, new TranslationInfo(RoleId.Eraser, Eraser.color), rates, null, true);
+            eraserCooldown = CustomOption.Create(231, Types.Impostor, new TranslationInfo("Opt-Eraser", 1), 30f, 10f, 120f, 5f, eraserSpawnRate);
+            eraserCanEraseAnyone = CustomOption.Create(232, Types.Impostor, new TranslationInfo("Opt-Eraser", 2), false, eraserSpawnRate);
 			
-			poucherSpawnRate = CustomOption.Create(8833, Types.Impostor, cs(Poucher.color, "Poucher"), rates, null, true);
-			mimicSpawnRate = CustomOption.Create(8835, Types.Impostor, cs(Mimic.color, "Mimic"), rates, null, true);
+			poucherSpawnRate = CustomOption.Create(8833, Types.Impostor, new TranslationInfo(RoleId.Poucher, Poucher.color), rates, null, true);
+
+			mimicSpawnRate = CustomOption.Create(8835, Types.Impostor, new TranslationInfo(RoleId.Mimic, Mimic.color), rates, null, true);
 
             
             //cultistSpawnRate =  CustomOption.Create(3801, Types.Impostor, cs(Cultist.color, "Cultist"), rates, null, true);
 
-            tricksterSpawnRate = CustomOption.Create(250, Types.Impostor, cs(Trickster.color, "Trickster"), rates, null, true);
-            tricksterPlaceBoxCooldown = CustomOption.Create(251, Types.Impostor, "Trickster Box Cooldown", 10f, 2.5f, 30f, 2.5f, tricksterSpawnRate);
-            tricksterLightsOutCooldown = CustomOption.Create(252, Types.Impostor, "Trickster Lights Out Cooldown", 30f, 10f, 60f, 5f, tricksterSpawnRate);
-            tricksterLightsOutDuration = CustomOption.Create(253, Types.Impostor, "Trickster Lights Out Duration", 15f, 5f, 60f, 2.5f, tricksterSpawnRate);
+            tricksterSpawnRate = CustomOption.Create(250, Types.Impostor, new TranslationInfo(RoleId.Trickster, Trickster.color), rates, null, true);
+            tricksterPlaceBoxCooldown = CustomOption.Create(251, Types.Impostor, new TranslationInfo("Opt-Trickster", 1), 10f, 2.5f, 30f, 2.5f, tricksterSpawnRate);
+            tricksterLightsOutCooldown = CustomOption.Create(252, Types.Impostor, new TranslationInfo("Opt-Trickster", 2), 30f, 10f, 60f, 5f, tricksterSpawnRate);
+            tricksterLightsOutDuration = CustomOption.Create(253, Types.Impostor, new TranslationInfo("Opt-Trickster", 3), 15f, 5f, 60f, 2.5f, tricksterSpawnRate);
 
-            cleanerSpawnRate = CustomOption.Create(260, Types.Impostor, cs(Cleaner.color, "Cleaner"), rates, null, true);
-            cleanerCooldown = CustomOption.Create(261, Types.Impostor, "Cleaner Cooldown", 30f, 10f, 60f, 2.5f, cleanerSpawnRate);
+            cleanerSpawnRate = CustomOption.Create(260, Types.Impostor, new TranslationInfo(RoleId.Cleaner, Cleaner.color), rates, null, true);
+            cleanerCooldown = CustomOption.Create(261, Types.Impostor, new TranslationInfo("Opt-Cleaner", 1), 30f, 10f, 60f, 2.5f, cleanerSpawnRate);
 
-            warlockSpawnRate = CustomOption.Create(270, Types.Impostor, cs(Cleaner.color, "Warlock"), rates, null, true);
-            warlockCooldown = CustomOption.Create(271, Types.Impostor, "Warlock Cooldown", 30f, 10f, 60f, 2.5f, warlockSpawnRate);
-            warlockRootTime = CustomOption.Create(272, Types.Impostor, "Warlock Root Time", 5f, 0f, 15f, 1f, warlockSpawnRate);
+            warlockSpawnRate = CustomOption.Create(270, Types.Impostor, new TranslationInfo(RoleId.Warlock, Warlock.color), rates, null, true);
+            warlockCooldown = CustomOption.Create(271, Types.Impostor, new TranslationInfo("Opt-Warlock", 1), 30f, 10f, 60f, 2.5f, warlockSpawnRate);
+            warlockRootTime = CustomOption.Create(272, Types.Impostor, new TranslationInfo("Opt-Warlock", 2), 5f, 0f, 15f, 1f, warlockSpawnRate);
 
-            bountyHunterSpawnRate = CustomOption.Create(320, Types.Impostor, cs(BountyHunter.color, "Bounty Hunter"), rates, null, true);
-            bountyHunterBountyDuration = CustomOption.Create(321, Types.Impostor, "Duration After Which Bounty Changes",  60f, 10f, 180f, 10f, bountyHunterSpawnRate);
-            bountyHunterReducedCooldown = CustomOption.Create(322, Types.Impostor, "Cooldown After Killing Bounty", 2.5f, 0f, 30f, 2.5f, bountyHunterSpawnRate);
-            bountyHunterPunishmentTime = CustomOption.Create(323, Types.Impostor, "Additional Cooldown After Killing Others", 20f, 0f, 60f, 2.5f, bountyHunterSpawnRate);
-            bountyHunterShowArrow = CustomOption.Create(324, Types.Impostor, "Show Arrow Pointing Towards The Bounty", true, bountyHunterSpawnRate);
-            bountyHunterArrowUpdateIntervall = CustomOption.Create(325, Types.Impostor, "Arrow Update Intervall", 15f, 2.5f, 60f, 2.5f, bountyHunterShowArrow);
+            bountyHunterSpawnRate = CustomOption.Create(320, Types.Impostor, new TranslationInfo(RoleId.BountyHunter, BountyHunter.color), rates, null, true);
+            bountyHunterBountyDuration = CustomOption.Create(321, Types.Impostor, new TranslationInfo("Opt-BountyHunter", 1),  60f, 10f, 180f, 10f, bountyHunterSpawnRate);
+            bountyHunterReducedCooldown = CustomOption.Create(322, Types.Impostor, new TranslationInfo("Opt-BountyHunter", 2), 2.5f, 0f, 30f, 2.5f, bountyHunterSpawnRate);
+            bountyHunterPunishmentTime = CustomOption.Create(323, Types.Impostor, new TranslationInfo("Opt-BountyHunter", 3), 20f, 0f, 60f, 2.5f, bountyHunterSpawnRate);
+            bountyHunterShowArrow = CustomOption.Create(324, Types.Impostor, new TranslationInfo("Opt-BountyHunter", 4), true, bountyHunterSpawnRate);
+            bountyHunterArrowUpdateIntervall = CustomOption.Create(325, Types.Impostor, new TranslationInfo("Opt-BountyHunter", 5), 15f, 2.5f, 60f, 2.5f, bountyHunterShowArrow);
 
-            witchSpawnRate = CustomOption.Create(370, Types.Impostor, cs(Witch.color, "Witch"), rates, null, true);
-            witchCooldown = CustomOption.Create(371, Types.Impostor, "Witch Spell Casting Cooldown", 30f, 10f, 120f, 5f, witchSpawnRate);
-            witchAdditionalCooldown = CustomOption.Create(372, Types.Impostor, "Witch Additional Cooldown", 10f, 0f, 60f, 5f, witchSpawnRate);
-            witchCanSpellAnyone = CustomOption.Create(373, Types.Impostor, "Witch Can Spell Anyone", false, witchSpawnRate);
-            witchSpellCastingDuration = CustomOption.Create(374, Types.Impostor, "Spell Casting Duration", 1f, 0f, 10f, 1f, witchSpawnRate);
-            witchTriggerBothCooldowns = CustomOption.Create(375, Types.Impostor, "Trigger Both Cooldowns", true, witchSpawnRate);
-            witchVoteSavesTargets = CustomOption.Create(376, Types.Impostor, "Voting The Witch Saves All The Targets", true, witchSpawnRate);
+            witchSpawnRate = CustomOption.Create(370, Types.Impostor, new TranslationInfo(RoleId.Witch, Witch.color), rates, null, true);
+            witchCooldown = CustomOption.Create(371, Types.Impostor, new TranslationInfo("Opt-Witch", 1), 30f, 10f, 120f, 5f, witchSpawnRate);
+            witchAdditionalCooldown = CustomOption.Create(372, Types.Impostor, new TranslationInfo("Opt-Witch", 2), 10f, 0f, 60f, 5f, witchSpawnRate);
+            witchCanSpellAnyone = CustomOption.Create(373, Types.Impostor, new TranslationInfo("Opt-Witch", 3), false, witchSpawnRate);
+            witchSpellCastingDuration = CustomOption.Create(374, Types.Impostor, new TranslationInfo("Opt-Witch", 4), 1f, 0f, 10f, 1f, witchSpawnRate);
+            witchTriggerBothCooldowns = CustomOption.Create(375, Types.Impostor, new TranslationInfo("Opt-Witch", 5), true, witchSpawnRate);
+            witchVoteSavesTargets = CustomOption.Create(376, Types.Impostor, new TranslationInfo("Opt-Witch", 6), true, witchSpawnRate);
 
-            ninjaSpawnRate = CustomOption.Create(380, Types.Impostor, cs(Ninja.color, "Ninja"), rates, null, true);
-            ninjaCooldown = CustomOption.Create(381, Types.Impostor, "Ninja Mark Cooldown", 30f, 10f, 120f, 5f, ninjaSpawnRate);
-            ninjaKnowsTargetLocation = CustomOption.Create(382, Types.Impostor, "Ninja Knows Location Of Target", true, ninjaSpawnRate);
-            ninjaTraceTime = CustomOption.Create(383, Types.Impostor, "Trace Duration", 5f, 1f, 20f, 0.5f, ninjaSpawnRate);
-            ninjaTraceColorTime = CustomOption.Create(384, Types.Impostor, "Time Till Trace Color Has Faded", 2f, 0f, 20f, 0.5f, ninjaSpawnRate);
-            ninjaInvisibleDuration = CustomOption.Create(385, Types.Impostor, "Time The Ninja Is Invisible", 3f, 0f, 20f, 1f, ninjaSpawnRate);
+            ninjaSpawnRate = CustomOption.Create(380, Types.Impostor, new TranslationInfo(RoleId.Ninja, Ninja.color), rates, null, true);
+            ninjaCooldown = CustomOption.Create(381, Types.Impostor, new TranslationInfo("Opt-Ninja", 1), 30f, 10f, 120f, 5f, ninjaSpawnRate);
+            ninjaKnowsTargetLocation = CustomOption.Create(382, Types.Impostor, new TranslationInfo("Opt-Ninja", 2), true, ninjaSpawnRate);
+            ninjaTraceTime = CustomOption.Create(383, Types.Impostor, new TranslationInfo("Opt-Ninja", 3), 5f, 1f, 20f, 0.5f, ninjaSpawnRate);
+            ninjaTraceColorTime = CustomOption.Create(384, Types.Impostor, new TranslationInfo("Opt-Ninja", 4), 2f, 0f, 20f, 0.5f, ninjaSpawnRate);
+            ninjaInvisibleDuration = CustomOption.Create(385, Types.Impostor, new TranslationInfo("Opt-Ninja", 5), 3f, 0f, 20f, 1f, ninjaSpawnRate);
 
-            bomberSpawnRate = CustomOption.Create(460, Types.Impostor, cs(Bomber.color, "Bomber"), rates, null, true);
-            bomberBombDestructionTime = CustomOption.Create(461, Types.Impostor, "Bomb Destruction Time", 20f, 2.5f, 120f, 2.5f, bomberSpawnRate);
-            bomberBombDestructionRange = CustomOption.Create(462, Types.Impostor, "Bomb Destruction Range", 50f, 5f, 150f, 5f, bomberSpawnRate);
-            bomberBombHearRange = CustomOption.Create(463, Types.Impostor, "Bomb Hear Range", 60f, 5f, 150f, 5f, bomberSpawnRate);
-            bomberDefuseDuration = CustomOption.Create(464, Types.Impostor, "Bomb Defuse Duration", 3f, 0.5f, 30f, 0.5f, bomberSpawnRate);
-            bomberBombCooldown = CustomOption.Create(465, Types.Impostor, "Bomb Cooldown", 15f, 2.5f, 30f, 2.5f, bomberSpawnRate);
-            bomberBombActiveAfter = CustomOption.Create(466, Types.Impostor, "Bomb Is Active After", 3f, 0.5f, 15f, 0.5f, bomberSpawnRate);
+            bomberSpawnRate = CustomOption.Create(460, Types.Impostor, new TranslationInfo(RoleId.Bomber, Bomber.color), rates, null, true);
+            bomberBombDestructionTime = CustomOption.Create(461, Types.Impostor, new TranslationInfo("Opt-Bomber", 1), 20f, 2.5f, 120f, 2.5f, bomberSpawnRate);
+            bomberBombDestructionRange = CustomOption.Create(462, Types.Impostor, new TranslationInfo("Opt-Bomber", 2), 50f, 5f, 150f, 5f, bomberSpawnRate);
+            bomberBombHearRange = CustomOption.Create(463, Types.Impostor, new TranslationInfo("Opt-Bomber", 3), 60f, 5f, 150f, 5f, bomberSpawnRate);
+            bomberDefuseDuration = CustomOption.Create(464, Types.Impostor, new TranslationInfo("Opt-Bomber", 4), 3f, 0.5f, 30f, 0.5f, bomberSpawnRate);
+            bomberBombCooldown = CustomOption.Create(465, Types.Impostor, new TranslationInfo("Opt-Bomber", 5), 15f, 2.5f, 30f, 2.5f, bomberSpawnRate);
+            bomberBombActiveAfter = CustomOption.Create(466, Types.Impostor, new TranslationInfo("Opt-Bomber", 6), 3f, 0.5f, 15f, 0.5f, bomberSpawnRate);
 
-            yoyoSpawnRate = CustomOption.Create(470, Types.Impostor, cs(Yoyo.color, "Yo-Yo"), rates, null, true);
-            yoyoBlinkDuration = CustomOption.Create(471, Types.Impostor, "Blink Duration", 20f, 2.5f, 120f, 2.5f, yoyoSpawnRate);
-            yoyoMarkCooldown = CustomOption.Create(472, Types.Impostor, "Mark Location Cooldown", 20f, 2.5f, 120f, 2.5f, yoyoSpawnRate);
-            yoyoMarkStaysOverMeeting = CustomOption.Create(473, Types.Impostor, "Marked Location Stays After Meeting", true, yoyoSpawnRate);
-            yoyoHasAdminTable = CustomOption.Create(474, Types.Impostor, "Has Admin Table", true, yoyoSpawnRate);
-            yoyoAdminTableCooldown = CustomOption.Create(475, Types.Impostor, "Admin Table Cooldown", 20f, 2.5f, 120f, 2.5f, yoyoHasAdminTable);
-            yoyoSilhouetteVisibility = CustomOption.Create(476, Types.Impostor, "Silhouette Visibility", new string[] { "0%", "10%", "20%", "30%", "40%", "50%" }, yoyoSpawnRate);
+            yoyoSpawnRate = CustomOption.Create(470, Types.Impostor, new TranslationInfo(RoleId.Yoyo, Yoyo.color), rates, null, true);
+            yoyoBlinkDuration = CustomOption.Create(471, Types.Impostor, new TranslationInfo("Opt-Yoyo", 1), 20f, 2.5f, 120f, 2.5f, yoyoSpawnRate);
+            yoyoMarkCooldown = CustomOption.Create(472, Types.Impostor, new TranslationInfo("Opt-Yoyo", 2), 20f, 2.5f, 120f, 2.5f, yoyoSpawnRate);
+            yoyoMarkStaysOverMeeting = CustomOption.Create(473, Types.Impostor, new TranslationInfo("Opt-Yoyo", 3), true, yoyoSpawnRate);
+            yoyoHasAdminTable = CustomOption.Create(474, Types.Impostor, new TranslationInfo("Opt-Yoyo", 4), true, yoyoSpawnRate);
+            yoyoAdminTableCooldown = CustomOption.Create(475, Types.Impostor, new TranslationInfo("Opt-Yoyo", 5), 20f, 2.5f, 120f, 2.5f, yoyoHasAdminTable);
+            yoyoSilhouetteVisibility = CustomOption.Create(476, Types.Impostor, new TranslationInfo("Opt-Yoyo", 6), new[] { new TranslationInfo("0%"), new TranslationInfo("10%"), new TranslationInfo("20%"), new TranslationInfo("30%"), new TranslationInfo("40%"), new TranslationInfo("50%") }, yoyoSpawnRate);
 
+            minerSpawnRate = CustomOption.Create(1120, Types.Impostor, new TranslationInfo(RoleId.Miner, Miner.color), rates, null, true); //jackalSpawnRate);
+            minerCooldown = CustomOption.Create(1121, Types.Impostor, new TranslationInfo("Opt-Miner", 1), 25f, 10f, 60f, 2.5f, minerSpawnRate);
+            minerUseNumber = CustomOption.Create(1122, Types.Impostor, new TranslationInfo("Opt-Miner", 2), 1, 1, 20, 1, minerSpawnRate);
 
-            blackmailerSpawnRate = CustomOption.Create(710, Types.Impostor, cs(Blackmailer.color, "Blackmailer"), rates, null, true);
-            blackmailerCooldown = CustomOption.Create(711, Types.Impostor, "Blackmail Cooldown", 30f, 5f, 120f, 5f, blackmailerSpawnRate);
+            blackmailerSpawnRate = CustomOption.Create(710, Types.Impostor, new TranslationInfo(RoleId.Blackmailer, Blackmailer.color), rates, null, true);
+            blackmailerCooldown = CustomOption.Create(711, Types.Impostor, new TranslationInfo("Opt-Blackmailer", 1), 30f, 5f, 120f, 5f, blackmailerSpawnRate);
 
-            jesterSpawnRate = CustomOption.Create(60, Types.Neutral, cs(Jester.color, "Jester"), rates, null, true);
-            jesterCanCallEmergency = CustomOption.Create(61, Types.Neutral, "Jester Can Call Emergency Meeting", true, jesterSpawnRate);
-            jesterCanVent = CustomOption.Create(1901, Types.Neutral, "Jester Can Hide in Vent", true, jesterSpawnRate);
-            jesterHasImpostorVision = CustomOption.Create(62, Types.Neutral, "Jester Has Impostor Vision", false, jesterSpawnRate);
+            jesterSpawnRate = CustomOption.Create(60, Types.Neutral, new TranslationInfo(RoleId.Jester, Jester.color), rates, null, true);
+            jesterCanCallEmergency = CustomOption.Create(61, Types.Neutral, new TranslationInfo("Opt-Jester", 1), true, jesterSpawnRate);
+            jesterCanVent = CustomOption.Create(1901, Types.Neutral, new TranslationInfo("Opt-Jester", 2), true, jesterSpawnRate);
+            jesterHasImpostorVision = CustomOption.Create(62, Types.Neutral, new TranslationInfo("Opt-Jester", 3), false, jesterSpawnRate);
 			
-            prosecutorSpawnRate = CustomOption.Create(615, Types.Neutral, cs(Prosecutor.color, "Executioner"),   rates, null, true);
+            prosecutorSpawnRate = CustomOption.Create(615, Types.Neutral, new TranslationInfo(RoleId.Prosecutor, Prosecutor.color),   rates, null, true);
 
-            amnisiacSpawnRate = CustomOption.Create(616, Types.Neutral, cs(Amnisiac.color, "Amnesiac"), rates, null, true);
-            amnisiacShowArrows = CustomOption.Create(617, Types.Neutral, "Show arrows to dead bodies", true, amnisiacSpawnRate);
-            amnisiacResetRole = CustomOption.Create(618, Types.Neutral, "Reset role when taken", true, amnisiacSpawnRate);
+            amnisiacSpawnRate = CustomOption.Create(616, Types.Neutral, new TranslationInfo(RoleId.Amnisiac, Amnisiac.color), rates, null, true);
+            amnisiacShowArrows = CustomOption.Create(617, Types.Neutral, new TranslationInfo("Opt-Amnesiac", 1), true, amnisiacSpawnRate);
+            amnisiacResetRole = CustomOption.Create(618, Types.Neutral, new TranslationInfo("Opt-Amnesiac", 2), true, amnisiacSpawnRate);
 
+            arsonistSpawnRate = CustomOption.Create(290, Types.Neutral, new TranslationInfo(RoleId.Arsonist, Arsonist.color), rates, null, true);
+            arsonistCooldown = CustomOption.Create(291, Types.Neutral, new TranslationInfo("Opt-Arsonist", 1), 12.5f, 2.5f, 60f, 2.5f, arsonistSpawnRate);
+            arsonistDuration = CustomOption.Create(292, Types.Neutral, new TranslationInfo("Opt-Arsonist", 2), 3f, 1f, 10f, 1f, arsonistSpawnRate);
 
-            arsonistSpawnRate = CustomOption.Create(290, Types.Neutral, cs(Arsonist.color, "Arsonist"), rates, null, true);
-            arsonistCooldown = CustomOption.Create(291, Types.Neutral, "Arsonist Cooldown", 12.5f, 2.5f, 60f, 2.5f, arsonistSpawnRate);
-            arsonistDuration = CustomOption.Create(292, Types.Neutral, "Arsonist Douse Duration", 3f, 1f, 10f, 1f, arsonistSpawnRate);
-
-            jackalSpawnRate = CustomOption.Create(220, Types.Neutral, cs(Jackal.color, "Jackal"), rates, null, true);
-            jackalKillCooldown = CustomOption.Create(221, Types.Neutral, "Jackal/Sidekick Kill Cooldown", 30f, 10f, 60f, 2.5f, jackalSpawnRate);
+            jackalSpawnRate = CustomOption.Create(220, Types.Neutral, new TranslationInfo(RoleId.Jackal, Jackal.color), rates, null, true);
+            jackalKillCooldown = CustomOption.Create(221, Types.Neutral, new TranslationInfo("Opt-Jackal", 1), 30f, 10f, 60f, 2.5f, jackalSpawnRate);
             //jackalhasChat = CustomOption.Create(1197, Types.Neutral, "Jackal team has Chat", false, jackalSpawnRate);
-            jackalCanUseVents = CustomOption.Create(223, Types.Neutral, "Jackal Can Use Vents", true, jackalSpawnRate);
-            jackalCanUseSabo = CustomOption.Create(8876, Types.Neutral, "Jackal Team Can Sabo", false, jackalSpawnRate);
-            if (jackalCanUseSabo.getBool() != true) jackalCanSabotageLights = CustomOption.Create(431, Types.Neutral, "Jackal Can Sabotage Lights(Except Fungle)", true, jackalSpawnRate);
-            jackalAndSidekickHaveImpostorVision = CustomOption.Create(430, Types.Neutral, "Jackal And Sidekick Have Impostor Vision", false, jackalSpawnRate);
-            jackalCanCreateSidekick = CustomOption.Create(224, Types.Neutral, "Jackal Can Create A Sidekick", false, jackalSpawnRate);
-            jackalCreateSidekickCooldown = CustomOption.Create(222, Types.Neutral, "Jackal Create Sidekick Cooldown", 30f, 10f, 60f, 2.5f, jackalCanCreateSidekick);
-            sidekickPromotesToJackal = CustomOption.Create(225, Types.Neutral, "Sidekick Gets Promoted To Jackal On Jackal Death", false, jackalCanCreateSidekick);
-            sidekickCanKill = CustomOption.Create(226, Types.Neutral, "Sidekick Can Kill", false, jackalCanCreateSidekick);
-            sidekickCanUseVents = CustomOption.Create(227, Types.Neutral, "Sidekick Can Use Vents", true, jackalCanCreateSidekick);
-            sidekickCanSabotageLights = CustomOption.Create(432, Types.Neutral, "Sidekick Can Sabotage Lights(Except Fungle)", true, jackalCanCreateSidekick);
-            jackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(228, Types.Neutral, "Jackals Promoted From Sidekick Can Create A Sidekick", true, sidekickPromotesToJackal);
-            jackalCanCreateSidekickFromImpostor = CustomOption.Create(229, Types.Neutral, "Jackals Can Make An Impostor To His Sidekick", true, jackalCanCreateSidekick);
-			jackalKillFakeImpostor = CustomOption.Create(7885, Types.Neutral, "Kill a failed sidekick attempt", true, jackalCanCreateSidekick);
+            jackalCanUseVents = CustomOption.Create(223, Types.Neutral, new TranslationInfo("Opt-Jackal", 2), true, jackalSpawnRate);
+            jackalCanUseSabo = CustomOption.Create(8876, Types.Neutral, new TranslationInfo("Opt-Jackal", 3), false, jackalSpawnRate);
+            //jackalCanSabotageLights = CustomOption.Create(431, Types.Neutral, "Jackal Can Sabotage Lights(Except Fungle)", true, jackalSpawnRate);
+            jackalAndSidekickHaveImpostorVision = CustomOption.Create(430, Types.Neutral, new TranslationInfo("Opt-Jackal", 4), false, jackalSpawnRate);
+            jackalCanCreateSidekick = CustomOption.Create(224, Types.Neutral, new TranslationInfo("Opt-Jackal", 5), false, jackalSpawnRate);
+            jackalCreateSidekickCooldown = CustomOption.Create(222, Types.Neutral, new TranslationInfo("Opt-Jackal", 6), 30f, 10f, 60f, 2.5f, jackalCanCreateSidekick);
+            sidekickPromotesToJackal = CustomOption.Create(225, Types.Neutral, new TranslationInfo("Opt-Jackal", 7), false, jackalCanCreateSidekick);
+            sidekickCanKill = CustomOption.Create(226, Types.Neutral, new TranslationInfo("Opt-Jackal", 8), false, jackalCanCreateSidekick);
+            sidekickCanUseVents = CustomOption.Create(227, Types.Neutral, new TranslationInfo("Opt-Jackal", 9), true, jackalCanCreateSidekick);
+            //sidekickCanSabotageLights = CustomOption.Create(432, Types.Neutral, "Sidekick Can Sabotage Lights(Except Fungle)", true, jackalCanCreateSidekick);
+            jackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(228, Types.Neutral, new TranslationInfo("Opt-Jackal", 10), true, sidekickPromotesToJackal);
+            jackalCanCreateSidekickFromImpostor = CustomOption.Create(229, Types.Neutral, new TranslationInfo("Opt-Jackal", 11), true, jackalCanCreateSidekick);
+			jackalKillFakeImpostor = CustomOption.Create(7885, Types.Neutral, new TranslationInfo("Opt-Jackal", 12), true, jackalCanCreateSidekick);
 
-            swooperSpawnRate = CustomOption.Create(1110, Types.Neutral, cs(Swooper.color, "Swooper"), rates, null, true); //jackalSpawnRate);
-            swooperAsWell = CustomOption.Create(1113, Types.Neutral, "Spawn as Alternate Jackal", false, swooperSpawnRate);
-            swooperCooldown = CustomOption.Create(1111, Types.Neutral, "Swoop Cooldown", 30f, 10f, 60f, 2.5f, swooperSpawnRate);
-            swooperDuration = CustomOption.Create(1112, Types.Neutral, "Swoop Duration", 10f, 2.5f, 20f, 0.5f, swooperSpawnRate);
-            swooperHasImpVision = CustomOption.Create(1114, Types.Neutral, "Swooper Has Impostor Vision", true, swooperSpawnRate);
+            swooperSpawnRate = CustomOption.Create(1110, Types.Neutral, new TranslationInfo(RoleId.Swooper, Swooper.color), rates, null, true); //jackalSpawnRate);
+            swooperAsWell = CustomOption.Create(1113, Types.Neutral, new TranslationInfo("Opt-Swooper", 1), false, swooperSpawnRate);
+            swooperCooldown = CustomOption.Create(1111, Types.Neutral, new TranslationInfo("Opt-Swooper", 2), 30f, 10f, 60f, 2.5f, swooperSpawnRate);
+            swooperDuration = CustomOption.Create(1112, Types.Neutral, new TranslationInfo("Opt-Swooper", 3), 10f, 2.5f, 20f, 0.5f, swooperSpawnRate);
+            swooperHasImpVision = CustomOption.Create(1114, Types.Neutral, new TranslationInfo("Opt-Swooper", 4), true, swooperSpawnRate);
 			
-            minerSpawnRate = CustomOption.Create(1120, Types.Impostor, cs(Miner.color, "Miner"), rates, null, true); //jackalSpawnRate);
-            minerCooldown = CustomOption.Create(1121, Types.Impostor, "Mine Cooldown", 25f, 10f, 60f, 2.5f, minerSpawnRate);
-            minerUseNumber = CustomOption.Create(1122, Types.Impostor, "Number Of Uses", 1, 1, 20, 1, minerSpawnRate);
+            vultureSpawnRate = CustomOption.Create(340, Types.Neutral, new TranslationInfo(RoleId.Vulture, Vulture.color), rates, null, true);
+            vultureCooldown = CustomOption.Create(341, Types.Neutral, new TranslationInfo("Opt-Vulture", 1), 15f, 10f, 60f, 2.5f, vultureSpawnRate);
+            vultureNumberToWin = CustomOption.Create(342, Types.Neutral, new TranslationInfo("Opt-Vulture", 2), 4f, 1f, 10f, 1f, vultureSpawnRate);
+            vultureCanUseVents = CustomOption.Create(343, Types.Neutral, new TranslationInfo("Opt-Vulture", 3), true, vultureSpawnRate);
+            vultureShowArrows = CustomOption.Create(344, Types.Neutral, new TranslationInfo("Opt-Vulture", 4), true, vultureSpawnRate);
 
-            vultureSpawnRate = CustomOption.Create(340, Types.Neutral, cs(Vulture.color, "Vulture"), rates, null, true);
-            vultureCooldown = CustomOption.Create(341, Types.Neutral, "Vulture Cooldown", 15f, 10f, 60f, 2.5f, vultureSpawnRate);
-            vultureNumberToWin = CustomOption.Create(342, Types.Neutral, "Number Of Corpses Needed To Be Eaten", 4f, 1f, 10f, 1f, vultureSpawnRate);
-            vultureCanUseVents = CustomOption.Create(343, Types.Neutral, "Vulture Can Use Vents", true, vultureSpawnRate);
-            vultureShowArrows = CustomOption.Create(344, Types.Neutral, "Show Arrows Pointing Towards The Corpses", true, vultureSpawnRate);
+            doomsayerSpawnRate = CustomOption.Create(490, Types.Neutral, new TranslationInfo(RoleId.Doomsayer, Doomsayer.color), rates, null, true);
+            doomsayerCooldown = CustomOption.Create(491, Types.Neutral, new TranslationInfo("Opt-Doomsayer", 1), 20f, 2.5f, 60f, 2.5f, doomsayerSpawnRate);
+            doomsayerHasMultipleShotsPerMeeting = CustomOption.Create(492, Types.Neutral, new TranslationInfo("Opt-Doomsayer", 2), true, doomsayerSpawnRate);
+            doomsayerCanGuessImpostor = CustomOption.Create(493, Types.Neutral, new TranslationInfo($"{new TranslationInfo("Opt-Doomsayer", 3)}{cs(Palette.ImpostorRed, ModTranslation.GetString("Opt-Doomsayer", 4))}"), true, doomsayerSpawnRate);
+            doomsayerCanGuessNeutral = CustomOption.Create(494, Types.Neutral, new TranslationInfo($"{new TranslationInfo("Opt-Doomsayer", 3)}{cs(Color.grey, ModTranslation.GetString("Opt-Doomsayer", 5))}"), true, doomsayerSpawnRate);
+            doomsayerOnlineTarger = CustomOption.Create(495, Types.Neutral, new TranslationInfo("Opt-Doomsayer", 6), false, doomsayerSpawnRate);
+            doomsayerObtainRoles = CustomOption.Create(496, Types.Neutral, new TranslationInfo("Opt-Doomsayer", 7), 3f, 1f, 10f, 1f, doomsayerSpawnRate);
+            doomsayerDormationNum = CustomOption.Create(497, Types.Neutral, new TranslationInfo("Opt-Doomsayer", 8), 5f, 1f, 10f, 1f, doomsayerSpawnRate);
 
-            doomsayerSpawnRate = CustomOption.Create(490, Types.Neutral, cs(Doomsayer.color, "Doomsayer"), rates, null, true);
-            doomsayerCooldown = CustomOption.Create(491, Types.Neutral, "Doomsayer Observe Cooldown", 20f, 2.5f, 60f, 2.5f, doomsayerSpawnRate);
-            doomsayerHasMultipleShotsPerMeeting = CustomOption.Create(492, Types.Neutral, "Doommayer Can Continue Guessing After Guess", true, doomsayerSpawnRate);
-            doomsayerCanGuessImpostor = CustomOption.Create(493, Types.Neutral, $"Doomsayer can Guess {cs(Palette.ImpostorRed, "Impostor Roles")}", true, doomsayerSpawnRate);
-            doomsayerCanGuessNeutral = CustomOption.Create(494, Types.Neutral,$"Doomsayer can Guess {cs(Color.grey, "Neutral Roles")}", true, doomsayerSpawnRate);
-            doomsayerOnlineTarger = CustomOption.Create(495, Types.Neutral, "Obtain Enable Roles", false, doomsayerSpawnRate);
-            doomsayerObtainRoles = CustomOption.Create(496, Types.Neutral, "Number Of Roles Need Doomsayer Guess", 3f, 1f, 10f, 1f, doomsayerSpawnRate);
-            doomsayerDormationNum = CustomOption.Create(497, Types.Neutral, "Obtain Roles Number", 5f, 1f, 10f, 1f, doomsayerSpawnRate);
+            lawyerSpawnRate = CustomOption.Create(350, Types.Neutral, new TranslationInfo(RoleId.Lawyer, Lawyer.color), rates, null, true);
+            lawyerVision = CustomOption.Create(354, Types.Neutral, new TranslationInfo("Opt-Lawyer", 1), 1f, 0.25f, 3f, 0.25f, lawyerSpawnRate);
+            lawyerKnowsRole = CustomOption.Create(355, Types.Neutral, new TranslationInfo("Opt-Lawyer", 2), false, lawyerSpawnRate);
+            lawyerCanCallEmergency = CustomOption.Create(352, Types.Neutral, new TranslationInfo("Opt-Lawyer", 3), true, lawyerSpawnRate);
+            lawyerTargetCanBeJester = CustomOption.Create(351, Types.Neutral, new TranslationInfo("Opt-Lawyer", 4), false, lawyerSpawnRate);
+            pursuerCooldown = CustomOption.Create(356, Types.Neutral, new TranslationInfo("Opt-Lawyer", 5), 30f, 5f, 60f, 2.5f, lawyerSpawnRate);
+            pursuerBlanksNumber = CustomOption.Create(357, Types.Neutral, new TranslationInfo("Opt-Lawyer", 6), 5f, 1f, 20f, 1f, lawyerSpawnRate);
 
-            lawyerSpawnRate = CustomOption.Create(350, Types.Neutral, cs(Lawyer.color, "Lawyer"), rates, null, true);
-            lawyerVision = CustomOption.Create(354, Types.Neutral, "Vision", 1f, 0.25f, 3f, 0.25f, lawyerSpawnRate);
-            lawyerKnowsRole = CustomOption.Create(355, Types.Neutral, "Lawyer/Prosecutor Knows Target Role", false, lawyerSpawnRate);
-            lawyerCanCallEmergency = CustomOption.Create(352, Types.Neutral, "Lawyer/Prosecutor Can Call Emergency Meeting", true, lawyerSpawnRate);
-            lawyerTargetCanBeJester = CustomOption.Create(351, Types.Neutral, "Lawyer Target Can Be The Jester", false, lawyerSpawnRate);
-            pursuerCooldown = CustomOption.Create(356, Types.Neutral, "Pursuer Blank Cooldown", 30f, 5f, 60f, 2.5f, lawyerSpawnRate);
-            pursuerBlanksNumber = CustomOption.Create(357, Types.Neutral, "Pursuer Number Of Blanks", 5f, 1f, 20f, 1f, lawyerSpawnRate);
-            
-            werewolfSpawnRate = CustomOption.Create(1501, Types.Neutral, cs(Werewolf.color, "Werewolf"), rates, null, true);
-            werewolfRampageCooldown  = CustomOption.Create(1502, Types.Neutral, "Rampage Cooldown", 30f, 10f, 60f, 2.5f, werewolfSpawnRate);
-            werewolfRampageDuration = CustomOption.Create(1503, Types.Neutral, "Rampage Duration", 15f, 1f, 20f, 0.5f, werewolfSpawnRate);
-            werewolfKillCooldown = CustomOption.Create(1504, Types.Neutral, "KillCooldown", 3f, 1f, 60f, 1f, werewolfSpawnRate);
+            thiefSpawnRate = CustomOption.Create(400, Types.Neutral, new TranslationInfo(RoleId.Thief, Thief.color), rates, null, true);
+            thiefCooldown = CustomOption.Create(401, Types.Neutral, new TranslationInfo("Opt-Thief", 1), 30f, 5f, 120f, 5f, thiefSpawnRate);
+            thiefCanKillSheriff = CustomOption.Create(402, Types.Neutral, new TranslationInfo("Opt-Thief", 2), true, thiefSpawnRate);
+            thiefHasImpVision = CustomOption.Create(403, Types.Neutral, new TranslationInfo("Opt-Thief", 3), true, thiefSpawnRate);
+            thiefCanUseVents = CustomOption.Create(404, Types.Neutral, new TranslationInfo("Opt-Thief", 4), true, thiefSpawnRate);
+            thiefCanStealWithGuess = CustomOption.Create(405, Types.Neutral, new TranslationInfo("Opt-Thief", 5), false, thiefSpawnRate);
 
-            mayorSpawnRate = CustomOption.Create(80, Types.Crewmate, cs(Mayor.color, "Mayor"), rates, null, true);
-            mayorCanSeeVoteColors = CustomOption.Create(81, Types.Crewmate, "Mayor Can See Vote Colors", false, mayorSpawnRate);
-            mayorTasksNeededToSeeVoteColors = CustomOption.Create(82, Types.Crewmate, "Completed Tasks Needed To See Vote Colors", 5f, 0f, 20f, 1f, mayorCanSeeVoteColors);
-            mayorMeetingButton = CustomOption.Create(83, Types.Crewmate, "Mobile Emergency Button", true, mayorSpawnRate);
-            mayorMaxRemoteMeetings = CustomOption.Create(84, Types.Crewmate, "Number Of Remote Meetings", 1f, 1f, 5f, 1f, mayorMeetingButton);
-            mayorChooseSingleVote = CustomOption.Create(85, Types.Crewmate, "Mayor Can Choose Single Vote", new string[] { "Off", "On (Before Voting)", "On (Until Meeting Ends)" }, mayorSpawnRate);
+            werewolfSpawnRate = CustomOption.Create(1501, Types.Neutral, new TranslationInfo(RoleId.Werewolf, Werewolf.color), rates, null, true);
+            werewolfRampageCooldown  = CustomOption.Create(1502, Types.Neutral, new TranslationInfo("Opt-Werewolf", 1), 30f, 10f, 60f, 2.5f, werewolfSpawnRate);
+            werewolfRampageDuration = CustomOption.Create(1503, Types.Neutral, new TranslationInfo("Opt-Werewolf", 2), 15f, 1f, 20f, 0.5f, werewolfSpawnRate);
+            werewolfKillCooldown = CustomOption.Create(1504, Types.Neutral, new TranslationInfo("Opt-Werewolf", 3), 3f, 1f, 60f, 1f, werewolfSpawnRate);
 
-            engineerSpawnRate = CustomOption.Create(90, Types.Crewmate, cs(Engineer.color, "Engineer"), rates, null, true);
-            engineerNumberOfFixes = CustomOption.Create(91, Types.Crewmate, "Number Of Sabotage Fixes", 1f, 1f, 3f, 1f, engineerSpawnRate);
-            engineerHighlightForImpostors = CustomOption.Create(92, Types.Crewmate, "Impostors See Vents Highlighted", true, engineerSpawnRate);
-            engineerHighlightForTeamJackal = CustomOption.Create(93, Types.Crewmate, "Jackal and Sidekick See Vents Highlighted ", true, engineerSpawnRate);
+            mayorSpawnRate = CustomOption.Create(80, Types.Crewmate, new TranslationInfo(RoleId.Mayor, Mayor.color), rates, null, true);
+            mayorCanSeeVoteColors = CustomOption.Create(81, Types.Crewmate, new TranslationInfo("Opt-Mayor", 1), false, mayorSpawnRate);
+            mayorTasksNeededToSeeVoteColors = CustomOption.Create(82, Types.Crewmate, new TranslationInfo("Opt-Mayor", 2), 5f, 0f, 20f, 1f, mayorCanSeeVoteColors);
+            mayorMeetingButton = CustomOption.Create(83, Types.Crewmate, new TranslationInfo("Opt-Mayor", 3), true, mayorSpawnRate);
+            mayorMaxRemoteMeetings = CustomOption.Create(84, Types.Crewmate, new TranslationInfo("Opt-Mayor", 4), 1f, 1f, 5f, 1f, mayorMeetingButton);
+            mayorChooseSingleVote = CustomOption.Create(85, Types.Crewmate, new TranslationInfo("Opt-Mayor", 5), new[] { new TranslationInfo("Opt-General", 9), new TranslationInfo("Opt-Mayor", 6), new TranslationInfo("Opt-Mayor", 7) }, mayorSpawnRate);
 
-            privateInvestigatorSpawnRate = CustomOption.Create(8839, Types.Crewmate, cs(PrivateInvestigator.color, "Private Investigator"), rates, null, true);
-			privateInvestigatorSeeColor = CustomOption.Create(8844, Types.Crewmate, "Can see target player color", true, privateInvestigatorSpawnRate);
+            engineerSpawnRate = CustomOption.Create(90, Types.Crewmate, new TranslationInfo(RoleId.Engineer, Engineer.color), rates, null, true);
+            engineerNumberOfFixes = CustomOption.Create(91, Types.Crewmate, new TranslationInfo("Opt-Engineer", 1), 1f, 1f, 3f, 1f, engineerSpawnRate);
+            engineerHighlightForImpostors = CustomOption.Create(92, Types.Crewmate, new TranslationInfo("Opt-Engineer", 2), true, engineerSpawnRate);
+            engineerHighlightForTeamJackal = CustomOption.Create(93, Types.Crewmate, new TranslationInfo("Opt-Engineer", 3), true, engineerSpawnRate);
 
+            privateInvestigatorSpawnRate = CustomOption.Create(8839, Types.Crewmate, new TranslationInfo(RoleId.PrivateInvestigator, PrivateInvestigator.color), rates, null, true);
+			privateInvestigatorSeeColor = CustomOption.Create(8844, Types.Crewmate, new TranslationInfo("Opt-PrivateInvestigator", 1), true, privateInvestigatorSpawnRate);
 
-            sheriffSpawnRate = CustomOption.Create(100, Types.Crewmate, cs(Sheriff.color, "Sheriff"), rates, null, true);
-            sheriffCooldown = CustomOption.Create(101, Types.Crewmate, "Sheriff Cooldown", 30f, 10f, 60f, 2.5f, sheriffSpawnRate);
-            sheriffCanKillNeutrals = CustomOption.Create(102, Types.Crewmate, "Sheriff Can Kill Neutrals", false, sheriffSpawnRate);
-            deputySpawnRate = CustomOption.Create(103, Types.Crewmate, "Sheriff Has A Deputy", rates, sheriffSpawnRate);
-            deputyNumberOfHandcuffs = CustomOption.Create(104, Types.Crewmate, "Deputy Number Of Handcuffs", 3f, 1f, 10f, 1f, deputySpawnRate);
-            deputyHandcuffCooldown = CustomOption.Create(105, Types.Crewmate, "Handcuff Cooldown", 30f, 10f, 60f, 2.5f, deputySpawnRate);
-            deputyHandcuffDuration = CustomOption.Create(106, Types.Crewmate, "Handcuff Duration", 15f, 5f, 60f, 2.5f, deputySpawnRate);
-            deputyKnowsSheriff = CustomOption.Create(107, Types.Crewmate, "Sheriff And Deputy Know Each Other ", true, deputySpawnRate);
-            deputyGetsPromoted = CustomOption.Create(108, Types.Crewmate, "Deputy Gets Promoted To Sheriff", new string[] { "Off", "On (Immediately)", "On (After Meeting)" }, deputySpawnRate);
-            deputyKeepsHandcuffs = CustomOption.Create(109, Types.Crewmate, "Deputy Keeps Handcuffs When Promoted", true, deputyGetsPromoted);
+            sheriffSpawnRate = CustomOption.Create(100, Types.Crewmate, new TranslationInfo(RoleId.Sheriff, Sheriff.color), rates, null, true);
+            sheriffCooldown = CustomOption.Create(101, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 1), 30f, 10f, 60f, 2.5f, sheriffSpawnRate);
+            sheriffCanKillNeutrals = CustomOption.Create(102, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 2), false, sheriffSpawnRate);
+            deputySpawnRate = CustomOption.Create(103, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 3), rates, sheriffSpawnRate);
+            deputyNumberOfHandcuffs = CustomOption.Create(104, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 4), 3f, 1f, 10f, 1f, deputySpawnRate);
+            deputyHandcuffCooldown = CustomOption.Create(105, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 5), 30f, 10f, 60f, 2.5f, deputySpawnRate);
+            deputyHandcuffDuration = CustomOption.Create(106, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 6), 15f, 5f, 60f, 2.5f, deputySpawnRate);
+            deputyKnowsSheriff = CustomOption.Create(107, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 7), true, deputySpawnRate);
+            deputyGetsPromoted = CustomOption.Create(108, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 8), new[] { new TranslationInfo("Opt-General", 9), new TranslationInfo("Opt-Sheriff", 9), new TranslationInfo("Opt-Sheriff", 10) }, deputySpawnRate);
+            deputyKeepsHandcuffs = CustomOption.Create(109, Types.Crewmate, new TranslationInfo("Opt-Sheriff", 11), true, deputyGetsPromoted);
 
-            lighterSpawnRate = CustomOption.Create(110, Types.Crewmate, cs(Lighter.color, "Lighter"), rates, null, true);
-            lighterModeLightsOnVision = CustomOption.Create(111, Types.Crewmate, "Lighter Mode Vision On Lights On", 2f, 0.25f, 5f, 0.25f, lighterSpawnRate);
-            lighterModeLightsOffVision = CustomOption.Create(112, Types.Crewmate, "Lighter Mode Vision On Lights Off", 0.75f, 0.25f, 5f, 0.25f, lighterSpawnRate);
-            lighterCooldown = CustomOption.Create(113, Types.Crewmate, "Lighter Cooldown", 30f, 5f, 120f, 5f, lighterSpawnRate);
-            lighterDuration = CustomOption.Create(114, Types.Crewmate, "Lighter Duration", 5f, 2.5f, 60f, 2.5f, lighterSpawnRate);
+            lighterSpawnRate = CustomOption.Create(110, Types.Crewmate, new TranslationInfo(RoleId.Lighter, Lighter.color), rates, null, true);
+            lighterModeLightsOnVision = CustomOption.Create(111, Types.Crewmate, new TranslationInfo("Opt-Lighter", 1), 2f, 0.25f, 5f, 0.25f, lighterSpawnRate);
+            lighterModeLightsOffVision = CustomOption.Create(112, Types.Crewmate, new TranslationInfo("Opt-Lighter", 2), 0.75f, 0.25f, 5f, 0.25f, lighterSpawnRate);
+            lighterCooldown = CustomOption.Create(113, Types.Crewmate, new TranslationInfo("Opt-Lighter", 3), 30f, 5f, 120f, 5f, lighterSpawnRate);
+            lighterDuration = CustomOption.Create(114, Types.Crewmate, new TranslationInfo("Opt-Lighter", 4), 5f, 2.5f, 60f, 2.5f, lighterSpawnRate);
 
             detectiveSpawnRate = CustomOption.Create(120, Types.Crewmate, cs(Detective.color, "Detective"), rates, null, true);
             detectiveAnonymousFootprints = CustomOption.Create(121, Types.Crewmate, "Anonymous Footprints", false, detectiveSpawnRate); 
@@ -833,15 +838,6 @@ namespace TheOtherRoles {
 
             bodyGuardSpawnRate = CustomOption.Create(8820, Types.Crewmate, cs(BodyGuard.color, "Bodyguard"), rates, null, true);
             bodyGuardResetTargetAfterMeeting = CustomOption.Create(8821, Types.Crewmate, "Reset Target After Meeting", true, bodyGuardSpawnRate);
-
-
-
-            thiefSpawnRate = CustomOption.Create(400, Types.Neutral, cs(Thief.color, "Thief"), rates, null, true);
-            thiefCooldown = CustomOption.Create(401, Types.Neutral, "Thief Cooldown", 30f, 5f, 120f, 5f, thiefSpawnRate);
-            thiefCanKillSheriff = CustomOption.Create(402, Types.Neutral, "Thief Can Kill Sheriff", true, thiefSpawnRate);
-            thiefHasImpVision = CustomOption.Create(403, Types.Neutral, "Thief Has Impostor Vision", true, thiefSpawnRate);
-            thiefCanUseVents = CustomOption.Create(404, Types.Neutral, "Thief Can Use Vents", true, thiefSpawnRate);
-            thiefCanStealWithGuess = CustomOption.Create(405, Types.Neutral, "Thief Can Guess To Steal A Role (If Guesser)", false, thiefSpawnRate);
 
             trapperSpawnRate = CustomOption.Create(410, Types.Crewmate, cs(Trapper.color, "Trapper"), rates, null, true);
             trapperCooldown = CustomOption.Create(420, Types.Crewmate, "Trapper Cooldown", 30f, 5f, 120f, 5f, trapperSpawnRate);

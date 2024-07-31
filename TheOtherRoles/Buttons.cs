@@ -1277,7 +1277,7 @@ namespace TheOtherRoles
                 KeyCode.Q
             );
 
-            jackalAndSidekickSabotageLightsButton = new CustomButton(
+            /*jackalAndSidekickSabotageLightsButton = new CustomButton(
                 () => {
                      ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Sabotage, (byte)SystemTypes.Electrical);
                 },
@@ -1298,9 +1298,7 @@ namespace TheOtherRoles
                 __instance,
                 KeyCode.G,
                 buttonText:"LIGHTS OUT"
-            );
-
-
+            );*/
 
             //Miner button
             minerMineButton = new CustomButton(
