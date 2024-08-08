@@ -21,20 +21,21 @@ Even more roles are coming soon. :)
 | [Janitor (Mafia)](#mafia) | [Engineer](#engineer) | [Jackal](#jackal) | [Tie Breaker](#tie-breaker) | [Hide 'n' Seek](#hide-n-seek) |
 | [Morphling](#morphling) | [Sheriff](#sheriff) | [Sidekick](#sidekick) | [Bait](#bait) | [Vanilla Hide 'n' Seek](https://www.innersloth.com/new-game-mode-hide-n-seek-is-here-emergency-meeting-35/) |
 | [Camouflager](#camouflager) | [Deputy](#deputy) | [Vulture](#vulture) | [Lovers](#lovers) | [PropHunt](#prophunt) |
-| [Vampire](#vampire) | [Lighter](#lighter) | [Lawyer](#lawyer) | [Sunglasses](#sunglasses) |
-| [Eraser](#eraser) | [Detective](#detective) | [Executioner](#executioner) | [Mini](#mini) |
-| [Trickster](#trickster) | [Time Master](#time-master) | [Amnesiac](#amnesiac) | [VIP](#vip) |
-| [Cleaner](#cleaner) | [Medic](#medic) | [Swooper](#swooper) | [Invert](#invert) |
-| [Warlock](#warlock) | [Swapper](#swapper) | [Doomsayer](#doomsayer) | [Fanatic](#fanatic) |
-| [Bounty Hunter](#bounty-hunter) | [Seer](#seer) |  | [Tunneler](#tunneler) |
-| [Witch](#witch) | [Hacker](#hacker) |  |   [Guesser](#guesser) |
-| [Ninja](#ninja) | [Tracker](#tracker) |  |  [Indomitable](#indomitable) |
-| [Miner](#miner) | [Snitch](#snitch) |  |  [Blind](#blind) |
-| [Blackmailer](#blackmailer) | [Spy](#spy) |  |  [Slueth](#slueth) |
-| [Bomber2](#bomber) | [Portalmaker](#portalmaker) |  | [Disperser](#disperser) |
-| [Yo-Yo](#yoyo) | [Security Guard](#security-guard) |  |  |
-|  | [Medium](#medium) |  |  |
-| | [Body Guard](#bodyguard)
+| [Vampire](#vampire) | [Lighter](#lighter) | [Lawyer](#lawyer) | [Sunglasses](#sunglasses) ||
+| [Eraser](#eraser) | [Detective](#detective) | [Executioner](#executioner) | [Mini](#mini) ||
+| [Trickster](#trickster) | [Time Master](#time-master) | [Amnesiac](#amnesiac) | [VIP](#vip) ||
+| [Cleaner](#cleaner) | [Medic](#medic) | [Swooper](#swooper) | [Invert](#invert) ||
+| [Warlock](#warlock) | [Swapper](#swapper) | [Doomsayer](#doomsayer) | [Fanatic](#fanatic) ||
+| [Bounty Hunter](#bounty-hunter) | [Seer](#seer) |  | [Tunneler](#tunneler) ||
+| [Witch](#witch) | [Hacker](#hacker) |  |   [Guesser](#guesser) ||
+| [Ninja](#ninja) | [Tracker](#tracker) |  |  [Indomitable](#indomitable) ||
+| [Miner](#miner) | [Snitch](#snitch) |  |  [Blind](#blind) ||
+| [Blackmailer](#blackmailer) | [Spy](#spy) |  |  [Slueth](#slueth) ||
+| [Bomber2](#bomber) | [Portalmaker](#portalmaker) |  | [Disperser](#disperser) ||
+| [Yo-Yo](#yoyo) | [Security Guard](#security-guard) |  |  ||
+|  | [Medium](#medium) |  |  |  |
+| | [Body Guard](#bodyguard)||||
+
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
 
 # Releases
