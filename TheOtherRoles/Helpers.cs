@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using System.Net;
 using TheOtherRoles.CustomGameModes;
 using AmongUs.GameOptions;
-using Reactor.Utilities.Extensions;
 using System.Globalization;
 using TheOtherRoles.Patches;
 
@@ -114,7 +113,7 @@ namespace TheOtherRoles {
             bool powerCrewAlive = false;
 
             if (isRoleAlive(Sheriff.sheriff)) powerCrewAlive = true;
-            if (isRoleAlive(Veteren.veteren)) powerCrewAlive = true;
+            if (isRoleAlive(Veteran.veteran)) powerCrewAlive = true;
             if (isRoleAlive(Mayor.mayor)) powerCrewAlive = true;
             if (isRoleAlive(Swapper.swapper)) powerCrewAlive = true;
 
@@ -380,8 +379,10 @@ namespace TheOtherRoles {
             button.actionButton.OverrideText(text);
             button.showButtonText = true;
         }
-
-
+        public static Sprite loadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect)
+        {
+            return Sprite.Create(texture, textureRect, new Vector2(0.5f, 0.5f), pixelsPerUnit);
+        }
         public static Sprite loadSpriteFromResources(string path, float pixelsPerUnit, bool cache = true)
         {
             try
@@ -773,7 +774,7 @@ namespace TheOtherRoles {
             {
                 var instance = ShipStatus.Instance.CastFast<FungleShipStatus>().specialSabotage;
                 MushroomMixupSabotageSystem.CondensedOutfit condensedOutfit = instance.currentMixups[target.PlayerId];
-                GameData.PlayerOutfit playerOutfit = instance.ConvertToPlayerOutfit(condensedOutfit);
+                NetworkedPlayerInfo.PlayerOutfit playerOutfit = instance.ConvertToPlayerOutfit(condensedOutfit);
                 target.MixUpOutfit(playerOutfit);
             }
             else
@@ -894,7 +895,8 @@ namespace TheOtherRoles {
             return roleCouldUse;
         }
 
-        public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false, bool ignoreBlank = false, bool ignoreIfKillerIsDead = false) {
+        public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false, bool ignoreBlank = false, bool ignoreIfKillerIsDead = false, bool ignoreMedic = false)
+        {
             var targetRole = RoleInfo.getRoleInfoForPlayer(target, false).FirstOrDefault();
 
             // Modified vanilla checks
@@ -919,16 +921,17 @@ namespace TheOtherRoles {
             }
 
 
-            // Kill the killer if the Veteren is on alert
-            else if (Veteren.veteren != null && target == Veteren.veteren && Veteren.alertActive) {
-              if (Medic.shielded != null && Medic.shielded == target) {
+            // Kill the killer if the Veteran is on alert
+            else if (Veteran.veteran != null && target == Veteran.veteran && Veteran.alertActive) {
+                if (!ignoreMedic && Medic.shielded != null && Medic.shielded == target)
+                {
                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)CustomRPC.ShieldedMurderAttempt, Hazel.SendOption.Reliable, -1);
                    writer.Write(target.PlayerId);
                    AmongUsClient.Instance.FinishRpcImmediately(writer);
                    RPCProcedure.shieldedMurderAttempt(killer.PlayerId);
               }
               return MurderAttemptResult.ReverseKill;
-            }            // Kill the killer if the Veteren is on alert
+            }            // Kill the killer if the Veteran is on alert
             
             // Kill the Body Guard and the killer if the target is guarded
             else if (BodyGuard.bodyguard != null && target == BodyGuard.guarded && isAlive(BodyGuard.bodyguard)) {
@@ -948,7 +951,7 @@ namespace TheOtherRoles {
                 writer.Write(killer.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.shieldedMurderAttempt(killer.PlayerId);
-                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.fail, false, 1f);
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.fail, false, 1f);
                 return MurderAttemptResult.SuppressKill;
             }
 
@@ -1094,12 +1097,12 @@ namespace TheOtherRoles {
     
 
 	public static bool checkAndDoVetKill(PlayerControl target) {
-	  bool shouldVetKill = (Veteren.veteren == target && Veteren.alertActive);
+	  bool shouldVetKill = (Veteran.veteran == target && Veteran.alertActive);
 	  if (shouldVetKill) {
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VeterenKill, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VeteranKill, Hazel.SendOption.Reliable, -1);
             writer.Write(CachedPlayer.LocalPlayer.PlayerControl.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            RPCProcedure.veterenKill(CachedPlayer.LocalPlayer.PlayerControl.PlayerId);
+            RPCProcedure.veteranKill(CachedPlayer.LocalPlayer.PlayerControl.PlayerId);
 	  }
 	  return shouldVetKill;
 	}
@@ -1155,10 +1158,14 @@ namespace TheOtherRoles {
                 if (cam != null && cam.gameObject.name == "UI Camera") cam.orthographicSize = orthographicSize;  // The UI is scaled too, else we cant click the buttons. Downside: map is super small.
             }
 
-            if (HudManagerStartPatch.zoomOutButton != null)
+            var tzGO = GameObject.Find("TOGGLEZOOMBUTTON");
+            if (tzGO != null)
             {
-                HudManagerStartPatch.zoomOutButton.Sprite = zoomOutStatus ? Helpers.loadSpriteFromResources("TheOtherRoles.Resources.PlusButton.png", 75f) : Helpers.loadSpriteFromResources("TheOtherRoles.Resources.MinusButton.png", 150f);
-                HudManagerStartPatch.zoomOutButton.PositionOffset = zoomOutStatus ? new Vector3(0f, 3f, 0) : new Vector3(0.4f, 2.8f, 0);
+                var rend = tzGO.transform.Find("Inactive").GetComponent<SpriteRenderer>();
+                var rendActive = tzGO.transform.Find("Active").GetComponent<SpriteRenderer>();
+                rend.sprite = zoomOutStatus ? Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Plus_Button.png", 100f) : Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Minus_Button.png", 100f);
+                rendActive.sprite = zoomOutStatus ? Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Plus_ButtonActive.png", 100f) : Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Minus_ButtonActive.png", 100f);
+                tzGO.transform.localScale = new Vector3(1.2f, 1.2f, 1f) * (zoomOutStatus ? 4 : 1);
             }
             ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height, Screen.width, Screen.height, Screen.fullScreen); // This will move button positions to the correct position.
         }
@@ -1205,7 +1212,7 @@ namespace TheOtherRoles {
             }
         }
 
-        public static bool hasImpVision(GameData.PlayerInfo player) {
+        public static bool hasImpVision(NetworkedPlayerInfo player) {
             return player.Role.IsImpostor
                 || ((Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId || Jackal.formerJackals.Any(x => x.PlayerId == player.PlayerId)) && Jackal.hasImpostorVision)
                 || (Sidekick.sidekick != null && Sidekick.sidekick.PlayerId == player.PlayerId && Sidekick.hasImpostorVision)
@@ -1230,6 +1237,74 @@ namespace TheOtherRoles {
                 allRoleInfo.Add(role);
             }
             return allRoleInfo;
+        }
+        public interface Image
+        {
+            internal UnityEngine.Sprite GetSprite();
+        }
+
+        public static void Destroy(this UnityEngine.Object obj)
+        {
+            UnityEngine.Object.Destroy(obj);
+        }
+        public static GameObject CreateObject(string objName, Transform parent, Vector3 localPosition, int? layer = null)
+        {
+            var obj = new GameObject(objName);
+            obj.transform.SetParent(parent);
+            obj.transform.localPosition = localPosition;
+            obj.transform.localScale = new Vector3(1f, 1f, 1f);
+            if (layer.HasValue) obj.layer = layer.Value;
+            else if (parent != null) obj.layer = parent.gameObject.layer;
+            return obj;
+        }
+        public static T CreateObject<T>(string objName, Transform parent, Vector3 localPosition, int? layer = null) where T : Component
+        {
+            return CreateObject(objName, parent, localPosition, layer).AddComponent<T>();
+        }
+        public interface ITextureLoader
+        {
+            Texture2D GetTexture();
+        }
+        public static Sprite ToSprite(this Texture2D texture, Rect rect, float pixelsPerUnit)
+        {
+            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), pixelsPerUnit);
+        }
+        public static Sprite ToSprite(this Texture2D texture, float pixelsPerUnit) => ToSprite(texture, new Rect(0, 0, texture.width, texture.height), pixelsPerUnit);
+        public class ResourceTextureLoader : ITextureLoader
+        {
+            string address;
+            Texture2D texture = null;
+
+            public ResourceTextureLoader(string address)
+            {
+                this.address = address;
+            }
+
+            public Texture2D GetTexture()
+            {
+                if (!texture) texture = Helpers.loadTextureFromResources(address);
+                return texture!;
+            }
+        }
+        public class SpriteLoader : Image
+        {
+            Sprite sprite = null!;
+            float pixelsPerUnit;
+            ITextureLoader textureLoader;
+            public SpriteLoader(ITextureLoader textureLoader, float pixelsPerUnit)
+            {
+                this.textureLoader = textureLoader;
+                this.pixelsPerUnit = pixelsPerUnit;
+            }
+
+            public Sprite GetSprite()
+            {
+                if (!sprite) sprite = textureLoader.GetTexture().ToSprite(pixelsPerUnit);
+                sprite.hideFlags = textureLoader.GetTexture().hideFlags;
+                return sprite;
+            }
+
+            static public SpriteLoader FromResource(string address, float pixelsPerUnit) => new SpriteLoader(new ResourceTextureLoader(address), pixelsPerUnit);
         }
     }
 }

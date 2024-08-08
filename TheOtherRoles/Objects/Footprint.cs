@@ -1,5 +1,4 @@
 using InnerNet;
-using Reactor.Utilities.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -34,7 +33,7 @@ namespace TheOtherRoles.Objects
             public Transform Transform;
             public SpriteRenderer Renderer;
             public PlayerControl Owner;
-            public GameData.PlayerInfo Data;
+            public NetworkedPlayerInfo Data;
             public float Lifetime;
 
             public Footprint() {

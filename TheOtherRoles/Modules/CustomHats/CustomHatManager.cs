@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Reflection;
+using AmongUs.Data;
 
 namespace TheOtherRoles.Modules.CustomHats;
 
@@ -21,7 +22,7 @@ public static class CustomHatManager
         get
         {
             var (owner, repository) = Repository;
-            return $"https://raw.githubusercontent.com/{owner}/{repository}/master";
+            return DataManager.Settings.Language.CurrentLanguage == SupportedLangs.SChinese ? $"https://gitee.com/kuai-fang/the-other-hats2/raw/master" : $"https://raw.githubusercontent.com/{owner}/{repository}/master";
         }
     }
 
@@ -277,7 +278,7 @@ public static class CustomHatManager
         return toDownload;
     }
 
-    /*public static List<CustomHat> loadHorseHats() {
+    public static List<CustomHat> loadHorseHats() {
         List<CustomHat> hatdatas = new();
         Assembly assembly = Assembly.GetExecutingAssembly();
         string[] resourceNames = assembly.GetManifestResourceNames();
@@ -311,5 +312,5 @@ public static class CustomHatManager
             hatdatas.Add(info);
         }
         return hatdatas;
-    }*/
+    }
 }

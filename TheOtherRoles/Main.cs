@@ -16,22 +16,21 @@ using UnityEngine;
 using TheOtherRoles.Modules;
 using TheOtherRoles.Players;
 using TheOtherRoles.Utilities;
-using Reactor;
 using Il2CppSystem.Security.Cryptography;
 using Il2CppSystem.Text;
-using Reactor.Networking.Attributes;
 using AmongUs.Data;
 using TheOtherRoles.Modules.CustomHats;
+using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
     [BepInPlugin(Id, "The Other Roles CE", VersionString)]
     [BepInDependency(SubmergedCompatibility.SUBMERGED_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInProcess("Among Us.exe")]
-    [ReactorModFlags(Reactor.Networking.ModFlags.RequireOnAllClients)]
+    [ReactorModFlags(ModFlags.RequireOnAllClients)]
     public class TheOtherRolesPlugin : BasePlugin
     {
-        public const string Id = "me.eisbison.theotherroles";
+        public const string Id = "me.fangkuai.theotherrolescommunicateedition";
         public const string VersionString = "5.9.0";
         public static uint betaDays = 0;  // amount of days for the build to be usable (0 for infinite!)
 
@@ -49,6 +48,8 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> GhostsSeeModifier { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes{ get; set; }
         public static ConfigEntry<bool> ShowRoleSummary { get; set; }
+        public static ConfigEntry<bool> ShowChatNotifications { get; set; }
+        public static ConfigEntry<bool> ShowFPS { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> EnableSoundEffects { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
@@ -69,7 +70,12 @@ namespace TheOtherRoles
         public static void UpdateRegions() {
             ServerManager serverManager = FastDestroyableSingleton<ServerManager>.Instance;
             var regions = new IRegionInfo[] {
-                new StaticHttpRegionInfo("Custom", StringNames.NoTranslation, Ip.Value, new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Custom", Ip.Value, Port.Value, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Modded EU (MEU)", StringNames.NoTranslation, "https://au-eu.duikbo.at", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Modded EU (MEU)", "https://au-eu.duikbo.at", 443, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Modded NA (MNA)", StringNames.NoTranslation, "https://www.aumods.org", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Modded NA (MNA)", "https://www.aumods.org", 443, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Modded Asia (MAS)", StringNames.NoTranslation, "https://au-as.duikbo.at", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Modded Asia (MAS)", "https://au-as.duikbo.at", 443, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Niko233(AS_CN2)", StringNames.NoTranslation, "https://aucn2.niko233.me", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Niko233(AS_CN)", "https://aucn2.niko233.me", 443, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Niko233(NA_US2)", StringNames.NoTranslation, "https://au-us2.niko233.me", new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Niko233(NA_US2)", "https://au-us2.niko233.me", 443, false) })).CastFast<IRegionInfo>(),
+                new StaticHttpRegionInfo("Custom", StringNames.NoTranslation, Ip.Value, new Il2CppReferenceArray<ServerInfo>(new ServerInfo[1] { new ServerInfo("Custom", Ip.Value, Port.Value, false) })).CastFast<IRegionInfo>()
             };
             IRegionInfo currentRegion = serverManager.CurrentRegion;
             Logger.LogInfo($"Adding {regions.Length} regions");
@@ -92,9 +98,11 @@ namespace TheOtherRoles
 
         public override void Load() {
             ModTranslation.Load();
+            
             Logger = Log;
             Instance = this;
-            AssetsLoad.Load();
+
+            ZipsLoad.Load();
 
             _ = Helpers.checkBeta(); // Exit if running an expired beta
             //_ = Patches.CredentialsPatch.MOTD.loadMOTDs();
@@ -112,11 +120,16 @@ namespace TheOtherRoles
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             ShowVentsOnMap = Config.Bind("Custom", "Show vent positions on minimap", false);
+            ShowChatNotifications = Config.Bind("Custom", "Show Chat Notifications", true);
+            ShowFPS = Config.Bind("Custom", "Show FPS On Ping", true);
 
 
             Ip = Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = Config.Bind("Custom", "Custom Server Port", (ushort)22023);
             defaultRegions = ServerManager.DefaultRegions;
+
+            // Removes vanilla Servers
+            ServerManager.DefaultRegions = new Il2CppReferenceArray<IRegionInfo>(new IRegionInfo[0]);
 
             UpdateRegions();
 
@@ -184,7 +197,7 @@ namespace TheOtherRoles
 
 
             // Spawn dummys
-            if (Input.GetKeyDown(KeyCode.F)) {
+            /*if (Input.GetKeyDown(KeyCode.F)) {
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
                 var i = playerControl.PlayerId = (byte) GameData.Instance.GetAvailableId();
 
@@ -198,7 +211,7 @@ namespace TheOtherRoles
                 playerControl.SetName(RandomString(10));
                 playerControl.SetColor((byte) random.Next(Palette.PlayerColors.Length));
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-            }
+            }*/
 
             // Terminate round
             if(Input.GetKeyDown(KeyCode.L)) {
@@ -217,6 +230,6 @@ namespace TheOtherRoles
     }
     public static class CustomMain
     {
-        public static CustomAssets customAssets = new CustomAssets();
+        public static CustomZip customZips = new CustomZip();
     }
 }

@@ -11,7 +11,7 @@ namespace TheOtherRoles.Modules.CustomHats;
 
 public class HatsLoader : MonoBehaviour
 {
-    private bool isRunning;
+    public static bool isRunning;
 
     public void FetchHats()
     {
@@ -52,7 +52,7 @@ public class HatsLoader : MonoBehaviour
 
         UnregisteredHats.AddRange(SanitizeHats(response));
         var toDownload = GenerateDownloadList(UnregisteredHats);
-        //if (EventUtility.isEnabled) UnregisteredHats.AddRange(CustomHatManager.loadHorseHats());
+        if (EventUtility.isEnabled) UnregisteredHats.AddRange(CustomHatManager.loadHorseHats());
 
         TheOtherRolesPlugin.Logger.LogMessage($"I'll download {toDownload.Count} hat files");
 

@@ -39,7 +39,7 @@ namespace TheOtherRoles
         TimeMaster,
 		Mimic,
         Swooper,
-        Veteren,
+        Veteran,
         Amnisiac,
 		Cursed,
         Medic,
@@ -100,14 +100,18 @@ namespace TheOtherRoles
         Blind,
         Invert,
         Chameleon,
-        Shifter
+        Shifter,
+        Max = byte.MaxValue,
+        Hunter,
+        Hunted,
+        Prop
     }
 
     enum CustomRPC
     {
         // Main Controls
 
-        ResetVaribles = 60,
+        ResetVaribles = 100,
         ShareOptions,
         ForceEnd,
         WorkaroundSetRoles,
@@ -125,7 +129,7 @@ namespace TheOtherRoles
 
         // Role functionality
 
-        EngineerFixLights = 101,
+        EngineerFixLights = 120,
         EngineerFixSubmergedOxygen,
         EngineerUsedRepair,
         CleanBody,
@@ -144,8 +148,8 @@ namespace TheOtherRoles
         BodyGuardGuardPlayer,
 		PrivateInvestigatorWatchPlayer,
 		PrivateInvestigatorWatchFlash,
-        VeterenAlert,
-        VeterenKill,
+        VeteranAlert,
+        VeteranKill,
         ShifterShift,
         SwapperSwap,
         MorphlingMorph,
@@ -230,6 +234,7 @@ namespace TheOtherRoles
         // Main Controls
 
         public static void resetVariables() {
+            PropHunt.ResetData();
             Garlic.clearGarlics();
             JackInTheBox.clearJackInTheBoxes();
             NinjaTrace.clearTraces();
@@ -256,7 +261,7 @@ namespace TheOtherRoles
                     uint optionId = reader.ReadPackedUInt32();
                     uint selection = reader.ReadPackedUInt32();
                     CustomOption option = CustomOption.options.First(option => option.id == (int)optionId);
-                    option.updateSelection((int)selection);
+                    option.updateSelection((int)selection, i == numberOfOptions - 1);
                 }
             } catch (Exception e) {
                 TheOtherRolesPlugin.Logger.LogError("Error while deserializing options: " + e.Message);
@@ -271,7 +276,7 @@ namespace TheOtherRoles
                 {
                     
                     GameData.Instance.GetPlayerById(player.PlayerId); // player.RemoveInfected(); (was removed in 2022.12.08, no idea if we ever need that part again, replaced by these 2 lines.) 
-                    player.SetRole(RoleTypes.Crewmate);
+                    player.CoSetRole(RoleTypes.Crewmate, true);
 
                     player.MurderPlayer(player);
                     player.Data.IsDead = true;
@@ -281,6 +286,9 @@ namespace TheOtherRoles
 
         public static void shareGamemode(byte gm) {
             MapOptionsTor.gameMode = (CustomGamemodes) gm;
+            LobbyViewSettingsPatch.currentButtons?.ForEach(x => x.gameObject?.Destroy());
+            LobbyViewSettingsPatch.currentButtons?.Clear();
+            LobbyViewSettingsPatch.currentButtonTypes?.Clear();
         }
         public static void stopStart(byte playerId)
         {
@@ -367,8 +375,8 @@ namespace TheOtherRoles
                     case RoleId.Amnisiac:
                         Amnisiac.amnisiac = player;
                         break;
-                    case RoleId.Veteren:
-                        Veteren.veteren = player;
+                    case RoleId.Veteran:
+                        Veteran.veteran = player;
                         break;
                     case RoleId.Medic:
                         Medic.medic = player;
@@ -491,7 +499,7 @@ namespace TheOtherRoles
                     if (AmongUsClient.Instance.AmHost && Helpers.roleCanUseVents(player) && !player.Data.Role.IsImpostor)
                     {
                         player.RpcSetRole(RoleTypes.Engineer);
-                        player.SetRole(RoleTypes.Engineer);
+                        player.CoSetRole(RoleTypes.Engineer, true);
                     }
                 }
             }
@@ -715,7 +723,7 @@ namespace TheOtherRoles
 
         public static void timeMasterRewindTime() {
             TimeMaster.shieldActive = false; // Shield is no longer active when rewinding
-            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);// Shield sound stopped when rewinding
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);// Shield sound stopped when rewinding
             if (TimeMaster.timeMaster != null && TimeMaster.timeMaster == CachedPlayer.LocalPlayer.PlayerControl) {
                 resetTimeMasterButton();
             }
@@ -870,9 +878,9 @@ namespace TheOtherRoles
                     Amnisiac.clearAndReload();
                     break;
 
-                case RoleId.Veteren:
-                    if (Amnisiac.resetRole) Veteren.clearAndReload();
-                    Veteren.veteren = amnisiac;
+                case RoleId.Veteran:
+                    if (Amnisiac.resetRole) Veteran.clearAndReload();
+                    Veteran.veteran = amnisiac;
                     Amnisiac.clearAndReload();
                     break;
 
@@ -1238,10 +1246,10 @@ namespace TheOtherRoles
 					Mimic.hasMimic = true;
                     break;
 
-                case RoleId.Veteren:
-                    if (Amnisiac.resetRole) Veteren.clearAndReload();
-                    Veteren.veteren = Mimic.mimic;
-					veterenAlertButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
+                case RoleId.Veteran:
+                    if (Amnisiac.resetRole) Veteran.clearAndReload();
+                    Veteran.veteran = Mimic.mimic;
+					veteranAlertButton.PositionOffset = CustomButton.ButtonPositions.upperRowLeft;
 					Mimic.hasMimic = true;
                     break;
 
@@ -1315,17 +1323,20 @@ namespace TheOtherRoles
             Helpers.turnToImpostor(player);
         }
         
-        public static void veterenAlert() {
-            Veteren.alertActive = true;
-            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Veteren.alertDuration, new Action<float>((p) => {
-                if (p == 1f) Veteren.alertActive = false;
+        public static void veteranAlert() {
+            Veteran.alertActive = true;
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Veteran.alertDuration, new Action<float>((p) => {
+                if (p == 1f) {
+                    Veteran.alertActive = false;
+                    veteranAlertButton.Sprite = Veteran.getButtonNoSprite();
+                };
             })));
         }
 
-        public static void veterenKill(byte targetId) {
-      if (CachedPlayer.LocalPlayer.PlayerControl == Veteren.veteren) {
+        public static void veteranKill(byte targetId) {
+      if (CachedPlayer.LocalPlayer.PlayerControl == Veteran.veteran) {
             PlayerControl player = Helpers.playerById(targetId);
-          Helpers.checkMuderAttemptAndKill(Veteren.veteren, player);
+          Helpers.checkMuderAttemptAndKill(Veteran.veteran, player);
           }
         }
 
@@ -1514,7 +1525,7 @@ namespace TheOtherRoles
             if (player == Detective.detective) Detective.clearAndReload();
             if (player == TimeMaster.timeMaster) TimeMaster.clearAndReload();
             if (player == Amnisiac.amnisiac) Amnisiac.clearAndReload();
-            if (player == Veteren.veteren) Veteren.clearAndReload();
+            if (player == Veteran.veteran) Veteran.clearAndReload();
             if (player == Medic.medic) Medic.clearAndReload();
             if (player == Shifter.shifter) Shifter.clearAndReload();
             if (player == Seer.seer) Seer.clearAndReload();
@@ -1807,7 +1818,7 @@ namespace TheOtherRoles
                     CachedPlayer.LocalPlayer.PlayerControl.transform.position = FindVentPoss()[rnd.Next(FindVentPoss().Count)];
                 }
                 Disperser.remainingDisperses--;
-                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.disperserDisperse, false, 0.8f);
+                if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.disperserDisperse, false, 0.8f);
             }
         }
 
@@ -1963,6 +1974,7 @@ namespace TheOtherRoles
                     RPCProcedure.thiefStealsRole(dyingTarget.PlayerId);
                 }
             }
+            bool lawyerDiedAdditionally = false;
             if (Lawyer.lawyer != null && !Lawyer.isProsecutor && Lawyer.lawyer.PlayerId == killerId && Lawyer.target != null && Lawyer.target.PlayerId == dyingTargetId)
             {
                 // Lawyer guessed client.
@@ -1972,6 +1984,8 @@ namespace TheOtherRoles
                     if (MeetingHudPatch.guesserUI != null) MeetingHudPatch.guesserUIExitButton.OnClick.Invoke();
                 }
                 Lawyer.lawyer.Exiled();
+                lawyerDiedAdditionally = true;
+                GameHistory.overrideDeathReasonAndKiller(Lawyer.lawyer, DeadPlayer.CustomDeathReason.LawyerSuicide, guesser);
             }
             dyingTarget.Exiled();
             GameHistory.overrideDeathReasonAndKiller(dyingTarget, DeadPlayer.CustomDeathReason.Guess, guesser);
@@ -1980,15 +1994,16 @@ namespace TheOtherRoles
             HandleGuesser.remainingShots(killerId, true);
             if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(dyingTarget.KillSfx, false, 0.8f);
             if (MeetingHud.Instance) {
-                MeetingHudPatch.swapperCheckAndReturnSwap(MeetingHud.Instance, dyingTargetId);
                 foreach (PlayerVoteArea pva in MeetingHud.Instance.playerStates) {
-                    if (pva.TargetPlayerId == dyingTargetId || pva.TargetPlayerId == partnerId) {
+                    if (pva.TargetPlayerId == dyingTargetId || pva.TargetPlayerId == partnerId || lawyerDiedAdditionally && Lawyer.lawyer.PlayerId == pva.TargetPlayerId)
+                    {
                         pva.SetDead(pva.DidReport, true);
                         pva.Overlay.gameObject.SetActive(true);
+                        MeetingHudPatch.swapperCheckAndReturnSwap(MeetingHud.Instance, pva.TargetPlayerId);
                     }
 
                     //Give players back their vote if target is shot dead
-                    if (pva.VotedFor != dyingTargetId || pva.VotedFor != partnerId) continue;
+                    if (pva.VotedFor != dyingTargetId && pva.VotedFor != partnerId && (!lawyerDiedAdditionally || Lawyer.lawyer.PlayerId != pva.VotedFor)) continue;
                     pva.UnsetVote();
                     var voteAreaPlayer = Helpers.playerById(pva.TargetPlayerId);
                     if (!voteAreaPlayer.AmOwner) continue;
@@ -2204,7 +2219,7 @@ namespace TheOtherRoles
             if (target == Bomber2.bomber) Bomber2.bomber = thief;
             if (target == Miner.miner) Miner.miner = thief;
             if (target == Undertaker.undertaker) Undertaker.undertaker = thief;
-            if (target == Veteren.veteren) Veteren.veteren = thief;
+            if (target == Veteran.veteran) Veteran.veteran = thief;
             if (target == Blackmailer.blackmailer) Blackmailer.blackmailer = thief;
             if (target == Mimic.mimic) {
 				Mimic.mimic = thief;
@@ -2255,7 +2270,7 @@ namespace TheOtherRoles
 
         public static void huntedRewindTime(byte playerId) {
             Hunted.timeshieldActive.Remove(playerId); // Shield is no longer active when rewinding
-            SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);  // Shield sound stopped when rewinding
+            SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);  // Shield sound stopped when rewinding
             if (playerId == CachedPlayer.LocalPlayer.PlayerControl.PlayerId) {
                 resetHuntedRewindButton();
             }
@@ -2315,7 +2330,7 @@ namespace TheOtherRoles
 
         public static void propHuntSetRevealed(byte playerId)
         {
-            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
             PropHunt.isCurrentlyRevealed.Add(playerId, PropHunt.revealDuration);
             PropHunt.timer -= PropHunt.revealPunish;
         }
@@ -2403,7 +2418,7 @@ namespace TheOtherRoles
         {
             try
             {
-                Bomb.playAtPositionBomb(CustomMain.customAssets.bombDefused, Bomber.bomb.bomb.transform.position, range: Bomber.hearRange);
+                Bomb.playAtPositionBomb(CustomMain.customZips.bombDefused, Bomber.bomb.bomb.transform.position, range: Bomber.hearRange);
             }
             catch { }
             Bomber.clearBomb();
@@ -2429,7 +2444,6 @@ namespace TheOtherRoles
 
         public static void yoyoBlink(bool isFirstJump, byte[] buff)
         {
-            TheOtherRolesPlugin.Logger.LogMessage($"blink fistjumpo: {isFirstJump}");
             if (Yoyo.yoyo == null || Yoyo.markedLocation == null) return;
             var markedPos = (Vector3)Yoyo.markedLocation;
             Yoyo.yoyo.NetTransform.SnapTo(markedPos);
@@ -2594,11 +2608,11 @@ namespace TheOtherRoles
                 case (byte)CustomRPC.ShowIndomitableFlash:
                     RPCProcedure.showIndomitableFlash();
                     break;
-                case (byte)CustomRPC.VeterenAlert:
-                    RPCProcedure.veterenAlert();
+                case (byte)CustomRPC.VeteranAlert:
+                    RPCProcedure.veteranAlert();
                     break;
-                case (byte)CustomRPC.VeterenKill:
-                    RPCProcedure.veterenKill(reader.ReadByte());
+                case (byte)CustomRPC.VeteranKill:
+                    RPCProcedure.veteranKill(reader.ReadByte());
                     break;
                 case (byte)CustomRPC.MedicSetShielded:
                     RPCProcedure.medicSetShielded(reader.ReadByte());

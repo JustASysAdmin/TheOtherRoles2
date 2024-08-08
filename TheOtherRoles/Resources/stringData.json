@@ -1,27 +1,35 @@
 {
     "Opt-General,1": {
-        "0": "TheOtherRoles Community Edition Settings"
+        "0": "TheOtherRoles Community Edition Settings",
+        "13": "\u8d85\u591a\u804c\u4e1a\u793e\u533a\u7248\u6a21\u7ec4\u8bbe\u7f6e"
     },
     "Opt-General,2": {
-        "0": "Impostor Roles Settings"
+        "0": "Impostor Roles Settings",
+        "13": "\u5185\u9b3c\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
     },
     "Opt-General,3": {
-        "0": "Neutral Roles Settings"
+        "0": "Neutral Roles Settings",
+        "13": "\u72ec\u7acb\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
     },
     "Opt-General,4": {
-        "0": "Crewmate Roles Settings"
+        "0": "Crewmate Roles Settings",
+        "13": "\u8239\u5458\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
     },
     "Opt-General,5": {
-        "0": "Modifier Settings"
+        "0": "Modifier Settings",
+        "13": "\u9644\u52a0\u804c\u4e1a\u8bbe\u7f6e"
     },
     "Opt-General,6": {
-        "0": "Guesser Mode Settings"
+        "0": "Guesser Mode Settings",
+        "13": "\u8d4c\u602a\u6a21\u5f0f\u8bbe\u7f6e"
     },
     "Opt-General,7": {
-        "0": "Hide 'N Seek Settings"
+        "0": "Hide 'N Seek Settings",
+        "13": "\u6349\u8ff7\u85cf\u6a21\u5f0f\u8bbe\u7f6e"
     },
     "Opt-General,8": {
-        "0": "Prop Hunt Settings"
+        "0": "Prop Hunt Settings",
+        "13": "\u53d8\u5f62\u72e9\u730e\u8bbe\u7f6e"
     },
     "Opt-General,9": {
         "0": "<color=#CCCCCCFF>Off</color>",
@@ -32,78 +40,100 @@
         "13": "<color=#FFFF00FF>\u5f00\u542f</color>"
     },
     "Opt-General,11": {
-        "0": "Preset"
+        "0": "Preset",
+        "13": "\u9884\u8bbe"
     },
     "Opt-General,12": {
-        "0": "Evil:"
+        "0": "Evil:",
+        "13": "\u90aa\u6076:"
     },
     "Opt-General,13": {
-        "0": "Crewmate Roles"
+        "0": "Crewmate Roles",
+        "13": "\u8239\u5458\u9635\u8425\u804c\u4e1a"
     },
     "Opt-General,14": {
-        "0": "Neutral Roles"
+        "0": "Neutral Roles",
+        "13": "\u72ec\u7acb\u9635\u8425\u804c\u4e1a"
     },
     "Opt-General,15": {
-        "0": "Impostor Roles"
+        "0": "Impostor Roles",
+        "13": "\u5185\u9b3c\u9635\u8425\u804c\u4e1a"
     },
     "Opt-General,16": {
-        "0": "Modifiers"
+        "0": "Modifiers",
+        "13": "\u9644\u52a0\u804c\u4e1a"
     },
     "Opt-General,17": {
-        "0": "Fill:"
+        "0": "Fill:",
+        "13": "\u586b\u5145:"
     },
     "Opt-General,18": {
-        "0": "Page 1: Hide N Seek Settings"
+        "0": "Amount of Guessers",
+        "13": "\u8d4c\u602a\u6570\u91cf"
     },
     "Opt-General,19": {
-        "0": "Page 2: Hide N Seek Role Settings"
+        "0": "Force Guessers",
+        "13": "\u5f3a\u5236\u4e3a\u8d4c\u602a"
     },
     "Opt-General,20": {
-        "0": "Page 1: Prop Hunt Settings"
+        "0": "Hunter Lights Settings",
+        "13": "\u730e\u4eba\u706f\u5149\u8bbe\u7f6e"
     },
     "Opt-General,21": {
-        "0": "Page 1: Vanilla Settings"
+        "0": "Hunter Shields Settings",
+        "13": "\u730e\u4eba\u62a4\u76fe\u8bbe\u7f6e"
     },
     "Opt-General,22": {
-        "0": "Page 2: TheOtherRoles Community Edition Settings"
+        "0": "General PropHunt Settings",
+        "13": "\u53d8\u5f62\u72e9\u730e\u5e38\u89c4\u8bbe\u7f6e"
     },
     "Opt-General,23": {
-        "0": "Page 3: Role and Modifier Rates"
+        "0": "Hunter Settings",
+        "13": "\u730e\u4eba\u8bbe\u7f6e"
     },
     "Opt-General,24": {
-        "0": "Page 4: Impostor Role Settings"
+        "0": "Prop Settings",
+        "13": "\u9053\u5177\u8bbe\u7f6e"
     },
     "Opt-General,25": {
-        "0": "Page 5: Neutral Role Settings"
+        "0": "Gameplay Settings",
+        "13": "\u6e38\u620f\u8bbe\u7f6e"
     },
     "Opt-General,26": {
-        "0": "Page 6: Crewmate Role Settings"
+        "0": "Any Player Can Stop The Start",
+        "13": "\u4efb\u4f55\u73a9\u5bb6\u53ef\u4ee5\u505c\u6b62\u5f00\u59cb\u5012\u8ba1\u65f6"
     },
     "Opt-General,27": {
-        "0": "Page 7: Modifier Settings"
+        "0": "Night Vision Cams",
+        "13": "\u591c\u89c6\u6444\u50cf\u5934"
     },
     "Opt-General,28": {
-        "0": "Press TAB or Page Number for more..."
+        "0": "Host Info: Pasting vanilla settings failed, TORCE Options applied!",
+        "13": "\u623f\u4e3b\u6d88\u606f: \u7c98\u8d34\u539f\u7248\u8bbe\u7f6e\u5931\u8d25, TORCE\u8bbe\u7f6e\u5df2\u5e94\u7528\uff01"
     },
     "Opt-General,29": {
-        "0": "Very Short"
+        "0": "Very Short",
+        "13": "\u975e\u5e38\u77ed"
     },
     "Opt-General,30": {
-        "0": "Short"
+        "0": "Short",
+        "13": "\u77ed"
     },
     "Opt-General,31": {
-        "0": "Medium"
+        "0": "Medium",
+        "13": "\u6b63\u5e38"
     },
     "Opt-General,32": {
-        "0": "Long"
+        "0": "Long",
+        "13": "\u957f"
     },
     "Opt-General,33": {
-        "0": "Enable Mod Roles And Block Vanilla Roles",
-        "13": "\u542f\u7528MOD\u804c\u4e1a\u5e76\u7981\u7528\u539f\u7248\u804c\u4e1a"
+        "0": "Min/Max Roles",
+        "13": "\u6700\u5927/\u6700\u5c0f\u804c\u4e1a\u6570"
     },
     "Opt-General,34": {
-        "0": "Any Player Can Stop The Start",
-        "13": "\u4efb\u4f55\u73a9\u5bb6\u90fd\u53ef\u4ee5\u7ec8\u6b62\u5f00\u59cb\u5012\u8ba1\u65f6"
+        "0": "VIP, Bait & Bloody Are Hidden",
+        "13": "VIP, \u8bf1\u9975\u548c\u6e85\u8840\u8005\u9690\u85cf"
     },
     "Opt-General,35": {
         "0": "Enable Special Mode",
@@ -145,184 +175,2116 @@
         "0": "Maximum Modifiers",
         "13": "\u6700\u5927\u9644\u52a0\u804c\u4e1a\u6570\u91cf"
     },
-    "Opt-Mafia,1": {
-        "0": "Janitor Cooldown"
+    "Opt-General,45": {
+        "0": "Preset 1",
+        "13": "\u9884\u8bbe1"
+    },
+    "Opt-General,46": {
+        "0": "Preset 2",
+        "13": "\u9884\u8bbe2"
+    },
+    "Opt-General,47": {
+        "0": "Random Preset Skeld",
+        "13": "\u968f\u673a\u9884\u8bbeSkeld"
+    },
+    "Opt-General,48": {
+        "0": "Random Preset Mira HQ",
+        "13": "\u968f\u673a\u9884\u8bbeMira HQ"
+    },
+    "Opt-General,49": {
+        "0": "Random Preset Polus",
+        "13": "\u968f\u673a\u9884\u8bbePolus"
+    },
+    "Opt-General,50": {
+        "0": "Random Preset Airship",
+        "13": "\u968f\u673a\u9884\u8bbeAirship"
+    },
+    "Opt-General,51": {
+        "0": "Random Preset Fungle",
+        "13": "\u968f\u673a\u9884\u8bbeFungle"
+    },
+    "Opt-General,52": {
+        "0": "Random Preset Submerged",
+        "13": "\u968f\u673a\u9884\u8bbeSubmerged"
+    },
+    "Opt-General,53": {
+        "0": "Hide After Death Modifiers",
+        "13": "<b>\u6b7b\u540e\u9690\u85cf\u9644\u52a0\u804c\u4e1a\u6548\u679c</b>"
+    },
+    "Opt-General,54": {
+        "0": "Number Of Meetings (excluding Mayor meeting)",
+        "13": "\u4f1a\u8bae\u6570(\u4e0d\u5305\u62ec\u5e02\u957f\u4f1a\u8bae)"
+    },
+    "Opt-General,55": {
+        "0": "Block Skipping In Emergency Meetings",
+        "13": "\u7981\u6b62\u8df3\u8fc7\u6295\u7968"
+    },
+    "Opt-General,56": {
+        "0": "No Vote Is Self Vote",
+        "13": "\u4e0d\u6295\u7968\u89c6\u4e3a\u6295\u81ea\u5df1"
+    },
+    "Opt-General,57": {
+        "0": "Hide Player Names",
+        "13": "\u9690\u85cf\u73a9\u5bb6\u540d\u79f0"
+    },
+    "Opt-General,58": {
+        "0": "Allow Parallel MedBay Scans",
+        "13": "\u5141\u8bb8\u591a\u4eba\u8fdb\u884c\u626b\u63cf\u4efb\u52a1"
+    },
+    "Opt-General,59": {
+        "0": "Shield Last Game First Kill",
+        "13": "\u4fdd\u62a4\u4e0a\u5c40\u6e38\u620f\u88ab\u9996\u5200\u73a9\u5bb6"
+    },
+    "Opt-General,60": {
+        "0": "Finish Tasks Before Haunting Or Zooming Out",
+        "13": "\u5b8c\u6210\u4efb\u52a1\u524d\u4e0d\u53ef\u4f7f\u7528\u5343\u91cc\u773c\u548c\u5e7d\u5e7d\u9b3c\u5f71"
+    },
+    "Opt-General,61": {
+        "0": "Cams Switch To Night Vision If Lights Are Off",
+        "13": "\u706f\u5149\u5173\u95ed\u65f6\u76d1\u63a7\u4f7f\u7528\u591c\u95f4\u6a21\u5f0f"
+    },
+    "Opt-General,62": {
+        "0": "Impostor Vision Ignores Night Vision Cams",
+        "13": "\u5185\u9b3c\u65e0\u89c6\u591c\u95f4\u6444\u50cf\u5934"
+    },
+    "Opt-General,63": {
+        "0": "Block Dead Impostor From Sabotaging",
+        "13": "\u7981\u6b62\u5df2\u6b7b\u4ea1\u7684\u5185\u9b3c\u7834\u574f"
+    },
+    "Opt-General,64": {
+        "0": "Play On A Random Map",
+        "13": "\u6e38\u73a9\u968f\u673a\u5730\u56fe"
+    },
+    "Opt-General,65": {
+        "0": "Enable Better Polus",
+        "13": "\u5f00\u542f\u66f4\u597d\u7684Polus"
+    },
+    "Opt-General,66": {
+        "0": "Adjust Vents",
+        "13": "\u8c03\u6574\u7ba1\u9053"
+    },
+    "Opt-General,67": {
+        "0": "Move Vitals to Labs",
+        "13": "\u79fb\u52a8\u751f\u547d\u68c0\u6d4b\u4eea\u5230\u5b9e\u9a8c\u5ba4"
+    },
+    "Opt-General,68": {
+        "0": "Swap Reboot and Chart Course",
+        "13": "\u4ea4\u6362\u91cd\u542fWifi\u548c\u7a33\u5b9a\u822a\u5411"
+    },
+    "Opt-General,69": {
+        "0": "Move Cold temp to Death Vally",
+        "13": "\u5c06\u51b7\u70ed\u7a0b\u5ea6\u68c0\u6d4b\u4eea\u79fb\u52a8\u5230\u6b7b\u4ea1\u8c37"
+    },
+    "Opt-General,70": {
+        "0": "Enable Camouflage Comms",
+        "13": "\u5f00\u542f\u7834\u574f\u901a\u8baf\u65f6\u9690\u853d"
+    },
+    "Opt-General,71": {
+        "0": "Disable Medbay Walk",
+        "13": "\u7981\u7528\u533b\u7597\u5ba4\u626b\u63cf"
+    },
+    "Opt-General,72": {
+        "0": "Restrict Map Information",
+        "13": "\u9650\u5b9a\u5730\u56fe\u4fe1\u606f"
+    },
+    "Opt-General,73": {
+        "0": "<color=#FFFF00FF>Per Round</color>",
+        "13": "<color=#FFFF00FF>\u6bcf\u56de\u5408</color>"
+    },
+    "Opt-General,74": {
+        "0": "<color=#FFFF00FF>Per Game</color>",
+        "13": "<color=#FFFF00FF>\u6bcf\u5c40\u6e38\u620f</color>"
+    },
+    "Opt-General,75": {
+        "0": "Restrict Admin Table",
+        "13": "\u9650\u5236\u7ba1\u7406\u5730\u56fe"
+    },
+    "Opt-General,76": {
+        "0": "Restrict Cameras",
+        "13": "\u9650\u5236\u6444\u50cf\u5934"
+    },
+    "Opt-General,77": {
+        "0": "Restrict Vitals",
+        "13": "\u9650\u5236\u751f\u547d\u68c0\u6d4b"
+    },
+    "Opt-General,78": {
+        "0": "Disable Cameras round 1",
+        "13": "\u5728\u7b2c\u4e00\u8f6e\u7981\u7528\u6444\u50cf\u5934"
+    },
+    "Opt-General,79": {
+        "0": "Show Button Target",
+        "13": "\u663e\u793a\u6309\u94ae\u76ee\u6807"
+    },
+    "Opt-General,80": {
+        "0": "Block Game End if Power Crew is Alive",
+        "13": "\u963b\u6b62\u5728\u5e26\u5200\u8239\u5458\u5b58\u5728\u65f6\u6e38\u620f\u7ed3\u675f"
+    },
+    "Opt-General,81": {
+        "0": "Random Spawn Location",
+        "13": "\u968f\u673a\u91cd\u751f\u5730\u70b9"
+    },
+    "Opt-General,82": {
+        "0": "Allow Guessing Some Modifiers",
+        "13": "\u5141\u8bb8\u731c\u6d4b\u6548\u679c"
+    },
+    "Opt-General,83": {
+        "0": "Reset Spawn Cooldown",
+        "13": "\u91cd\u7f6e\u751f\u6210\u51b7\u5374"
+    },
+    "Opt-General,84": {
+        "0": "Use Random Map Setting Presets",
+        "13": "\u4f7f\u7528\u968f\u673a\u5730\u56fe\u9884\u8bbe"
+    },
+    "Opt-General,85": {
+        "0": "Random Maps",
+        "13": "\u968f\u673a\u5730\u56fe"
+    },
+    "Opt-General,86": {
+        "0": "Host Info: You tried to paste invalid settings: \"{0}...\"",
+        "13": "\u623f\u4e3b\u6d88\u606f: \u60a8\u5c1d\u8bd5\u7c98\u8d34\u65e0\u6548\u8bbe\u7f6e: \"{0}...\""
+    },
+    "Opt-General,87": {
+        "0": "Spawn Chance",
+        "13": "\u51fa\u73b0\u6982\u7387"
+    },
+    "Opt-General,88": {
+        "0": "Role Overview",
+        "13": "\u804c\u4e1a\u603b\u89c8"
+    },
+    "Opt-General,89": {
+        "0": "TORCE Settings",
+        "13": "TORCE\u6a21\u7ec4\u8bbe\u7f6e"
+    },
+    "Opt-General,90": {
+        "0": "Hide 'N' Seek",
+        "13": "\u6349\u8ff7\u85cf\u8bbe\u7f6e"
+    },
+    "Opt-General,91": {
+        "0": "Hide 'N' Seek Roles",
+        "13": "\u6349\u8ff7\u85cf\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,92": {
+        "0": "Prop Hunt",
+        "13": "\u53d8\u5f62\u72e9\u730e\u8bbe\u7f6e"
+    },
+    "Opt-General,93": {
+        "0": "Guesser Settings",
+        "13": "\u8d4c\u602a\u6a21\u5f0f\u8bbe\u7f6e"
+    },
+    "Opt-General,94": {
+        "0": "Page 1: Hide N Seek Settings",
+        "13": "\u7b2c1\u9875: \u6349\u8ff7\u85cf\u6a21\u5f0f\u8bbe\u7f6e"
+    },
+    "Opt-General,95": {
+        "0": "Page 2: Hide N Seek Role Settings",
+        "13": "\u7b2c2\u9875: \u6349\u8ff7\u85cf\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,96": {
+        "0": "Page 1: Prop Hunt Settings",
+        "13": "\u7b2c1\u9875: \u53d8\u5f62\u72e9\u730e\u8bbe\u7f6e"
+    },
+    "Opt-General,97": {
+        "0": "Page 1: Vanilla Settings",
+        "13": "\u7b2c1\u9875: \u539f\u7248\u8bbe\u7f6e"
+    },
+    "Opt-General,98": {
+        "0": "Page 2: The Other Roles Communicate Edition Settings",
+        "13": "\u7b2c2\u9875: \u8d85\u591a\u804c\u4e1a\u793e\u533a\u7248\u6a21\u7ec4\u8bbe\u7f6e"
+    },
+    "Opt-General,99": {
+        "0": "Page 3: Role and Modifier Rates",
+        "13": "\u7b2c3\u9875: \u804c\u4e1a\u548c\u9644\u52a0\u6982\u7387"
+    },
+    "Opt-General,100": {
+        "0": "Page 4: Impostor Role Settings",
+        "13": "\u7b2c4\u9875: \u5185\u9b3c\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,101": {
+        "0": "Page 5: Neutral Role Settings",
+        "13": "\u7b2c5\u9875: \u72ec\u7acb\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,102": {
+        "0": "Page 6: Crewmate Role Settings",
+        "13": "\u7b2c6\u9875: \u8239\u5458\u9635\u8425\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,103": {
+        "0": "Page 7: Modifier Settings",
+        "13": "\u7b2c7\u9875: \u9644\u52a0\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "Opt-General,104": {
+        "0": "Press TAB or Page Number for more...",
+        "13": "\u8bf7\u6309TAB\u952e\u6216\u6570\u5b57\u6309\u952e\u67e5\u770b\u66f4\u591a\u2026"
+    },
+    "Opt-Janitor,1": {
+        "0": "Janitor Cooldown",
+        "13": "\u6e05\u6d01\u5de5\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Morphling,1": {
-        "0": "Morphling Cooldown"
+        "0": "Morphling Cooldown",
+        "13": "\u5316\u5f62\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Morphling,2": {
-        "0": "Morph Duration"
+        "0": "Morph Duration",
+        "13": "\u5316\u5f62\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Bomber2,1": {
-        "0": "Bomber Cooldown"
+        "0": "Bomber Cooldown",
+        "13": "\u4f20\u9012\u70b8\u5f39\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Bomber2,2": {
-        "0": "Bomb Delay"
+        "0": "Bomb Delay",
+        "13": "\u70b8\u5f39\u6fc0\u6d3b\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Bomber2,3": {
-        "0": "Bomb Timer"
+        "0": "Bomb Timer",
+        "13": "\u70b8\u5f39\u7206\u70b8\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Undertaker,1": {
-        "0": "Draging delay after kill"
+        "0": "Draging delay after kill",
+        "13": "\u51fb\u6740\u540e\u62d6\u62fd\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Undertaker,2": {
-        "0": "Can Vent while dragging"
+        "0": "Can Vent while dragging",
+        "13": "\u62d6\u62fd\u5c38\u4f53\u65f6\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
     },
     "Opt-Camouflager,1": {
-        "0": "Camouflager Cooldown"
+        "0": "Camouflager Cooldown",
+        "13": "\u9690\u853d\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Camouflager,2": {
-        "0": "Camo Duration"
+        "0": "Camo Duration",
+        "13": "\u9690\u853d\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Vampire,1": {
-        "0": "Vampire Kill Delay"
+        "0": "Vampire Kill Delay",
+        "13": "\u5438\u8840\u9b3c\u51fb\u6740\u5ef6\u8fdf"
     },
     "Opt-Vampire,2": {
-        "0": "Vampire Cooldown"
+        "0": "Vampire Cooldown",
+        "13": "\u5438\u8840\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Vampire,3": {
-        "0": "Enable Garlic"
+        "0": "Enable Garlic",
+        "13": "\u542f\u7528\u5927\u849c"
     },
     "Opt-Vampire,4": {
-        "0": "Vampire Can Kill Near Garlics"
+        "0": "Vampire Can Kill Near Garlics",
+        "13": "\u5438\u8840\u602a\u53ef\u4ee5\u5728\u5927\u849c\u9644\u8fd1\u51fb\u6740"
     },
     "Opt-Eraser,1": {
-        "0": "Eraser Cooldown"
+        "0": "Eraser Cooldown",
+        "13": "\u62b9\u9664\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Eraser,2": {
-        "0": "Eraser Can Erase Anyone"
+        "0": "Eraser Can Erase Anyone",
+        "13": "\u62b9\u9664\u8005\u53ef\u4ee5\u62b9\u9664\u4efb\u4f55\u4eba"
     },
     "Opt-Trickster,1": {
-        "0": "Trickster Box Cooldown"
+        "0": "Trickster Box Cooldown",
+        "13": "\u9a97\u672f\u76d2\u5b50\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Trickster,2": {
-        "0": "Trickster Lights Out Cooldown"
+        "0": "Trickster Lights Out Cooldown",
+        "13": "\u9a97\u672f\u5173\u706f\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Trickster,3": {
-        "0": "Trickster Lights Out Duration"
+        "0": "Trickster Lights Out Duration",
+        "13": "\u9a97\u672f\u5173\u706f\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Cleaner,1": {
-        "0": "Cleaner Cooldown"
+        "0": "Cleaner Cooldown",
+        "13": "\u6e05\u7406\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Warlock,1": {
-        "0": "Warlock Cooldown"
+        "0": "Warlock Cooldown",
+        "13": "\u8bc5\u5492\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Warlock,2": {
-        "0": "Warlock Root Time"
+        "0": "Warlock Root Time",
+        "13": "\u8bc5\u5492\u540e\u5b9a\u8eab\u65f6\u95f4"
     },
     "Opt-BountyHunter,1": {
-        "0": "Duration After Which Bounty Changes"
+        "0": "Duration After Which Bounty Changes",
+        "13": "\u60ac\u8d4f\u76ee\u6807\u66f4\u65b0\u95f4\u9694\u65f6\u95f4"
     },
     "Opt-BountyHunter,2": {
-        "0": "Cooldown After Killing Bounty"
+        "0": "Cooldown After Killing Bounty",
+        "13": "\u51fb\u6740\u60ac\u8d4f\u76ee\u6807\u540e\u51cf\u5c11\u7684\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-BountyHunter,3": {
-        "0": "Additional Cooldown After Killing Others"
+        "0": "Additional Cooldown After Killing Others",
+        "13": "\u51fb\u6740\u975e\u60ac\u8d4f\u76ee\u6807\u540e\u589e\u52a0\u7684\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-BountyHunter,4": {
-        "0": "Show Arrow Pointing Towards The Bounty"
+        "0": "Show Arrow Pointing Towards The Bounty",
+        "13": "\u663e\u793a\u6307\u5411\u60ac\u8d4f\u76ee\u6807\u7684\u7bad\u5934"
     },
     "Opt-BountyHunter,5": {
-        "0": "Arrow Update Intervall"
+        "0": "Arrow Update Intervall",
+        "13": "\u7bad\u5934\u66f4\u65b0\u95f4\u9694\u65f6\u95f4"
     },
     "Opt-Witch,1": {
-        "0": "Witch Spell Casting Cooldown"
+        "0": "Witch Spell Casting Cooldown",
+        "13": "\u5973\u5deb\u4e0b\u5492\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Witch,2": {
-        "0": "Witch Additional Cooldown"
+        "0": "Witch Additional Cooldown",
+        "13": "\u5973\u5deb\u4e0b\u5492\u540e\u589e\u52a0\u7684\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Witch,3": {
-        "0": "Witch Can Spell Anyone"
+        "0": "Witch Can Spell Anyone",
+        "13": "\u5973\u5deb\u53ef\u4ee5\u7ed9\u4efb\u4f55\u4eba\u4e0b\u5492"
     },
     "Opt-Witch,4": {
-        "0": "Spell Casting Duration"
+        "0": "Spell Casting Duration",
+        "13": "\u4e0b\u5492\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Witch,5": {
-        "0": "Trigger Both Cooldowns"
+        "0": "Trigger Both Cooldowns",
+        "13": "\u4e0b\u5492\u4e0e\u51fb\u6740\u516c\u7528\u51b7\u5374"
     },
     "Opt-Witch,6": {
-        "0": "Voting The Witch Saves All The Targets"
+        "0": "Voting The Witch Saves All The Targets",
+        "13": "\u653e\u9010\u5973\u5deb\u62ef\u6551\u88ab\u4e0b\u5492\u73a9\u5bb6"
     },
     "Opt-Ninja,1": {
-        "0": "Ninja Mark Cooldown"
+        "0": "Ninja Mark Cooldown",
+        "13": "\u5fcd\u8005\u6807\u8bb0\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Ninja,2": {
-        "0": "Ninja Knows Location Of Target"
+        "0": "Ninja Knows Location Of Target",
+        "13": "\u5fcd\u8005\u77e5\u9053\u76ee\u6807\u7684\u4f4d\u7f6e"
     },
     "Opt-Ninja,3": {
-        "0": "Trace Duration"
+        "0": "Trace Duration",
+        "13": "\u5fcd\u8005\u75d5\u8ff9\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Ninja,4": {
-        "0": "Time Till Trace Color Has Faded"
+        "0": "Time Till Trace Color Has Faded",
+        "13": "\u5fcd\u8005\u75d5\u8ff9\u892a\u8272\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Ninja,5": {
-        "0": "Time The Ninja Is Invisible"
+        "0": "Time The Ninja Is Invisible",
+        "13": "\u5fcd\u8005\u9690\u8eab\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Bomber,1": {
-        "0": "Bomb Destruction Time"
+        "0": "Bomb Destruction Time",
+        "13": "\u70b8\u5f39\u7206\u70b8\u5012\u8ba1\u65f6"
     },
     "Opt-Bomber,2": {
-        "0": "Bomb Destruction Range"
+        "0": "Bomb Destruction Range",
+        "13": "\u70b8\u5f39\u7206\u70b8\u8303\u56f4"
     },
     "Opt-Bomber,3": {
-        "0": "Bomb Hear Range"
+        "0": "Bomb Hear Range",
+        "13": "\u70b8\u5f39\u58f0\u97f3\u8303\u56f4"
     },
     "Opt-Bomber,4": {
-        "0": "Bomb Defuse Duration"
+        "0": "Bomb Defuse Duration",
+        "13": "\u62c6\u9664\u70b8\u5f39\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Bomber,5": {
-        "0": "Bomb Cooldown"
+        "0": "Bomb Cooldown",
+        "13": "\u5b89\u653e\u70b8\u5f39\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Bomber,6": {
-        "0": "Bomb Is Active After"
+        "0": "Bomb Is Active After",
+        "13": "\u5b89\u653e\u70b8\u5f39\u540e\u6fc0\u6d3b\u6240\u9700\u65f6\u95f4"
     },
     "Opt-Yoyo,1": {
-        "0": "Blink Duration"
+        "0": "Blink Duration",
+        "13": "\u77ac\u79fb\u6301\u7eed\u65f6\u95f4"
     },
     "Opt-Yoyo,2": {
-        "0": "Mark Location Cooldown"
+        "0": "Mark Location Cooldown",
+        "13": "\u6807\u8bb0\u4f4d\u7f6e\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Yoyo,3": {
-        "0": "Marked Location Stays After Meeting"
+        "0": "Marked Location Stays After Meeting",
+        "13": "\u4f1a\u8bae\u7ed3\u675f\u540e\u4f20\u9001\u81f3\u6807\u8bb0\u5730\u70b9"
     },
     "Opt-Yoyo,4": {
-        "0": "Has Admin Table"
+        "0": "Has Admin Table",
+        "13": "\u53ef\u4ee5\u4f7f\u7528\u7ba1\u7406\u5ba4\u5730\u56fe"
     },
     "Opt-Yoyo,5": {
-        "0": "Admin Table Cooldown"
+        "0": "Admin Table Cooldown",
+        "13": "\u7ba1\u7406\u5ba4\u5730\u56fe\u51b7\u5374\u65f6\u95f4"
     },
     "Opt-Yoyo,6": {
-        "0": "Silhouette Visibility"
+        "0": "Silhouette Visibility",
+        "13": "\u6807\u8bb0\u8f6e\u5ed3\u53ef\u89c1\u7a0b\u5ea6"
     },
     "Opt-Miner,1": {
-        "0": "Mine Cooldown"
+        "0": "Mine Cooldown",
+        "13": "\u6316\u6d1e\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Miner,2": {
-        "0": "Number Of Uses"
+        "0": "Number Of Uses",
+        "13": "\u6700\u5927\u6316\u6d1e\u6b21\u6570"
     },
     "Opt-Blackmailer,1": {
-        "0": "Blackmail Cooldown"
+        "0": "Blackmail Cooldown",
+        "13": "\u52d2\u7d22\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Jester,1": {
-        "0": "Jester Can Call Emergency Meeting"
+        "0": "Jester Can Call Emergency Meeting",
+        "13": "\u5c0f\u4e11\u53ef\u4ee5\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
     },
     "Opt-Jester,2": {
-        "0": "Jester Can Hide in Vent"
+        "0": "Jester Can Hide in Vent",
+        "13": "\u5c0f\u4e11\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
     },
     "Opt-Jester,3": {
-        "0": "Jester Has Impostor Vision"
+        "0": "Jester Has Impostor Vision",
+        "13": "\u5c0f\u4e11\u62e5\u6709\u5185\u9b3c\u89c6\u91ce"
     },
     "Opt-Amnesiac,1": {
-        "0": "Show arrows to dead bodies"
+        "0": "Show arrows to dead bodies",
+        "13": "\u663e\u793a\u6307\u5411\u5c38\u4f53\u7684\u7bad\u5934"
     },
     "Opt-Amnesiac,2": {
-        "0": "Reset role when taken"
+        "0": "Reset role when taken",
+        "13": "\u91cd\u7f6e\u83b7\u53d6\u804c\u4e1a\u7684\u4f7f\u7528\u6b21\u6570"
     },
     "Opt-Arsonist,1": {
-        "0": "Arsonist Cooldown"
+        "0": "Arsonist Cooldown",
+        "13": "\u6d47\u6cb9\u6280\u80fd\u51b7\u5374"
     },
     "Opt-Arsonist,2": {
-        "0": "Arsonist Douse Duration"
+        "0": "Arsonist Douse Duration",
+        "13": "\u6d47\u6cb9\u6240\u9700\u65f6\u95f4"
+    },
+    "Opt-Jackal,1": {
+        "0": "Jackal/Sidekick Kill Cooldown",
+        "13": "\u8c7a\u72fc/\u8ddf\u73ed\u51fb\u6740\u51b7\u5374"
+    },
+    "Opt-Jackal,2": {
+        "0": "Jackal Can Use Vents",
+        "13": "\u8c7a\u72fc\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
+    },
+    "Opt-Jackal,3": {
+        "0": "Jackal Team Can Sabo",
+        "13": "\u8c7a\u72fc\u56e2\u961f\u53ef\u4ee5\u7834\u574f"
+    },
+    "Opt-Jackal,4": {
+        "0": "Jackal And Sidekick Have Impostor Vision",
+        "13": "\u8c7a\u72fc\u548c\u8ddf\u73ed\u62e5\u6709\u5185\u9b3c\u4e8b\u4e1a"
+    },
+    "Opt-Jackal,5": {
+        "0": "Jackal Can Create A Sidekick",
+        "13": "\u8c7a\u72fc\u53ef\u4ee5\u62db\u52df\u4e00\u4e2a\u8ddf\u73ed"
+    },
+    "Opt-Jackal,6": {
+        "0": "Jackal Create Sidekick Cooldown",
+        "13": "\u8c7a\u72fc\u62db\u52df\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Jackal,7": {
+        "0": "Sidekick Gets Promoted To Jackal On Jackal Death",
+        "13": "\u8c7a\u72fc\u6b7b\u540e\u8ddf\u73ed\u664b\u5347\u8c7a\u72fc"
+    },
+    "Opt-Jackal,8": {
+        "0": "Sidekick Can Kill",
+        "13": "\u8ddf\u73ed\u53ef\u4ee5\u51fb\u6740"
+    },
+    "Opt-Jackal,9": {
+        "0": "Sidekick Can Use Vents",
+        "13": "\u8ddf\u73ed\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
+    },
+    "Opt-Jackal,10": {
+        "0": "Jackals Promoted From Sidekick Can Create A Sidekick",
+        "13": "\u664b\u5347\u540e\u7684\u8ddf\u73ed\u53ef\u4ee5\u7ee7\u7eed\u62db\u52df"
+    },
+    "Opt-Jackal,11": {
+        "0": "Jackals Can Make An Impostor To His Sidekick",
+        "13": "\u8c7a\u72fc\u53ef\u4ee5\u62db\u52df\u5185\u9b3c\u4e3a\u8ddf\u73ed"
+    },
+    "Opt-Jackal,12": {
+        "0": "Kill a failed sidekick attempt",
+        "13": "\u6740\u6b7b\u62db\u52df\u5931\u8d25\u7684\u73a9\u5bb6"
+    },
+    "Opt-Swooper,1": {
+        "0": "Spawn as Alternate Jackal",
+        "13": "\u9690\u8eab\u4eba\u4e0d\u80fd\u4e0e\u8c7a\u72fc\u540c\u65f6\u5b58\u5728"
+    },
+    "Opt-Swooper,2": {
+        "0": "Swoop Cooldown",
+        "13": "\u9690\u8eab\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Swooper,3": {
+        "0": "Swoop Duration",
+        "13": "\u9690\u8eab\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Swooper,4": {
+        "0": "Swooper Has Impostor Vision",
+        "13": "\u9690\u8eab\u4eba\u62e5\u6709\u5185\u9b3c\u89c6\u91ce"
+    },
+    "Opt-Vulture,1": {
+        "0": "Vulture Cooldown",
+        "13": "\u541e\u566c\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Vulture,2": {
+        "0": "Number Of Corpses Needed To Be Eaten",
+        "13": "\u80dc\u5229\u6240\u9700\u541e\u566c\u5c38\u4f53\u6570\u91cf"
+    },
+    "Opt-Vulture,3": {
+        "0": "Vulture Can Use Vents",
+        "13": "\u79c3\u9e6b\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
+    },
+    "Opt-Vulture,4": {
+        "0": "Show Arrows Pointing Towards The Corpses",
+        "13": "\u663e\u793a\u6307\u5411\u5c38\u4f53\u7684\u7bad\u5934"
+    },
+    "Opt-Doomsayer,1": {
+        "0": "Doomsayer Observe Cooldown",
+        "13": "\u6d1e\u5bdf\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Doomsayer,2": {
+        "0": "Doommayer Can Continue Guessing After Guess",
+        "13": "\u731c\u6d4b\u6210\u529f\u540e\u53ef\u7ee7\u7eed\u731c\u6d4b"
+    },
+    "Opt-Doomsayer,3": {
+        "0": "Doomsayer can Guess",
+        "13": "\u53ef\u4ee5\u731c\u6d4b"
+    },
+    "Opt-Doomsayer,4": {
+        "0": "Impostor Roles",
+        "13": "\u5185\u9b3c\u9635\u8425\u804c\u4e1a"
+    },
+    "Opt-Doomsayer,5": {
+        "0": "Neutral Roles",
+        "13": "\u72ec\u7acb\u9635\u8425\u804c\u4e1a"
+    },
+    "Opt-Doomsayer,6": {
+        "0": "Obtain Enable Roles",
+        "13": "\u6d1e\u5bdf\u83b7\u53d6\u5df2\u5f00\u542f\u7684\u804c\u4e1a"
+    },
+    "Opt-Doomsayer,7": {
+        "0": "Number Of Roles Need Doomsayer Guess",
+        "13": "\u80dc\u5229\u6240\u9700\u731c\u6d4b\u73a9\u5bb6\u6570\u91cf"
+    },
+    "Opt-Doomsayer,8": {
+        "0": "Obtain Roles Number",
+        "13": "\u83b7\u53d6\u7684\u804c\u4e1a\u6570\u91cf"
+    },
+    "Opt-Lawyer,1": {
+        "0": "Vision",
+        "13": "\u5f8b\u5e08\u89c6\u91ce"
+    },
+    "Opt-Lawyer,2": {
+        "0": "Lawyer/Prosecutor Knows Target Role",
+        "13": "\u5f8b\u5e08/\u68c0\u5bdf\u5b98\u77e5\u9053\u5ba2\u6237\u7684\u804c\u4e1a"
+    },
+    "Opt-Lawyer,3": {
+        "0": "Lawyer/Prosecutor Can Call Emergency Meeting",
+        "13": "\u5f8b\u5e08/\u68c0\u5bdf\u5b98\u53ef\u4ee5\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
+    },
+    "Opt-Lawyer,4": {
+        "0": "Lawyer Target Can Be The Jester",
+        "13": "\u5f8b\u5e08\u7684\u5ba2\u6237\u53ef\u4ee5\u662f\u5c0f\u4e11"
+    },
+    "Opt-Lawyer,5": {
+        "0": "Pursuer Blank Cooldown",
+        "13": "\u8d77\u8bc9\u4eba\u7a7a\u5305\u5f39\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Lawyer,6": {
+        "0": "Pursuer Number Of Blanks",
+        "13": "\u8d77\u8bc9\u4eba\u7a7a\u5305\u5f39\u6570\u91cf"
+    },
+    "Opt-Lawyer,7": {
+        "0": "Prosecutor Spawn Rate",
+        "13": "\u68c0\u5bdf\u5b98\u751f\u6210\u6982\u7387"
+    },
+    "Opt-Thief,1": {
+        "0": "Thief Cooldown",
+        "13": "\u51fb\u6740\u51b7\u5374"
+    },
+    "Opt-Thief,2": {
+        "0": "Thief Can Kill Sheriff",
+        "13": "\u8eab\u4efd\u7a83\u8d3c\u53ef\u4ee5\u51fb\u6740\u8b66\u957f"
+    },
+    "Opt-Thief,3": {
+        "0": "Thief Has Impostor Vision",
+        "13": "\u8eab\u4efd\u7a83\u8d3c\u62e5\u6709\u5185\u9b3c\u89c6\u91ce"
+    },
+    "Opt-Thief,4": {
+        "0": "Thief Can Use Vents",
+        "13": "\u8eab\u4efd\u7a83\u8d3c\u53ef\u4ee5\u4f7f\u7528\u7ba1\u9053"
+    },
+    "Opt-Thief,5": {
+        "0": "Thief Can Guess To Steal A Role (If Guesser)",
+        "13": "\u8eab\u4efd\u7a83\u8d3c\u53ef\u4ee5\u901a\u8fc7\u731c\u6d4b\u7a83\u53d6\u804c\u4e1a(\u8d4c\u602a\u6a21\u5f0f)"
+    },
+    "Opt-Werewolf,1": {
+        "0": "Rampage Cooldown",
+        "13": "\u66b4\u8d70\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Werewolf,2": {
+        "0": "Rampage Duration",
+        "13": "\u66b4\u8d70\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Werewolf,3": {
+        "0": "Kill Cooldown When Rampage",
+        "13": "\u66b4\u8d70\u65f6\u51fb\u6740\u51b7\u5374"
+    },
+    "Opt-Mayor,1": {
+        "0": "Mayor Can See Vote Colors",
+        "13": "\u5e02\u957f\u53ef\u89c1\u6295\u7968\u73a9\u5bb6\u989c\u8272"
+    },
+    "Opt-Mayor,2": {
+        "0": "Completed Tasks Needed To See Vote Colors",
+        "13": "\u53ef\u89c1\u6295\u7968\u73a9\u5bb6\u989c\u8272\u6240\u9700\u5b8c\u6210\u4efb\u52a1\u6570"
+    },
+    "Opt-Mayor,3": {
+        "0": "Mobile Emergency Button",
+        "13": "\u542f\u7528\u8fdc\u7a0b\u7d27\u6025\u4f1a\u8bae\u6309\u94ae"
+    },
+    "Opt-Mayor,4": {
+        "0": "Number Of Remote Meetings",
+        "13": "\u6700\u5927\u53ec\u5f00\u8fdc\u7a0b\u4f1a\u8bae\u6b21\u6570"
+    },
+    "Opt-Mayor,5": {
+        "0": "Mayor Can Choose Single Vote",
+        "13": "\u5e02\u957f\u53ef\u4ee5\u9009\u62e9\u6295\u7968\u6570"
+    },
+    "Opt-Mayor,6": {
+        "0": "<color=#FFFF00FF>On (Before Voting)</color>",
+        "13": "<color=#FFFF00FF>\u5f00\u542f (\u6295\u7968\u524d)</color>"
+    },
+    "Opt-Mayor,7": {
+        "0": "<color=#FFFF00FF>On (Until Meeting Ends)</color>",
+        "13": "<color=#FFFF00FF>\u5f00\u542f (\u5230\u4f1a\u8bae\u7ed3\u675f\u90fd\u53ef)</color>"
+    },
+    "Opt-Engineer,1": {
+        "0": "Number Of Sabotage Fixes",
+        "13": "\u8fdc\u7a0b\u4fee\u590d\u7834\u574f\u6b21\u6570"
+    },
+    "Opt-Engineer,2": {
+        "0": "Impostors See Vents Highlighted",
+        "13": "\u5185\u9b3c\u53ef\u4ee5\u77e5\u9053\u5de5\u7a0b\u5e08\u5728\u7ba1\u9053\u4e2d"
+    },
+    "Opt-Engineer,3": {
+        "0": "Jackal and Sidekick See Vents Highlighted",
+        "13": "\u8c7a\u72fc\u548c\u8ddf\u73ed\u77e5\u9053\u5de5\u7a0b\u5e08\u5728\u7ba1\u9053\u91cc"
+    },
+    "Opt-PrivateInvestigator,1": {
+        "0": "Can see target player color",
+        "13": "\u53ef\u89c1\u6280\u80fd\u89e6\u53d1\u65f6\u5bf9\u65b9\u5177\u4f53\u989c\u8272"
+    },
+    "Opt-Sheriff,1": {
+        "0": "Sheriff Cooldown",
+        "13": "\u8b66\u957f\u51fb\u6740\u51b7\u5374"
+    },
+    "Opt-Sheriff,2": {
+        "0": "Sheriff Can Kill Neutrals",
+        "13": "\u8b66\u957f\u53ef\u4ee5\u51fb\u6740\u72ec\u7acb\u9635\u8425"
+    },
+    "Opt-Sheriff,3": {
+        "0": "Sheriff Has A Deputy",
+        "13": "\u8b66\u957f\u62e5\u6709\u4e00\u4e2a\u6355\u5feb"
+    },
+    "Opt-Sheriff,4": {
+        "0": "Deputy Number Of Handcuffs",
+        "13": "\u6355\u5feb\u624b\u94d0\u6570\u91cf"
+    },
+    "Opt-Sheriff,5": {
+        "0": "Handcuff Cooldown",
+        "13": "\u624b\u94d0\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Sheriff,6": {
+        "0": "Handcuff Duration",
+        "13": "\u624b\u94d0\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Sheriff,7": {
+        "0": "Sheriff And Deputy Know Each Other",
+        "13": "\u8b66\u957f\u4e0e\u6355\u5feb\u4e92\u76f8\u77e5\u9053"
+    },
+    "Opt-Sheriff,8": {
+        "0": "Deputy Gets Promoted To Sheriff",
+        "13": "\u6355\u5feb\u53ef\u4ee5\u664b\u5347\u4e3a\u8b66\u957f"
+    },
+    "Opt-Sheriff,9": {
+        "0": "<color=#FFFF00FF>On (Immediately)</color>",
+        "13": "<color=#FFFF00FF>\u5f00\u542f (\u7acb\u523b)</color>"
+    },
+    "Opt-Sheriff,10": {
+        "0": "<color=#FFFF00FF>On (After Meeting)</color>",
+        "13": "<color=#FFFF00FF>\u5f00\u542f (\u4f1a\u8bae\u540e)</color>"
+    },
+    "Opt-Sheriff,11": {
+        "0": "Deputy Keeps Handcuffs When Promoted",
+        "13": "\u6355\u5feb\u664b\u5347\u4e3a\u8b66\u957f\u540e\u4fdd\u7559\u624b\u94d0\u6280\u80fd"
+    },
+    "Opt-Lighter,1": {
+        "0": "Lighter Mode Vision On Lights On",
+        "13": "\u5f00\u706f\u65f6\u7535\u706f\u89c6\u91ce"
+    },
+    "Opt-Lighter,2": {
+        "0": "Lighter Mode Vision On Lights Off",
+        "13": "\u5173\u706f\u65f6\u7535\u706f\u89c6\u91ce"
+    },
+    "Opt-Lighter,3": {
+        "0": "Lighter Cooldown",
+        "13": "\u70b9\u706f\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Lighter,4": {
+        "0": "Lighter Duration",
+        "13": "\u70b9\u706f\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Detective,1": {
+        "0": "Anonymous Footprints",
+        "13": "\u4f7f\u7528\u533f\u540d\u811a\u5370"
+    },
+    "Opt-Detective,2": {
+        "0": "Footprint Intervall",
+        "13": "\u811a\u5370\u751f\u6210\u95f4\u9694\u65f6\u95f4"
+    },
+    "Opt-Detective,3": {
+        "0": "Footprint Duration",
+        "13": "\u811a\u5370\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Detective,4": {
+        "0": "Time Where Detective Reports Will Have Name",
+        "13": "\u4fa6\u63a2\u62a5\u544a\u663e\u793a\u51f6\u624b\u540d\u5b57\u7684\u65f6\u95f4"
+    },
+    "Opt-Detective,5": {
+        "0": "Time Where Detective Reports Will Have Color Type",
+        "13": "\u4fa6\u63a2\u62a5\u544a\u663e\u793a\u51f6\u624b\u989c\u8272\u7684\u65f6\u95f4"
+    },
+    "Opt-TimeMaster,1": {
+        "0": "Time Master Cooldown",
+        "13": "\u65f6\u5149\u4e4b\u4e3b\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-TimeMaster,2": {
+        "0": "Rewind Time",
+        "13": "\u56de\u6eaf\u65f6\u957f"
+    },
+    "Opt-TimeMaster,3": {
+        "0": "Time Master Shield Duration",
+        "13": "\u65f6\u5149\u4e4b\u76fe\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Veteran,1": {
+        "0": "Alert Cooldown",
+        "13": "\u8b66\u6212\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Veteran,2": {
+        "0": "Alert Duration",
+        "13": "\u8b66\u6212\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Medic,1": {
+        "0": "Show Shielded Player",
+        "13": "\u53ef\u89c1\u62a4\u76fe\u7684\u73a9\u5bb6"
+    },
+    "Opt-Medic,2": {
+        "0": "Everyone",
+        "13": "\u6240\u6709\u4eba"
+    },
+    "Opt-Medic,3": {
+        "0": "Shielded + Medic",
+        "13": "\u88ab\u4fdd\u62a4\u73a9\u5bb6+\u533b\u751f"
+    },
+    "Opt-Medic,4": {
+        "0": "Medic",
+        "13": "\u533b\u751f"
+    },
+    "Opt-Medic,5": {
+        "0": "Shielded Player Sees Murder Attempt",
+        "13": "\u88ab\u4fdd\u62a4\u73a9\u5bb6\u53ef\u89c1\u5c1d\u8bd5\u51fb\u6740"
+    },
+    "Opt-Medic,6": {
+        "0": "Shield Will Be Activated",
+        "13": "\u62a4\u76fe\u6fc0\u6d3b"
+    },
+    "Opt-Medic,7": {
+        "0": "Instantly",
+        "13": "\u7acb\u523b\u751f\u6548\u5e76\u53ef\u89c1"
+    },
+    "Opt-Medic,8": {
+        "0": "Instantly, Visible\nAfter Meeting",
+        "13": "\u7acb\u523b\u751f\u6548, \u4f1a\u8bae\u540e\u53ef\u89c1"
+    },
+    "Opt-Medic,9": {
+        "0": "After Meeting",
+        "13": "\u4f1a\u8bae\u540e\u751f\u6548\u5e76\u53ef\u89c1"
+    },
+    "Opt-Medic,10": {
+        "0": "Medic Sees Murder Attempt On Shielded Player",
+        "13": "\u533b\u751f\u53ef\u4ee5\u770b\u5230\u88ab\u4fdd\u62a4\u73a9\u5bb6\u88ab\u5c1d\u8bd5\u51fb\u6740"
+    },
+    "Opt-Swapper,1": {
+        "0": "Swapper Can Call Emergency Meeting",
+        "13": "\u6362\u7968\u5e08\u53ef\u4ee5\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
+    },
+    "Opt-Swapper,2": {
+        "0": "Swapper Can Only Swap Others",
+        "13": "\u6362\u7968\u5e08\u53ea\u80fd\u4ea4\u6362\u4ed6\u4eba\u7968\u6570"
+    },
+    "Opt-Swapper,3": {
+        "0": "Initial Swap Charges",
+        "13": "\u521d\u59cb\u6362\u7968\u6b21\u6570"
+    },
+    "Opt-Swapper,4": {
+        "0": "Number Of Tasks Needed For Recharging",
+        "13": "\u8865\u5145\u4e00\u6b21\u6362\u7968\u6b21\u6570\u6240\u9700\u5b8c\u6210\u4efb\u52a1\u6570"
+    },
+    "Opt-Seer,1": {
+        "0": "Seer Mode",
+        "13": "\u7075\u5a92\u6a21\u5f0f"
+    },
+    "Opt-Seer,2": {
+        "0": "Show Death Flash + Souls",
+        "13": "\u6b7b\u4ea1\u95ea\u5149+\u53ef\u89c1\u7075\u9b42"
+    },
+    "Opt-Seer,3": {
+        "0": "Show Death Flash",
+        "13": "\u6b7b\u4ea1\u95ea\u5149"
+    },
+    "Opt-Seer,4": {
+        "0": "Show Souls",
+        "13": "\u663e\u793a\u7075\u9b42"
+    },
+    "Opt-Seer,5": {
+        "0": "Seer Limit Soul Duration",
+        "13": "\u9650\u5236\u7075\u5a92\u53ef\u89c1\u7075\u9b42\u65f6\u95f4"
+    },
+    "Opt-Seer,6": {
+        "0": "Seer Soul Duration",
+        "13": "\u7075\u5a92\u53ef\u89c1\u7075\u9b42\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Hacker,1": {
+        "0": "Hacker Cooldown",
+        "13": "\u9ed1\u5165\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Hacker,2": {
+        "0": "Hacker Duration",
+        "13": "\u9ed1\u5165\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Hacker,3": {
+        "0": "Hacker Only Sees Color Type",
+        "13": "\u9ed1\u5165\u540e\u53ea\u80fd\u770b\u5230\u989c\u8272\u7c7b\u578b"
+    },
+    "Opt-Hacker,4": {
+        "0": "Max Mobile Gadget Charges",
+        "13": "\u79fb\u52a8\u8bbe\u5907\u6700\u5927\u5145\u80fd\u6b21\u6570"
+    },
+    "Opt-Hacker,5": {
+        "0": "Number Of Tasks Needed For Recharging",
+        "13": "\u5145\u80fd\u4e00\u6b21\u6240\u9700\u5b8c\u6210\u4efb\u52a1\u6570"
+    },
+    "Opt-Hacker,6": {
+        "0": "Cant Move During Mobile Gadget Duration",
+        "13": "\u4f7f\u7528\u79fb\u52a8\u88c5\u7f6e\u65f6\u4e0d\u80fd\u79fb\u52a8"
+    },
+    "Opt-Tracker,1": {
+        "0": "Tracker Update Intervall",
+        "13": "\u8ffd\u8e2a\u7bad\u5934\u66f4\u65b0\u95f4\u9694"
+    },
+    "Opt-Tracker,2": {
+        "0": "Tracker Reset Target After Meeting",
+        "13": "\u4f1a\u8bae\u540e\u91cd\u7f6e\u8ffd\u8e2a\u76ee\u6807"
+    },
+    "Opt-Tracker,3": {
+        "0": "Tracker Tracking Cooldown",
+        "13": "\u8ffd\u8e2a\u8005\u8ffd\u8e2a\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Tracker,4": {
+        "0": "Tracker Can Track Corpses",
+        "13": "\u8ffd\u8e2a\u8005\u53ef\u4ee5\u8ffd\u8e2a\u5c38\u4f53"
+    },
+    "Opt-Tracker,5": {
+        "0": "Corpses Tracking Cooldown",
+        "13": "\u8ffd\u8e2a\u5c38\u4f53\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Tracker,6": {
+        "0": "Corpses Tracking Duration",
+        "13": "\u8ffd\u8e2a\u5c38\u4f53\u6301\u7eed\u65f6\u95f4"
+    },
+    "Opt-Tracker,7": {
+        "0": "How Tracker Gets Target Location",
+        "13": "\u8ffd\u8e2a\u8005\u83b7\u53d6\u88ab\u8ffd\u8e2a\u8005\u4f4d\u7f6e\u65b9\u5f0f"
+    },
+    "Opt-Tracker,8": {
+        "0": "Arrow Only",
+        "13": "\u4ec5\u7bad\u5934"
+    },
+    "Opt-Tracker,9": {
+        "0": "Proximity Dectector Only",
+        "13": "\u8fdc\u8fd1\u611f\u5e94\u5668"
+    },
+    "Opt-Tracker,10": {
+        "0": "Arrow + Proximity",
+        "13": "\u7bad\u5934+\u611f\u5e94\u5668"
+    },
+    "Opt-Snitch,1": {
+        "0": "Task Count Where The Snitch Will Be Revealed",
+        "13": "\u544a\u5bc6\u8005\u5269\u4f59\u591a\u5c11\u4efb\u52a1\u65f6\u88ab\u63ed\u9732"
+    },
+    "Opt-Snitch,2": {
+        "0": "Information Mode",
+        "13": "\u83b7\u53d6\u4fe1\u606f\u65b9\u5f0f"
+    },
+    "Opt-Snitch,3": {
+        "0": "Chat",
+        "13": "\u804a\u5929\u6846"
+    },
+    "Opt-Snitch,4": {
+        "0": "Map",
+        "13": "\u5730\u56fe"
+    },
+    "Opt-Snitch,5": {
+        "0": "Chat & Map",
+        "13": "\u804a\u5929\u6846\u548c\u5730\u56fe"
+    },
+    "Opt-Snitch,6": {
+        "0": "Targets",
+        "13": "\u63ed\u793a\u76ee\u6807"
+    },
+    "Opt-Snitch,7": {
+        "0": "All Evil Players",
+        "13": "\u6240\u6709\u90aa\u6076\u73a9\u5bb6"
+    },
+    "Opt-Snitch,8": {
+        "0": "Killing Players",
+        "13": "\u5e26\u5200\u73a9\u5bb6"
+    },
+    "Opt-Spy,1": {
+        "0": "Spy Can Die To Sheriff",
+        "13": "\u5367\u5e95\u53ef\u4ee5\u88ab\u8b66\u957f\u51fb\u6740"
+    },
+    "Opt-Spy,2": {
+        "0": "Impostors Can Kill Anyone If There Is A Spy",
+        "13": "\u5982\u679c\u6709\u5367\u5e95\u5185\u9b3c\u53ef\u4ee5\u51fb\u6740\u4efb\u4f55\u4eba"
+    },
+    "Opt-Spy,3": {
+        "0": "Spy Can Enter Vents",
+        "13": "\u5367\u5e95\u53ef\u4ee5\u8fdb\u5165\u7ba1\u9053"
+    },
+    "Opt-Spy,4": {
+        "0": "Spy Has Impostor Vision",
+        "13": "\u5367\u5e95\u7528\u6709\u5185\u9b3c\u89c6\u91ce"
+    },
+    "Opt-Portalmaker,1": {
+        "0": "Portalmaker Cooldown",
+        "13": "\u653e\u7f6e\u4f20\u9001\u95e8\u6280\u80fd\u51b7\u5374"
+    },
+    "Opt-Portalmaker,2": {
+        "0": "Use Portal Cooldown",
+        "13": "\u4f7f\u7528\u4f20\u9001\u95e8\u51b7\u5374"
+    },
+    "Opt-Portalmaker,3": {
+        "0": "Portalmaker Log Only Shows Color Type",
+        "13": "\u4f20\u9001\u95e8\u8bb0\u5f55\u53ea\u663e\u793a\u989c\u8272\u7c7b\u578b"
+    },
+    "Opt-Portalmaker,4": {
+        "0": "Log Shows Time",
+        "13": "\u4f20\u9001\u95e8\u65e5\u5fd7\u663e\u793a\u65f6\u95f4"
+    },
+    "Opt-Portalmaker,5": {
+        "0": "Can Port To Portal From Everywhere",
+        "13": "\u53ef\u4ee5\u5728\u4efb\u4f55\u5730\u65b9\u4f20\u9001\u5230\u4f20\u9001\u95e8"
+    },
+    "Opt-SecurityGuard,1": {
+        "0": "Security Guard Cooldown",
+        "13": "\u4fdd\u5b89\u6280\u80fd\u51b7\u5374\u65f6\u95f4"
+    },
+    "Opt-SecurityGuard,2": {
+        "0": "Security Guard Number Of Screws",
+        "13": "\u4fdd\u5b89\u87ba\u4e1d\u9489\u6570\u91cf"
+    },
+    "Opt-SecurityGuard,3": {
+        "0": "Number Of Screws Per Cam",
+        "13": "\u5b89\u9632\u6444\u50cf\u5934\u6240\u9700\u87ba\u4e1d\u9489\u6570\u91cf"
+    },
+    "Opt-SecurityGuard,4": {
+        "0": "Number Of Screws Per Vent",
+        "13": "\u5c01\u9501\u7ba1\u9053\u6240\u9700\u87ba\u4e1d\u9489\u6570\u91cf"
+    },
+    "Opt-SecurityGuard,5": {
+        "0": "Security Guard Duration",
+        "13": "\u8fdc\u7a0b\u76d1\u63a7\u53ef\u6301\u7eed\u4f7f\u7528\u65f6\u95f4"
+    },
+    "Opt-SecurityGuard,6": {
+        "0": "Gadget Max Charges",
+        "13": "\u8fdc\u7a0b\u8bbe\u5907\u4f7f\u7528\u6700\u5927\u6b21\u6570"
+    },
+    "Opt-SecurityGuard,7": {
+        "0": "Number Of Tasks Needed For Recharging",
+        "13": "\u5145\u80fd\u4e00\u6b21\u6240\u9700\u5b8c\u6210\u4efb\u52a1\u6570"
+    },
+    "Opt-SecurityGuard,8": {
+        "0": "Cant Move During Cam Duration",
+        "13": "\u67e5\u770b\u8fdc\u7a0b\u76d1\u63a7\u65f6\u65e0\u6cd5\u79fb\u52a8"
+    },
+    "Opt-Medium,1": {
+        "0": "Medium Questioning Cooldown"
+    },
+    "Opt-Medium,2": {
+        "0": "Medium Questioning Duration"
+    },
+    "Opt-Medium,3": {
+        "0": "Each Soul Can Only Be Questioned Once"
+    },
+    "Opt-Medium,4": {
+        "0": "Chance That The Answer Contains \nAdditional Information"
+    },
+    "Opt-Bodyguard,1": {
+        "0": "Reset Target After Meeting"
+    },
+    "Opt-Trapper,1": {
+        "0": "Trapper Cooldown"
+    },
+    "Opt-Trapper,2": {
+        "0": "Max Traps Charges"
+    },
+    "Opt-Trapper,3": {
+        "0": "Number Of Tasks Needed For Recharging"
+    },
+    "Opt-Trapper,4": {
+        "0": "Trap Needed Trigger To Reveal"
+    },
+    "Opt-Trapper,5": {
+        "0": "Show Anonymous Map"
+    },
+    "Opt-Trapper,6": {
+        "0": "Trap Information Type"
+    },
+    "Opt-Trapper,7": {
+        "0": "Role"
+    },
+    "Opt-Trapper,8": {
+        "0": "Good/Evil Role"
+    },
+    "Opt-Trapper,9": {
+        "0": "Name"
+    },
+    "Opt-Trapper,10": {
+        "0": "Trap Duration"
+    },
+    "Opt-Disperser,1": {
+        "0": "Disperser Cooldown"
+    },
+    "Opt-Guesser,1": {
+        "0": "Evil Spawn Rate"
+    },
+    "Opt-Guesser,2": {
+        "0": "Other Spawn Rate"
+    },
+    "Opt-Guesser,3": {
+        "0": "Guesser Number Of Shots"
+    },
+    "Opt-Guesser,4": {
+        "0": "Guesser Can Shoot Multiple Times Per Meeting"
+    },
+    "Opt-Guesser,5": {
+        "0": "Guesses Visible In Ghost Chat"
+    },
+    "Opt-Guesser,6": {
+        "0": "Guesses Ignore The Medic Shield"
+    },
+    "Opt-Guesser,7": {
+        "0": "Evil Guesser Can Guess The Spy"
+    },
+    "Opt-Guesser,8": {
+        "0": "Guesser Can't Guess Snitch When Tasks Completed"
+    },
+    "Opt-Guesser,9": {
+        "0": "Guesser"
+    },
+    "Opt-Bloody,1": {
+        "0": "Bloody Quantity"
+    },
+    "Opt-Bloody,2": {
+        "0": "Trail Duration"
+    },
+    "Opt-AntiTeleport,1": {
+        "0": "Anti Teleport Quantity"
+    },
+    "Opt-Bait,1": {
+        "0": "Bait Quantity"
+    },
+    "Opt-Bait,2": {
+        "0": "Bait Report Delay Min"
+    },
+    "Opt-Bait,3": {
+        "0": "Bait Report Delay Max"
+    },
+    "Opt-Bait,4": {
+        "0": "Warn The Killer With A Flash"
+    },
+    "Opt-Lovers,1": {
+        "0": "Chance That One Lover Is Impostor"
+    },
+    "Opt-Lovers,2": {
+        "0": "Both Lovers Die"
+    },
+    "Opt-Lovers,3": {
+        "0": "Enable Lover Chat"
+    },
+    "Opt-Sunglasses,1": {
+        "0": "Sunglasses Quantity"
+    },
+    "Opt-Sunglasses,2": {
+        "0": "Vision With Sunglasses"
+    },
+    "Opt-Mini,1": {
+        "0": "Mini Growing Up Duration"
+    },
+    "Opt-Mini,2": {
+        "0": "Mini Grows Up In Meeting"
+    },
+    "Opt-Vip,1": {
+        "0": "VIP Quantity"
+    },
+    "Opt-Vip,2": {
+        "0": "Show Team Color"
+    },
+    "Opt-Invert,1": {
+        "0": "Modifier Quantity"
+    },
+    "Opt-Invert,2": {
+        "0": "Number Of Meetings Inverted"
+    },
+    "Opt-Chameleon,1": {
+        "0": "Chameleon Quantity"
+    },
+    "Opt-Chameleon,2": {
+        "0": "Time Until Fading Starts"
+    },
+    "Opt-Chameleon,3": {
+        "0": "Fade Duration"
+    },
+    "Opt-Chameleon,4": {
+        "0": "Minimum Visibility"
+    },
+    "Opt-Guessers-General,1": {
+        "0": "Number of Crew Guessers"
+    },
+    "Opt-Guessers-General,2": {
+        "0": "Number of Neutral Guessers"
+    },
+    "Opt-Guessers-General,3": {
+        "0": "Number of Impostor Guessers"
+    },
+    "Opt-Guessers-General,4": {
+        "0": "Force Jackal Guesser"
+    },
+    "Opt-Guessers-General,5": {
+        "0": "Sidekick Is Always Guesser"
+    },
+    "Opt-Guessers-General,6": {
+        "0": "Force Thief Guesser"
+    },
+    "Opt-Guessers-General,7": {
+        "0": "Guessers Can Have A Modifier"
+    },
+    "Opt-Guessers-General,8": {
+        "0": "Guesser Number Of Shots"
+    },
+    "Opt-Guessers-General,9": {
+        "0": "Guesser Can Shoot Multiple Times Per Meeting"
+    },
+    "Opt-Guessers-General,10": {
+        "0": "Guesses Ignore The Medic Shield"
+    },
+    "Opt-Guessers-General,11": {
+        "0": "Evil Guesser Can Guess The Spy"
+    },
+    "Opt-Guessers-General,12": {
+        "0": "Guesser Can't Guess Snitch When Tasks Completed"
+    },
+    "Opt-HideNSeek-Main,1": {
+        "0": "Map"
+    },
+    "Opt-HideNSeek-Main,2": {
+        "0": "Number Of Hunters"
+    },
+    "Opt-HideNSeek-Main,3": {
+        "0": "Kill Cooldown"
+    },
+    "Opt-HideNSeek-Main,4": {
+        "0": "Hunter Vision"
+    },
+    "Opt-HideNSeek-Main,5": {
+        "0": "Hunted Vision"
+    },
+    "Opt-HideNSeek-Main,6": {
+        "0": "Common Tasks"
+    },
+    "Opt-HideNSeek-Main,7": {
+        "0": "Short Tasks"
+    },
+    "Opt-HideNSeek-Main,8": {
+        "0": "Long Tasks"
+    },
+    "Opt-HideNSeek-Main,9": {
+        "0": "Timer In Min"
+    },
+    "Opt-HideNSeek-Main,10": {
+        "0": "Task Win Is Possible"
+    },
+    "Opt-HideNSeek-Main,11": {
+        "0": "Finish Tasks Punish In Sec"
+    },
+    "Opt-HideNSeek-Main,12": {
+        "0": "Enable Sabotages"
+    },
+    "Opt-HideNSeek-Main,13": {
+        "0": "Time The Hunter Needs To Wait"
+    },
+    "Opt-HideNSeek-Roles,1": {
+        "0": "Hunter Light Cooldown"
+    },
+    "Opt-HideNSeek-Roles,2": {
+        "0": "Hunter Light Duration"
+    },
+    "Opt-HideNSeek-Roles,3": {
+        "0": "Hunter Light Vision"
+    },
+    "Opt-HideNSeek-Roles,4": {
+        "0": "Hunter Light Punish In Sec"
+    },
+    "Opt-HideNSeek-Roles,5": {
+        "0": "Hunter Admin Cooldown"
+    },
+    "Opt-HideNSeek-Roles,6": {
+        "0": "Hunter Admin Duration"
+    },
+    "Opt-HideNSeek-Roles,7": {
+        "0": "Hunter Admin Punish In Sec"
+    },
+    "Opt-HideNSeek-Roles,8": {
+        "0": "Hunter Arrow Cooldown"
+    },
+    "Opt-HideNSeek-Roles,9": {
+        "0": "Hunter Arrow Duration"
+    },
+    "Opt-HideNSeek-Roles,10": {
+        "0": "Hunter Arrow Punish In Sec"
+    },
+    "Opt-HideNSeek-Roles,11": {
+        "0": "Hunted Shield Cooldown"
+    },
+    "Opt-HideNSeek-Roles,12": {
+        "0": "Hunted Shield Duration"
+    },
+    "Opt-HideNSeek-Roles,13": {
+        "0": "Hunted Rewind Time"
+    },
+    "Opt-HideNSeek-Roles,14": {
+        "0": "Hunted Shield Number"
+    },
+    "Opt-PropHunt-Main,1": {
+        "0": "Timer In Min"
+    },
+    "Opt-PropHunt-Main,2": {
+        "0": "Unstuck Cooldown"
+    },
+    "Opt-PropHunt-Main,3": {
+        "0": "Unstuck Duration"
+    },
+    "Opt-PropHunt-Main,4": {
+        "0": "Hunter Vision"
+    },
+    "Opt-PropHunt-Main,5": {
+        "0": "Prop Vision"
+    },
+    "Opt-PropHunt-Roles,1": {
+        "0": "Number Of Hunters"
+    },
+    "Opt-PropHunt-Roles,2": {
+        "0": "Hunter Initial Blackout Duration"
+    },
+    "Opt-PropHunt-Roles,3": {
+        "0": "Kill Cooldown After Miss"
+    },
+    "Opt-PropHunt-Roles,4": {
+        "0": "Kill Cooldown After Hit"
+    },
+    "Opt-PropHunt-Roles,5": {
+        "0": "Reveal Prop Cooldown"
+    },
+    "Opt-PropHunt-Roles,6": {
+        "0": "Reveal Prop Duration"
+    },
+    "Opt-PropHunt-Roles,7": {
+        "0": "Reveal Time Punish"
+    },
+    "Opt-PropHunt-Roles,8": {
+        "0": "Hunter Admin Cooldown"
+    },
+    "Opt-PropHunt-Roles,9": {
+        "0": "Find Cooldown"
+    },
+    "Opt-PropHunt-Roles,10": {
+        "0": "Find Duration"
+    },
+    "Opt-PropHunt-Roles,11": {
+        "0": "Props Become Hunters When Found"
+    },
+    "Opt-PropHunt-Roles,12": {
+        "0": "Invisibility Enabled"
+    },
+    "Opt-PropHunt-Roles,13": {
+        "0": "Invisibility Cooldown"
+    },
+    "Opt-PropHunt-Roles,14": {
+        "0": "Invisibility Duration"
+    },
+    "Opt-PropHunt-Roles,15": {
+        "0": "Speedboost Enabled"
+    },
+    "Opt-PropHunt-Roles,16": {
+        "0": "Speedboost Cooldown"
+    },
+    "Opt-PropHunt-Roles,17": {
+        "0": "Speedboost Duration"
+    },
+    "Opt-PropHunt-Roles,18": {
+        "0": "Speedboost Ratio"
+    },
+    "Role-Name,1": {
+        "0": "Jester",
+        "13": "\u5c0f\u4e11"
+    },
+    "Role-IntroDesc,1": {
+        "0": "Get voted out",
+        "13": "\u8ba9\u522b\u4eba\u89c1\u8bc6\u4e0b\u771f\u6b63\u7684\u5c0f\u4e11"
+    },
+    "Role-ShortDesc,1": {
+        "0": "Get voted out",
+        "13": "\u60f3\u529e\u6cd5\u88ab\u6295\u51fa\u53bb"
+    },
+    "Role-Name,2": {
+        "0": "Werewolf"
+    },
+    "Role-IntroDesc,2": {
+        "0": "Rampage and kill everyone"
+    },
+    "Role-ShortDesc,2": {
+        "0": "Rampage and kill everyone"
+    },
+    "Role-Name,3": {
+        "0": "Prosecutor"
+    },
+    "Role-IntroDesc,3": {
+        "0": "Vote out your target"
+    },
+    "Role-ShortDesc,3": {
+        "0": "Vote out your target"
+    },
+    "Role-Name,4": {
+        "0": "Swooper"
+    },
+    "Role-IntroDesc,4": {
+        "0": "Turn Invisable and kill everyone"
+    },
+    "Role-ShortDesc,4": {
+        "0": "Turn Invisable"
+    },
+    "Role-Name,5": {
+        "0": "Mayor",
+        "13": "\u5e02\u957f"
+    },
+    "Role-IntroDesc,5": {
+        "0": "Your vote counts twice",
+        "13": "\u4f60\u7684\u6743\u529b\u81f3\u9ad8\u65e0\u4e0a"
+    },
+    "Role-ShortDesc,5": {
+        "0": "Your vote counts twice",
+        "13": "\u4f60\u7684\u4e00\u7968\u9876\u522b\u4eba\u4e24\u7968"
+    },
+    "Role-Name,6": {
+        "0": "Portalmaker"
+    },
+    "Role-IntroDesc,6": {
+        "0": "You can create portals"
+    },
+    "Role-ShortDesc,6": {
+        "0": "You can create portals"
+    },
+    "Role-Name,7": {
+        "0": "Engineer"
+    },
+    "Role-IntroDesc,7": {
+        "0": "Maintain important systems on the ship"
+    },
+    "Role-ShortDesc,7": {
+        "0": "Repair the ship"
+    },
+    "Role-Name,8": {
+        "0": "Private Investigator"
+    },
+    "Role-IntroDesc,8": {
+        "0": "See who is interacting with others"
+    },
+    "Role-ShortDesc,8": {
+        "0": "Spy on the ship."
+    },
+    "Role-Name,9": {
+        "0": "Sheriff"
+    },
+    "Role-IntroDesc,9": {
+        "0": "Shoot the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,9": {
+        "0": "Shoot the Impostors"
+    },
+    "Role-Name,10": {
+        "0": "Body Guard"
+    },
+    "Role-IntroDesc,10": {
+        "0": "Protect someone with your own life"
+    },
+    "Role-ShortDesc,10": {
+        "0": "You are the shield that guards the realms of men!"
+    },
+    "Role-Name,11": {
+        "0": "Deputy"
+    },
+    "Role-IntroDesc,11": {
+        "0": "Handcuff the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,11": {
+        "0": "Handcuff the Impostors"
+    },
+    "Role-Name,12": {
+        "0": "Lighter"
+    },
+    "Role-IntroDesc,12": {
+        "0": "Your light never goes out"
+    },
+    "Role-ShortDesc,12": {
+        "0": "Your light never goes out"
+    },
+    "Role-Name,13": {
+        "0": "Godfather"
+    },
+    "Role-IntroDesc,13": {
+        "0": "Kill all Crewmates"
+    },
+    "Role-ShortDesc,13": {
+        "0": "Kill all Crewmates"
+    },
+    "Role-Name,14": {
+        "0": "Mafioso"
+    },
+    "Role-IntroDesc,14": {
+        "0": "Work with the <color=#FF1919FF>Mafia</color> to kill the Crewmates"
+    },
+    "Role-ShortDesc,14": {
+        "0": "Kill all Crewmates"
+    },
+    "Role-Name,15": {
+        "0": "Janitor"
+    },
+    "Role-IntroDesc,15": {
+        "0": "Work with the <color=#FF1919FF>Mafia</color> by hiding dead bodies"
+    },
+    "Role-ShortDesc,15": {
+        "0": "Hide dead bodies"
+    },
+    "Role-Name,16": {
+        "0": "Morphling"
+    },
+    "Role-IntroDesc,16": {
+        "0": "Change your look to not get caught"
+    },
+    "Role-ShortDesc,16": {
+        "0": "Change your look"
+    },
+    "Role-Name,17": {
+        "0": "Bomber"
+    },
+    "Role-IntroDesc,17": {
+        "0": "Give bombs to players"
+    },
+    "Role-ShortDesc,17": {
+        "0": "Bomb Everyone"
+    },
+    "Role-Name,18": {
+        "0": "Bomber"
+    },
+    "Role-IntroDesc,18": {
+        "0": "Bomb all Crewmates"
+    },
+    "Role-ShortDesc,18": {
+        "0": "Bomb all Crewmates"
+    },
+    "Role-Name,19": {
+        "0": "Yo-Yo",
+        "13": "\u60a0\u60a0\u7403"
+    },
+    "Role-IntroDesc,19": {
+        "0": "Blink to a marked location and Back",
+        "13": "\u6807\u8bb0\u4e00\u4e2a\u5730\u70b9\u5e76\u56de\u53bb"
+    },
+    "Role-ShortDesc,19": {
+        "0": "Blink to a location",
+        "13": "\u6807\u8bb0\u70b9\u5e76\u95ea\u73b0"
+    },
+    "Role-Name,20": {
+        "0": "Poucher"
+    },
+    "Role-IntroDesc,20": {
+        "0": "Keep info on the players you kill"
+    },
+    "Role-ShortDesc,20": {
+        "0": "Investigate the kills"
+    },
+    "Role-Name,21": {
+        "0": "Mimic"
+    },
+    "Role-IntroDesc,21": {
+        "0": "Pose as a crewmate by killing one"
+    },
+    "Role-ShortDesc,21": {
+        "0": "Pose as a crewmate"
+    },
+    "Role-Name,22": {
+        "0": "Camouflager"
+    },
+    "Role-IntroDesc,22": {
+        "0": "Camouflage and kill the Crewmates"
+    },
+    "Role-ShortDesc,22": {
+        "0": "Hide among others"
+    },
+    "Role-Name,23": {
+        "0": "Miner"
+    },
+    "Role-IntroDesc,23": {
+        "0": "Make new Vents"
+    },
+    "Role-ShortDesc,23": {
+        "0": "Create Vents"
+    },
+    "Role-Name,24": {
+        "0": "Vampire"
+    },
+    "Role-IntroDesc,24": {
+        "0": "Kill the Crewmates with your bites"
+    },
+    "Role-ShortDesc,24": {
+        "0": "Bite your enemies"
+    },
+    "Role-Name,25": {
+        "0": "Eraser"
+    },
+    "Role-IntroDesc,25": {
+        "0": "Kill the Crewmates and erase their roles"
+    },
+    "Role-ShortDesc,25": {
+        "0": "Erase the roles of your enemies"
+    },
+    "Role-Name,26": {
+        "0": "Trickster"
+    },
+    "Role-IntroDesc,26": {
+        "0": "Use your jack-in-the-boxes to surprise others"
+    },
+    "Role-ShortDesc,26": {
+        "0": "Surprise your enemies"
+    },
+    "Role-Name,27": {
+        "0": "Cleaner"
+    },
+    "Role-IntroDesc,27": {
+        "0": "Kill everyone and leave no traces"
+    },
+    "Role-ShortDesc,27": {
+        "0": "Clean up dead bodies"
+    },
+    "Role-Name,28": {
+        "0": "Undertaker"
+    },
+    "Role-IntroDesc,28": {
+        "0": "Kill everyone and leave no traces"
+    },
+    "Role-ShortDesc,28": {
+        "0": "Drag up dead bodies to hide them"
+    },
+    "Role-Name,29": {
+        "0": "Warlock"
+    },
+    "Role-IntroDesc,29": {
+        "0": "Curse other players and kill everyone"
+    },
+    "Role-ShortDesc,29": {
+        "0": "Curse and kill everyone"
+    },
+    "Role-Name,30": {
+        "0": "Bounty Hunter"
+    },
+    "Role-IntroDesc,30": {
+        "0": "Hunt your bounty down"
+    },
+    "Role-ShortDesc,30": {
+        "0": "Hunt your bounty down"
+    },
+    "Role-Name,31": {
+        "0": "Detective"
+    },
+    "Role-IntroDesc,31": {
+        "0": "Find the <color=#FF1919FF>Impostors</color> by examining footprints"
+    },
+    "Role-ShortDesc,31": {
+        "0": "Examine footprints"
+    },
+    "Role-Name,32": {
+        "0": "Time Master"
+    },
+    "Role-IntroDesc,32": {
+        "0": "Save yourself with your time shield"
+    },
+    "Role-ShortDesc,32": {
+        "0": "Use your time shield"
+    },
+    "Role-Name,33": {
+        "0": "Veteran",
+        "13": "\u8001\u5175"
+    },
+    "Role-IntroDesc,33": {
+        "0": "Protect yourself from other",
+        "13": "\u4f60\u7684\u5b89\u5168\u4f7f\u7528\u522b\u4eba\u6362\u6765\u7684"
+    },
+    "Role-ShortDesc,33": {
+        "0": "Protect yourself from others",
+        "13": "\u65f6\u523b\u4fdd\u6301\u8b66\u89c9"
+    },
+    "Role-Name,34": {
+        "0": "Medic",
+        "13": "\u533b\u751f"
+    },
+    "Role-IntroDesc,34": {
+        "0": "Protect someone with your shield",
+        "13": "\u7528\u4f60\u7684\u62a4\u76fe\u4fdd\u62a4\u522b\u4eba"
+    },
+    "Role-ShortDesc,34": {
+        "0": "Protect other players",
+        "13": "\u4fdd\u62a4\u5176\u4ed6\u73a9\u5bb6"
+    },
+    "Role-Name,35": {
+        "0": "Swapper"
+    },
+    "Role-IntroDesc,35": {
+        "0": "Swap votes to exile the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,35": {
+        "0": "Swap votes"
+    },
+    "Role-Name,36": {
+        "0": "Seer"
+    },
+    "Role-IntroDesc,36": {
+        "0": "You will see players die"
+    },
+    "Role-ShortDesc,36": {
+        "0": "You will see players die"
+    },
+    "Role-Name,37": {
+        "0": "Hacker"
+    },
+    "Role-IntroDesc,37": {
+        "0": "Hack systems to find the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,37": {
+        "0": "Hack to find the Impostors"
+    },
+    "Role-Name,38": {
+        "0": "Tracker"
+    },
+    "Role-IntroDesc,38": {
+        "0": "Track the <color=#FF1919FF>Impostors</color> down"
+    },
+    "Role-ShortDesc,38": {
+        "0": "Track the Impostors down"
+    },
+    "Role-Name,39": {
+        "0": "Snitch"
+    },
+    "Role-IntroDesc,39": {
+        "0": "Finish your tasks to find the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,39": {
+        "0": "Finish your tasks"
+    },
+    "Role-Name,40": {
+        "0": "Jackal"
+    },
+    "Role-IntroDesc,40": {
+        "0": "Kill all Crewmates and <color=#FF1919FF>Impostors</color> to win"
+    },
+    "Role-ShortDesc,40": {
+        "0": "Kill everyone"
+    },
+    "Role-Name,41": {
+        "0": "Sidekick"
+    },
+    "Role-IntroDesc,41": {
+        "0": "Help your Jackal to kill everyone"
+    },
+    "Role-ShortDesc,41": {
+        "0": "Help your Jackal to kill everyone"
+    },
+    "Role-Name,42": {
+        "0": "Spy"
+    },
+    "Role-IntroDesc,42": {
+        "0": "Confuse the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,42": {
+        "0": "Confuse the Impostors"
+    },
+    "Role-Name,43": {
+        "0": "Security Guard"
+    },
+    "Role-IntroDesc,43": {
+        "0": "Seal vents and place cameras"
+    },
+    "Role-ShortDesc,43": {
+        "0": "Seal vents and place cameras"
+    },
+    "Role-Name,44": {
+        "0": "Arsonist"
+    },
+    "Role-IntroDesc,44": {
+        "0": "Let them burn"
+    },
+    "Role-ShortDesc,44": {
+        "0": "Let them burn"
+    },
+    "Role-Name,45": {
+        "0": "Amnesiac"
+    },
+    "Role-IntroDesc,45": {
+        "0": "Steal roles from the dead"
+    },
+    "Role-ShortDesc,45": {
+        "0": "You forgor"
+    },
+    "Role-Name,46": {
+        "0": "Vulture"
+    },
+    "Role-IntroDesc,46": {
+        "0": "Eat corpses to win"
+    },
+    "Role-ShortDesc,46": {
+        "0": "Eat dead bodies"
+    },
+    "Role-Name,47": {
+        "0": "Medium"
+    },
+    "Role-IntroDesc,47": {
+        "0": "Question the souls of the dead to gain information"
+    },
+    "Role-ShortDesc,47": {
+        "0": "Question the souls"
+    },
+    "Role-Name,48": {
+        "0": "Trapper"
+    },
+    "Role-IntroDesc,48": {
+        "0": "Place traps to find the Impostors"
+    },
+    "Role-ShortDesc,48": {
+        "0": "Place traps"
+    },
+    "Role-Name,49": {
+        "0": "Lawyer"
+    },
+    "Role-IntroDesc,49": {
+        "0": "Defend your client"
+    },
+    "Role-ShortDesc,49": {
+        "0": "Defend your client"
+    },
+    "Role-Name,50": {
+        "0": "Pursuer"
+    },
+    "Role-IntroDesc,50": {
+        "0": "Blank the <color=#FF1919FF>Impostors</color>"
+    },
+    "Role-ShortDesc,50": {
+        "0": "Blank the Impostors"
+    },
+    "Role-Name,51": {
+        "0": "Impostor"
+    },
+    "Role-IntroDesc,51": {
+        "0": "Sabotage and kill everyone"
+    },
+    "Role-ShortDesc,51": {
+        "0": "Sabotage and kill everyone"
+    },
+    "Role-Name,52": {
+        "0": "Crewmate"
+    },
+    "Role-IntroDesc,52": {
+        "0": "Find the Impostors"
+    },
+    "Role-ShortDesc,52": {
+        "0": "Find the Impostors"
+    },
+    "Role-Name,53": {
+        "0": "Witch"
+    },
+    "Role-IntroDesc,53": {
+        "0": "Cast a spell upon your foes"
+    },
+    "Role-ShortDesc,53": {
+        "0": "Cast a spell upon your foes"
+    },
+    "Role-Name,54": {
+        "0": "Cultist"
+    },
+    "Role-IntroDesc,54": {
+        "0": "Recruit for your cause"
+    },
+    "Role-ShortDesc,54": {
+        "0": "Recruit for your cause"
+    },
+    "Role-Name,55": {
+        "0": "Ninja"
+    },
+    "Role-IntroDesc,55": {
+        "0": "Surprise and assassinate your foes"
+    },
+    "Role-ShortDesc,55": {
+        "0": "Surprise and assassinate your foes"
+    },
+    "Role-Name,56": {
+        "0": "Blackmailer"
+    },
+    "Role-IntroDesc,56": {
+        "0": "Blackmail those who seek to hurt you"
+    },
+    "Role-ShortDesc,56": {
+        "0": "Blackmail those who seek to hurt you"
+    },
+    "Role-Name,57": {
+        "0": "Thief"
+    },
+    "Role-IntroDesc,57": {
+        "0": "Steal a killers role by killing them"
+    },
+    "Role-ShortDesc,57": {
+        "0": "Steal a killers role"
+    },
+    "Role-Name,58": {
+        "0": "Doomsayer"
+    },
+    "Role-IntroDesc,58": {
+        "0": "Guess People's Roles To Win!"
+    },
+    "Role-ShortDesc,58": {
+        "0": "Win by guessing player's roles"
+    },
+    "Role-Name,59": {
+        "0": "Hunter"
+    },
+    "Role-IntroDesc,59": {
+        "0": "Seek and kill everyone"
+    },
+    "Role-ShortDesc,59": {
+        "0": "Seek and kill everyone"
+    },
+    "Role-Name,60": {
+        "0": "Hunted"
+    },
+    "Role-IntroDesc,60": {
+        "0": "Hide"
+    },
+    "Role-ShortDesc,60": {
+        "0": "Hide"
+    },
+    "Role-Name,61": {
+        "0": "Prop"
+    },
+    "Role-IntroDesc,61": {
+        "0": "Disguise As An Object and Survive"
+    },
+    "Role-ShortDesc,61": {
+        "0": "Disguise As An Object"
+    },
+    "Role-Name,62": {
+        "0": "Bloody"
+    },
+    "Role-IntroDesc,62": {
+        "0": "Your killer leaves a bloody trail"
+    },
+    "Role-ShortDesc,62": {
+        "0": "Your killer leaves a bloody trail"
+    },
+    "Role-Name,63": {
+        "0": "Anti tp"
+    },
+    "Role-IntroDesc,63": {
+        "0": "You will not get teleported"
+    },
+    "Role-ShortDesc,63": {
+        "0": "You will not get teleported"
+    },
+    "Role-Name,64": {
+        "0": "Tiebreaker"
+    },
+    "Role-IntroDesc,64": {
+        "0": "Your vote breaks the tie"
+    },
+    "Role-ShortDesc,64": {
+        "0": "Break the tie"
+    },
+    "Role-Name,65": {
+        "0": "Bait"
+    },
+    "Role-IntroDesc,65": {
+        "0": "Bait your enemies"
+    },
+    "Role-ShortDesc,65": {
+        "0": "Bait your enemies"
+    },
+    "Role-Name,66": {
+        "0": "Sunglasses"
+    },
+    "Role-IntroDesc,66": {
+        "0": "You got the sunglasses"
+    },
+    "Role-ShortDesc,66": {
+        "0": "Your vision is reduced"
+    },
+    "Role-Name,67": {
+        "0": "Lover"
+    },
+    "Role-IntroDesc,67": {
+        "0": "You are in love"
+    },
+    "Role-ShortDesc,67": {
+        "0": "You are in love"
+    },
+    "Role-Name,68": {
+        "0": "Mini"
+    },
+    "Role-IntroDesc,68": {
+        "0": "No one will harm you until you grow up"
+    },
+    "Role-ShortDesc,68": {
+        "0": "No one will harm you"
+    },
+    "Role-Name,69": {
+        "0": "VIP"
+    },
+    "Role-IntroDesc,69": {
+        "0": "You are the VIP"
+    },
+    "Role-ShortDesc,69": {
+        "0": "Everyone is notified when you die"
+    },
+    "Role-Name,70": {
+        "0": "Indomitable"
+    },
+    "Role-IntroDesc,70": {
+        "0": "Your role cannot be guessed"
+    },
+    "Role-ShortDesc,70": {
+        "0": "You are Indomitable!"
+    },
+    "Role-Name,71": {
+        "0": "Slueth"
+    },
+    "Role-IntroDesc,71": {
+        "0": "Learn the roles of bodies you report"
+    },
+    "Role-ShortDesc,71": {
+        "0": "Who dat?"
+    },
+    "Role-Name,72": {
+        "0": "Fanatic"
+    },
+    "Role-IntroDesc,72": {
+        "0": "You are crewmate....for now"
+    },
+    "Role-ShortDesc,72": {
+        "0": "Discover your true potential"
+    },
+    "Role-Name,73": {
+        "0": "Invert"
+    },
+    "Role-IntroDesc,73": {
+        "0": "Your movement is inverted"
+    },
+    "Role-ShortDesc,73": {
+        "0": "Your movement is inverted"
+    },
+    "Role-Name,74": {
+        "0": "Blind"
+    },
+    "Role-IntroDesc,74": {
+        "0": "You cannot see your report button!"
+    },
+    "Role-ShortDesc,74": {
+        "0": "Was that a dead body?"
+    },
+    "Role-Name,75": {
+        "0": "Tunneler"
+    },
+    "Role-IntroDesc,75": {
+        "0": "Complete your tasks to gain the ability to vent"
+    },
+    "Role-ShortDesc,75": {
+        "0": "Finish work so you can play"
+    },
+    "Role-Name,76": {
+        "0": "Nice Guesser"
+    },
+    "Role-IntroDesc,76": {
+        "0": "Guess and shoot"
+    },
+    "Role-ShortDesc,76": {
+        "0": "Guess and shoot"
+    },
+    "Role-Name,77": {
+        "0": "Paranoid"
+    },
+    "Role-IntroDesc,77": {
+        "0": "Watch your six!"
+    },
+    "Role-ShortDesc,77": {
+        "0": "Use your paranoia to your advantage and see through tasks!"
+    },
+    "Role-Name,78": {
+        "0": "Disperser",
+        "13": "\u5206\u6563\u8005"
+    },
+    "Role-IntroDesc,78": {
+        "0": "Separate the Crew"
+    },
+    "Role-ShortDesc,78": {
+        "0": "Separate the Crew"
+    },
+    "Role-Name,79": {
+        "0": "Evil Guesser"
+    },
+    "Role-IntroDesc,79": {
+        "0": "Guess and shoot"
+    },
+    "Role-ShortDesc,79": {
+        "0": "Guess and shoot"
+    },
+    "Role-Name,80": {
+        "0": "Chameleon"
+    },
+    "Role-IntroDesc,80": {
+        "0": "You're hard to see when not moving"
+    },
+    "Role-ShortDesc,80": {
+        "0": "You're hard to see when not moving"
+    },
+    "Role-Name,81": {
+        "0": "Shifter"
+    },
+    "Role-IntroDesc,81": {
+        "0": "Shift your role"
+    },
+    "Role-ShortDesc,81": {
+        "0": "Shift your role"
     }
 }

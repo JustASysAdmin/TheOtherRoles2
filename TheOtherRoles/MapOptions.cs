@@ -15,6 +15,8 @@ namespace TheOtherRoles{
         public static bool ghostsSeeVotes = true;
         public static bool showRoleSummary = true;
         public static bool disableMedscanWalking = false;
+        public static bool ShowChatNotifications = true;
+        public static bool showFPS = true;
 
         public static bool allowParallelMedBayScans = false;
         public static bool showLighterDarker = true;
@@ -84,6 +86,8 @@ namespace TheOtherRoles{
             enableSoundEffects = TheOtherRolesPlugin.EnableSoundEffects.Value;
             enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
             ShowVentsOnMap = TheOtherRolesPlugin.ShowVentsOnMap.Value;
+            ShowChatNotifications = TheOtherRolesPlugin.ShowChatNotifications.Value;
+            showFPS = TheOtherRolesPlugin.ShowFPS.Value;
             //Patches.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }
 

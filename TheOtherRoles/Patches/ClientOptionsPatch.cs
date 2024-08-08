@@ -7,31 +7,41 @@ using TMPro;
 using UnityEngine.Events;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
+using UnityEngine.UIElements.UIR;
+using UnityEngine.UIElements;
 
 namespace TheOtherRoles.Patches 
 {
     [HarmonyPatch]
     public static class ClientOptionsPatch
     {
-        private static SelectionBehaviour[] AllOptions = {
-            new ("Ghosts See Tasks & Other Info", () => MapOptionsTor.ghostsSeeInformation  = TheOtherRolesPlugin.GhostsSeeInformation.Value = !TheOtherRolesPlugin.GhostsSeeInformation.Value, TheOtherRolesPlugin.GhostsSeeInformation.Value),
-            new ("Ghosts Can See Votes", () => MapOptionsTor.ghostsSeeVotes = TheOtherRolesPlugin.GhostsSeeVotes.Value = !TheOtherRolesPlugin.GhostsSeeVotes.Value, TheOtherRolesPlugin.GhostsSeeVotes.Value),
-            new ("Ghosts Can See Roles", () => MapOptionsTor.ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value = !TheOtherRolesPlugin.GhostsSeeRoles.Value, TheOtherRolesPlugin.GhostsSeeRoles.Value),
-            new ("Ghosts Can Additionally See Modifier", () => MapOptionsTor.ghostsSeeModifier = TheOtherRolesPlugin.GhostsSeeModifier.Value = !TheOtherRolesPlugin.GhostsSeeModifier.Value, TheOtherRolesPlugin.GhostsSeeModifier.Value),
-            new ("Show Role Summary", () => MapOptionsTor.showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value = !TheOtherRolesPlugin.ShowRoleSummary.Value, TheOtherRolesPlugin.ShowRoleSummary.Value),
-            new ("Show Lighter / Darker", () => MapOptionsTor.showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value = !TheOtherRolesPlugin.ShowLighterDarker.Value, TheOtherRolesPlugin.ShowLighterDarker.Value),
-            new ("Better Cursor", () => MapOptionsTor.toggleCursor = TheOtherRolesPlugin.ToggleCursor.Value = !TheOtherRolesPlugin.ToggleCursor.Value, TheOtherRolesPlugin.ToggleCursor.Value),
-            // new ("Hide Kill Animation", () => MapOptionsTor.showKillAnimation = TheOtherRolesPlugin.showKillAnimation.Value = !TheOtherRolesPlugin.showKillAnimation.Value, TheOtherRolesPlugin.showKillAnimation.Value),
-            new ("Enable Sound Effects", () => MapOptionsTor.enableSoundEffects = TheOtherRolesPlugin.EnableSoundEffects.Value = !TheOtherRolesPlugin.EnableSoundEffects.Value, TheOtherRolesPlugin.EnableSoundEffects.Value),
-            new ("Show Vents On Map", () => MapOptionsTor.ShowVentsOnMap = TheOtherRolesPlugin.ShowVentsOnMap.Value = !TheOtherRolesPlugin.ShowVentsOnMap.Value, TheOtherRolesPlugin.ShowVentsOnMap.Value),
+        private static List<SelectionBehaviour> AllOptions = new();
+        private static void setAllOptions()
+        {
+            AllOptions = new() {
+            new ("Ghosts See Tasks & Other Info", () => MapOptionsTor.ghostsSeeInformation  = TheOtherRolesPlugin.GhostsSeeInformation.Value = !TheOtherRolesPlugin.GhostsSeeInformation.Value, TheOtherRolesPlugin.GhostsSeeInformation.Value, 1),
+            new ("Ghosts Can See Votes", () => MapOptionsTor.ghostsSeeVotes = TheOtherRolesPlugin.GhostsSeeVotes.Value = !TheOtherRolesPlugin.GhostsSeeVotes.Value, TheOtherRolesPlugin.GhostsSeeVotes.Value, 2),
+            new ("Ghosts Can See Roles", () => MapOptionsTor.ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value = !TheOtherRolesPlugin.GhostsSeeRoles.Value, TheOtherRolesPlugin.GhostsSeeRoles.Value, 3),
+            new ("Ghosts Can Additionally See Modifier", () => MapOptionsTor.ghostsSeeModifier = TheOtherRolesPlugin.GhostsSeeModifier.Value = !TheOtherRolesPlugin.GhostsSeeModifier.Value, TheOtherRolesPlugin.GhostsSeeModifier.Value, 4),
+            new ("Show Role Summary", () => MapOptionsTor.showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value = !TheOtherRolesPlugin.ShowRoleSummary.Value, TheOtherRolesPlugin.ShowRoleSummary.Value, 5),
+            new ("Show Lighter / Darker", () => MapOptionsTor.showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value = !TheOtherRolesPlugin.ShowLighterDarker.Value, TheOtherRolesPlugin.ShowLighterDarker.Value, 6),
+            new ("Better Cursor", () => MapOptionsTor.toggleCursor = TheOtherRolesPlugin.ToggleCursor.Value = !TheOtherRolesPlugin.ToggleCursor.Value, TheOtherRolesPlugin.ToggleCursor.Value, 7),
+            // new ("Hide Kill Animation", () => MapOptionsTor.showKillAnimation = TheOtherRolesPlugin.showKillAnimation.Value = !TheOtherRolesPlugin.showKillAnimation.Value, TheOtherRolesPlugin.showKillAnimation.Value, 8),
+            new ("Enable Sound Effects", () => MapOptionsTor.enableSoundEffects = TheOtherRolesPlugin.EnableSoundEffects.Value = !TheOtherRolesPlugin.EnableSoundEffects.Value, TheOtherRolesPlugin.EnableSoundEffects.Value, 9),
+            new ("Show Vents On Map", () => MapOptionsTor.ShowVentsOnMap = TheOtherRolesPlugin.ShowVentsOnMap.Value = !TheOtherRolesPlugin.ShowVentsOnMap.Value, TheOtherRolesPlugin.ShowVentsOnMap.Value, 10),
+            new("Show Chat Notifications", () => MapOptionsTor.ShowChatNotifications = TheOtherRolesPlugin.ShowChatNotifications.Value = !TheOtherRolesPlugin.ShowChatNotifications.Value, TheOtherRolesPlugin.ShowChatNotifications.Value, 11),
+            new("Show FPS", () => MapOptionsTor.showFPS = TheOtherRolesPlugin.ShowFPS.Value = !TheOtherRolesPlugin.ShowFPS.Value, TheOtherRolesPlugin.ShowFPS.Value, 12),
         };
+        }
         
         private static GameObject popUp;
         private static TextMeshPro titleText;
-
+        private static ToggleButtonBehaviour moreOptions = null;
+        private static TextMeshPro titleTextTitle;
         private static ToggleButtonBehaviour buttonPrefab;
         private static Vector3? _origin;
-        
+        private static int page = 1;
+        private static List<ToggleButtonBehaviour> modButtons = new();
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
         public static void MainMenuManager_StartPostfix(MainMenuManager __instance)
@@ -146,7 +156,7 @@ namespace TheOtherRoles.Patches
         {
             if (!popUp || popUp.GetComponentInChildren<TextMeshPro>() || !titleText) return;
             
-            var title = Object.Instantiate(titleText, popUp.transform);
+            var title = titleTextTitle = Object.Instantiate(titleText, popUp.transform);
             title.GetComponent<RectTransform>().localPosition = Vector3.up * 2.3f;
             title.gameObject.SetActive(true);
             title.text = "More Options...";
@@ -155,12 +165,21 @@ namespace TheOtherRoles.Patches
 
         private static void SetUpOptions()
         {
-            if (popUp.transform.GetComponentInChildren<ToggleButtonBehaviour>()) return;
-            
-            for (var i = 0; i < AllOptions.Length; i++)
+            //if (popUp.transform.GetComponentInChildren<ToggleButtonBehaviour>()) return;
+            setAllOptions();
+
+            foreach (var button in modButtons)
             {
-                var info = AllOptions[i];
-                
+                if (button != null) GameObject.Destroy(button.gameObject);
+            }
+
+            modButtons = new List<ToggleButtonBehaviour>();
+            int length = (page * 10) < AllOptions.Count ? page * 10 : AllOptions.Count;
+
+            for (var i = 0; i + ((page - 1) * 10) < length; i++)
+            {
+                var info = AllOptions[i + ((page - 1) * 10)];
+
                 var button = Object.Instantiate(buttonPrefab, popUp.transform);
                 var pos = new Vector3(i % 2 == 0 ? -1.17f : 1.17f, 1.3f - i / 2 * 0.8f, -.5f);
 
@@ -169,7 +188,7 @@ namespace TheOtherRoles.Patches
 
                 button.onState = info.DefaultValue;
                 button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
-                
+
                 button.Text.text = info.Title;
                 button.Text.fontSizeMin = button.Text.fontSizeMax = 1.9f;
                 button.Text.font = Object.Instantiate(titleText.font);
@@ -177,19 +196,19 @@ namespace TheOtherRoles.Patches
 
                 button.name = info.Title.Replace(" ", "") + "Toggle";
                 button.gameObject.SetActive(true);
-                
+
                 var passiveButton = button.GetComponent<PassiveButton>();
                 var colliderButton = button.GetComponent<BoxCollider2D>();
-                
+
                 colliderButton.size = new Vector2(2.2f, .7f);
-                
+
                 passiveButton.OnClick = new ButtonClickedEvent();
                 passiveButton.OnMouseOut = new UnityEvent();
                 passiveButton.OnMouseOver = new UnityEvent();
 
                 passiveButton.OnClick.AddListener((Action) (() =>
                 {
-                    if(info.Title == "Better Cursor") {
+                    if(info.Number == 7) {
                         Helpers.enableCursor(false);                  
                     }
                     button.onState = info.OnClick();
@@ -201,6 +220,56 @@ namespace TheOtherRoles.Patches
 
                 foreach (var spr in button.gameObject.GetComponentsInChildren<SpriteRenderer>())
                     spr.size = new Vector2(2.2f, .7f);
+
+                modButtons.Add(button);
+            }
+            if (page * 10 < AllOptions.Count)
+            {
+                var button = Object.Instantiate(buttonPrefab, popUp.transform);
+                var pos = new Vector3(1.2f, -2.5f, -0.5f);
+                var transform = button.transform;
+                transform.localPosition = pos;
+                button.Text.text = "NEXT";
+                button.Text.fontSizeMin = button.Text.fontSizeMax = 2.2f;
+                button.Text.font = Object.Instantiate(titleText.font);
+                button.Text.GetComponent<RectTransform>().sizeDelta = new Vector2(2, 2);
+                button.gameObject.SetActive(true);
+                var passiveButton = button.GetComponent<PassiveButton>();
+                var colliderButton = button.GetComponent<BoxCollider2D>();
+                colliderButton.size = new Vector2(2.2f, .7f);
+                passiveButton.OnClick = new ButtonClickedEvent();
+                passiveButton.OnMouseOut = new UnityEvent();
+                passiveButton.OnMouseOver = new UnityEvent();
+                passiveButton.OnClick.AddListener((Action)(() =>
+                {
+                    page += 1;
+                    SetUpOptions();
+                }));
+                modButtons.Add(button);
+            }
+            if (page > 1)
+            {
+                var button = Object.Instantiate(buttonPrefab, popUp.transform);
+                var pos = new Vector3(-1.2f, -2.5f, -0.5f);
+                var transform = button.transform;
+                transform.localPosition = pos;
+                button.Text.text = "PREVIOUS";
+                button.Text.fontSizeMin = button.Text.fontSizeMax = 2.2f;
+                button.Text.font = Object.Instantiate(titleText.font);
+                button.Text.GetComponent<RectTransform>().sizeDelta = new Vector2(2, 2);
+                button.gameObject.SetActive(true);
+                var passiveButton = button.GetComponent<PassiveButton>();
+                var colliderButton = button.GetComponent<BoxCollider2D>();
+                colliderButton.size = new Vector2(2.2f, .7f);
+                passiveButton.OnClick = new ButtonClickedEvent();
+                passiveButton.OnMouseOut = new UnityEvent();
+                passiveButton.OnMouseOver = new UnityEvent();
+                passiveButton.OnClick.AddListener((Action)(() =>
+                {
+                    page -= 1;
+                    SetUpOptions();
+                }));
+                modButtons.Add(button);
             }
         }
         
@@ -211,18 +280,33 @@ namespace TheOtherRoles.Patches
                 yield return Go.transform.GetChild(i).gameObject;
             }
         }
-        
+        public static void UpdateTranslations()
+        {
+            if (titleTextTitle)
+                titleTextTitle.text = "More Options...";
+
+            if (moreOptions)
+                moreOptions.Text.text = "Mod Options...";
+
+            for (int i = 0; i < AllOptions.Count; i++)
+            {
+                if (i >= modButtons.Count) break;
+                modButtons[i].Text.text = AllOptions[i].Title;
+            }
+        }
         public class SelectionBehaviour
         {
             public string Title;
             public Func<bool> OnClick;
             public bool DefaultValue;
+            public int Number;
 
-            public SelectionBehaviour(string title, Func<bool> onClick, bool defaultValue)
+            public SelectionBehaviour(string title, Func<bool> onClick, bool defaultValue, int number)
             {
                 Title = title;
                 OnClick = onClick;
                 DefaultValue = defaultValue;
+                Number = number;
             }
         }
     }

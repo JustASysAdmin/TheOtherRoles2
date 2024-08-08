@@ -2,8 +2,6 @@ using AmongUs.Data;
 using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
-using Reactor.Utilities;
-using Reactor.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +10,8 @@ using TheOtherRoles.Players;
 using TheOtherRoles.Utilities;
 using TMPro;
 using UnityEngine;
+using static TheOtherRoles.Snitch;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TheOtherRoles.CustomGameModes
 {
@@ -24,6 +24,7 @@ namespace TheOtherRoles.CustomGameModes
         public static float timer = 20f;
         public static bool timerRunning = false;
         public static float blackOutTimer = 0f;
+        static TMPro.TextMeshPro TimeRemaining;
 
         public static int numberOfHunters;
         public static float initialBlackoutTime;
@@ -126,19 +127,14 @@ namespace TheOtherRoles.CustomGameModes
             return Helpers.loadSpriteFromResources($"TheOtherRoles.Resources.IntroAnimation.intro_{index + 1000}.png", 150f, cache: false);
         }
 
-        public static void updateWhitelistedObjects()
+        public static void updateWhitelistedObjects(bool debug = false)
         {
             string allNames = Helpers.readTextFromResources("TheOtherRoles.Resources.Txt.Props.txt");
-            bool debug = false;
             if (debug)
             {
                 allNames = Helpers.readTextFromFile(System.IO.Directory.GetCurrentDirectory() + "\\Props.txt");
             }
-            TheOtherRolesPlugin.Logger.LogMessage($"after debug");
             whitelistedObjects = allNames.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
-            TheOtherRolesPlugin.Logger.LogMessage($"after split");
-
-            TheOtherRolesPlugin.Logger.LogMessage($"Last element: {whitelistedObjects.Last()}");
         }
 
 
@@ -186,6 +182,7 @@ namespace TheOtherRoles.CustomGameModes
             {
                 poolablesBackground = new GameObject("poolablesBackground");
                 poolablesBackground.AddComponent<SpriteRenderer>();
+                poolablesBackground.layer = LayerMask.NameToLayer("UI");
                 if (poolablesBackgroundSprite == null) poolablesBackgroundSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.poolablesBackground.jpg", 200f);
             }
             poolablesBackground.transform.SetParent(HudManager.Instance.transform);
@@ -213,11 +210,7 @@ namespace TheOtherRoles.CustomGameModes
                 else
                 {
                     // Display Prop
-                    poolablePlayer.cosmetics.nameText.text = Helpers.cs(Palette.CrewmateBlue, pc.Data.PlayerName); ;
-                    if (isCurrentlyRevealed.ContainsKey(pc.PlayerId))
-                    {
-
-                    }
+                    poolablePlayer.cosmetics.nameText.text = Helpers.cs(Palette.CrewmateBlue, pc.Data.PlayerName);
                 }
                 // update currently revealed:
                 if (isCurrentlyRevealed.ContainsKey(pc.PlayerId))
@@ -225,6 +218,7 @@ namespace TheOtherRoles.CustomGameModes
                     if (!revealRenderer.ContainsKey(pc.PlayerId))
                     {
                         var go = new GameObject($"reveal_renderer_{pc.PlayerId}");
+                        go.layer = LayerMask.NameToLayer("UI");
                         go.AddComponent<SpriteRenderer>();
                         go.transform.SetParent(poolablePlayer.transform.parent, false);
                         go.SetActive(true);
@@ -249,7 +243,7 @@ namespace TheOtherRoles.CustomGameModes
                         isCurrentlyRevealed.Remove(pc.PlayerId);
                         revealRenderer.Remove(pc.PlayerId);
                         poolablePlayer.gameObject.SetActive(true);
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                     }
                 }
             }
@@ -293,6 +287,7 @@ namespace TheOtherRoles.CustomGameModes
 
         public static void dangerMeterUpdate()
         {
+            if (!HudManager.Instance || !HudManager.Instance.DangerMeter) return;
             if (HudManager.Instance.DangerMeter.gameObject.active)
             {
                 float dist = 55f;
@@ -373,33 +368,33 @@ namespace TheOtherRoles.CustomGameModes
         public static Sprite getUnstuckButtonSprite()
         {
             if (unstuckButtonSprite) return unstuckButtonSprite;
-            unstuckButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.UnStuck.png", 115f);
+            unstuckButtonSprite = CustomMain.customZips.UnStuck;
             return unstuckButtonSprite;
         }
         public static Sprite getRevealButtonSprite()
         {
             if (revealButtonSprite) return revealButtonSprite;
-            revealButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Reveal.png", 115f);
+            revealButtonSprite = CustomMain.customZips.Reveal;
             return revealButtonSprite;
         }
 
         public static Sprite getInvisButtonSprite()
         {
             if (invisButtonSprite) return invisButtonSprite;
-            invisButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.InvisButton.png", 115f);
+            invisButtonSprite = CustomMain.customZips.InvisButton;
             return invisButtonSprite;
         }
 
         public static Sprite getFindButtonSprite()
         {
             if (findButtonSprite) return findButtonSprite;
-            findButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.FindButton.png", 115f);
+            findButtonSprite = CustomMain.customZips.FindButton;
             return findButtonSprite;
         }
         public static Sprite getSpeedboostButtonSprite()
         {
             if (speedboostButtonSprite) return speedboostButtonSprite;
-            speedboostButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.SpeedboostButton.png", 115f);
+            speedboostButtonSprite = CustomMain.customZips.SpeedboostButton;
             return speedboostButtonSprite;
         }
 
@@ -413,7 +408,7 @@ namespace TheOtherRoles.CustomGameModes
                 float bestDist = 9999;
                 if (whitelistedObjects == null || whitelistedObjects.Count == 0 || verbose)
                 {
-                    updateWhitelistedObjects();
+                    updateWhitelistedObjects(true);
                 }
                 foreach (Collider2D collider in Physics2D.OverlapCircleAll(origin.transform.position, radius))
                 {
@@ -473,6 +468,14 @@ namespace TheOtherRoles.CustomGameModes
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
         [HarmonyPostfix]
+        public static void ResetData()
+        {
+            if (TimeRemaining != null)
+            {
+                UnityEngine.Object.Destroy(TimeRemaining);
+                TimeRemaining = null;
+            }
+        }
         public static void IntroCutsceneDestroyPatch(IntroCutscene __instance)
         {
             if (!isPropHuntGM || !PlayerControl.LocalPlayer.Data.Role.IsImpostor) return;
@@ -500,6 +503,7 @@ namespace TheOtherRoles.CustomGameModes
                     PlayerControl.LocalPlayer.moveable = true;
                     HudManager.Instance.FullScreen.enabled = false;
                     introObject.Destroy();
+                    TimeRemaining.Destroy();
                 }
                 else
                 {
@@ -509,6 +513,17 @@ namespace TheOtherRoles.CustomGameModes
                     introRenderer.sprite?.Destroy();
                     introRenderer.sprite = getIntroSprite(510 - nFrames + (int)(p * nFrames));
                     Resources.UnloadUnusedAssets();  // Needed so that the last sprite gets unloaded
+
+                    TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
+                    TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                    TimeRemaining.transform.position = Vector3.zero;
+                    TimeRemaining.transform.localPosition = new Vector3(0, 0, -1f);
+                    TimeRemaining.transform.localScale *= 1.8f;
+                    TimeRemaining.transform.SetParent(HudManager.Instance.FullScreen.transform);
+                    TimeRemaining.color = Palette.White;
+                    TimeRemaining.text = $"¾àÀë¿ªÊ¼: {initialBlackoutTime - Time.deltaTime}";
+                    TimeRemaining.gameObject.SetActive(true);
+
                 }
             })));
         }
@@ -605,7 +620,7 @@ namespace TheOtherRoles.CustomGameModes
 
         [HarmonyPatch(typeof(MapConsole), nameof(MapConsole.CanUse))]
         [HarmonyPostfix]
-        public static void AdminCanUsePostfix(MapConsole __instance, GameData.PlayerInfo pc, ref bool canUse, ref bool couldUse, ref float __result)
+        public static void AdminCanUsePostfix(MapConsole __instance, NetworkedPlayerInfo pc, ref bool canUse, ref bool couldUse, ref float __result)
         {
             if (!PropHunt.isPropHuntGM || !PlayerControl.LocalPlayer.Data.Role.IsImpostor) return;
             if (canUse)
@@ -667,6 +682,7 @@ namespace TheOtherRoles.CustomGameModes
         public static bool KillButtonClickPatch(KillButton __instance)
         {
             if (!PropHunt.isPropHuntGM || __instance.isCoolingDown || PlayerControl.LocalPlayer.Data.IsDead || PlayerControl.LocalPlayer.inVent) return false;
+            var targets = PlayerControl.LocalPlayer.Data.Role.GetPlayersInAbilityRangeSorted(RoleBehaviour.GetTempPlayerList(), true).ToArray();
 
             __instance.SetTarget(PlayerControl.LocalPlayer.Data.Role.GetPlayersInAbilityRangeSorted(RoleBehaviour.GetTempPlayerList(), true).ToArray().FirstOrDefault());
 
@@ -682,7 +698,14 @@ namespace TheOtherRoles.CustomGameModes
             }
             return false;
         }
-
+        [HarmonyPatch(typeof(RoleBehaviour), nameof(RoleBehaviour.IsValidTarget))]
+        [HarmonyPrefix]
+        public static bool IsValidTarget(RoleBehaviour __instance, NetworkedPlayerInfo target, ref bool __result)
+        {
+            if (!PropHunt.isPropHuntGM) return true;
+            __result = !(target == null) && !target.Disconnected && !target.IsDead && target.PlayerId != __instance.Player.PlayerId && !(target.Role == null) && !(target.Object == null) && !target.Object.inVent && !target.Object.inMovingPlat;
+            return false;
+        }
         [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.Show))]
         [HarmonyPrefix]
         public static void MapBehaviourShowPatch(MapBehaviour __instance, ref MapOptions opts)

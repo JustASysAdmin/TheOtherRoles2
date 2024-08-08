@@ -25,7 +25,7 @@ namespace TheOtherRoles
         private static CustomButton deputyHandcuffButton;
         public static CustomButton timeMasterShieldButton;
         private static CustomButton amnisiacRememberButton;
-        public static CustomButton veterenAlertButton;
+        public static CustomButton veteranAlertButton;
         public static CustomButton medicShieldButton;
         private static CustomButton bomber2BombButton;
         private static CustomButton bomber2KillButton;
@@ -50,7 +50,7 @@ namespace TheOtherRoles
         public static CustomButton jackalKillButton;
         public static CustomButton sidekickKillButton;
         private static CustomButton jackalSidekickButton;
-        public static CustomButton jackalAndSidekickSabotageLightsButton;
+        //public static CustomButton jackalAndSidekickSabotageLightsButton;
         private static CustomButton lighterButton;
         private static CustomButton eraserButton;
         private static CustomButton placeJackInTheBoxButton;        
@@ -128,7 +128,7 @@ namespace TheOtherRoles
             sheriffKillButton.MaxTimer = Sheriff.cooldown;
             deputyHandcuffButton.MaxTimer = Deputy.handcuffCooldown;
             timeMasterShieldButton.MaxTimer = TimeMaster.cooldown;
-            veterenAlertButton.MaxTimer = Veteren.cooldown;
+            veteranAlertButton.MaxTimer = Veteran.cooldown;
             medicShieldButton.MaxTimer = 0f;
             shifterShiftButton.MaxTimer = 0f;
             disperserDisperseButton.MaxTimer = 0f;
@@ -199,7 +199,7 @@ namespace TheOtherRoles
             propHuntAdminButton.MaxTimer = PropHunt.adminCooldown;
             propHuntFindButton.MaxTimer = PropHunt.findCooldown;
             timeMasterShieldButton.EffectDuration = TimeMaster.shieldDuration;
-            veterenAlertButton.EffectDuration = Veteren.alertDuration;
+            veteranAlertButton.EffectDuration = Veteran.alertDuration;
             hackerButton.EffectDuration = Hacker.duration;
             hackerVitalsButton.EffectDuration = Hacker.duration;
             hackerAdminTableButton.EffectDuration = Hacker.duration;
@@ -249,14 +249,14 @@ namespace TheOtherRoles
             timeMasterShieldButton.Timer = timeMasterShieldButton.MaxTimer;
             timeMasterShieldButton.isEffectActive = false;
             timeMasterShieldButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
-            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);
         }
 
         public static void resetHuntedRewindButton() {
             huntedShieldButton.Timer = huntedShieldButton.MaxTimer;
             huntedShieldButton.isEffectActive = false;
             huntedShieldButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
-            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);
+            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);
         }
 
         private static void addReplacementHandcuffedButton(CustomButton button, Vector3? positionOffset = null, Func<bool> couldUse = null)
@@ -339,7 +339,7 @@ namespace TheOtherRoles
             // Add poolable player to the button so that the target outfit is shown
             button.actionButton.cooldownTimerText.transform.localPosition = new Vector3(0, 0, -1f);  // Before the poolable player
             targetDisplay = UnityEngine.Object.Instantiate<PoolablePlayer>(Patches.IntroCutsceneOnDestroyPatch.playerPrefab, button.actionButton.transform);
-            GameData.PlayerInfo data = target.Data;
+            NetworkedPlayerInfo data = target.Data;
             target.SetPlayerMaterialColors(targetDisplay.cosmetics.currentBodySprite.BodySprite);
             targetDisplay.SetSkin(data.DefaultOutfit.SkinId, data.DefaultOutfit.ColorId);
             targetDisplay.SetHat(data.DefaultOutfit.HatId, data.DefaultOutfit.ColorId);
@@ -369,7 +369,7 @@ namespace TheOtherRoles
                     MessageWriter usedRepairWriter = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.EngineerUsedRepair, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(usedRepairWriter);
                     RPCProcedure.engineerUsedRepair();
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.engineerRepair, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.engineerRepair, false, 0.8f);
                     foreach (PlayerTask task in CachedPlayer.LocalPlayer.PlayerControl.myTasks.GetFastEnumerator()) {
                         if (task.TaskType == TaskTypes.FixLights) {
                             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.EngineerFixLights, Hazel.SendOption.Reliable, -1);
@@ -426,7 +426,7 @@ namespace TheOtherRoles
                                 Vector2 truePosition2 = component.TruePosition;
                                 if (Vector2.Distance(truePosition2, truePosition) <= CachedPlayer.LocalPlayer.PlayerControl.MaxReportDistance && CachedPlayer.LocalPlayer.PlayerControl.CanMove && !PhysicsHelpers.AnythingBetween(truePosition, truePosition2, Constants.ShipAndObjectsMask, false))
                                 {
-                                    GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
+                                    NetworkedPlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
 
                                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.CleanBody, Hazel.SendOption.Reliable, -1);
                                     writer.Write(playerInfo.PlayerId);
@@ -434,7 +434,7 @@ namespace TheOtherRoles
                                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                                     RPCProcedure.cleanBody(playerInfo.PlayerId, Janitor.janitor.PlayerId);
                                     janitorCleanButton.Timer = janitorCleanButton.MaxTimer;
-                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.cleanerClean, false, 0.8f);
+                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.cleanerClean, false, 0.8f);
                                     break;
                                 }
                             }
@@ -510,7 +510,7 @@ namespace TheOtherRoles
                     Deputy.currentTarget = null;
                     deputyHandcuffButton.Timer = deputyHandcuffButton.MaxTimer;
 
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.deputyHandcuff, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.deputyHandcuff, false, 0.8f);
                 },
                 () => { return (Deputy.deputy != null && Deputy.deputy == CachedPlayer.LocalPlayer.PlayerControl || Sheriff.sheriff != null && Sheriff.sheriff == CachedPlayer.LocalPlayer.PlayerControl && Sheriff.sheriff == Sheriff.formerDeputy && Deputy.keepsHandcuffsOnPromotion) && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => {
@@ -537,7 +537,7 @@ namespace TheOtherRoles
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.TimeMasterShield, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.timeMasterShield();
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.timemasterShield, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.timemasterShield, false, 0.8f);
                 },
                 () => { return TimeMaster.timeMaster != null && TimeMaster.timeMaster == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { return CachedPlayer.LocalPlayer.PlayerControl.CanMove; },
@@ -554,34 +554,35 @@ namespace TheOtherRoles
                 TimeMaster.shieldDuration,
                 () => {
                     timeMasterShieldButton.Timer = timeMasterShieldButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);
 
                 },
                 buttonText:"TIME SHIRLD"
             );
 
-            // Veteren Alert
-            veterenAlertButton = new CustomButton(
+            // Veteran Alert
+            veteranAlertButton = new CustomButton(
                 () => {
-                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VeterenAlert, Hazel.SendOption.Reliable, -1);
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.VeteranAlert, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    RPCProcedure.veterenAlert();
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.warlockCurse, false, 0.8f);
+                    RPCProcedure.veteranAlert();
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.warlockCurse, false, 0.8f);
+                    veteranAlertButton.Sprite = Veteran.getButtonSprite();
                 },
-                () => { return Veteren.veteren != null && Veteren.veteren == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
+                () => { return Veteran.veteran != null && Veteran.veteran == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { return CachedPlayer.LocalPlayer.PlayerControl.CanMove; },
                 () => {
-                    veterenAlertButton.Timer = veterenAlertButton.MaxTimer;
-                    veterenAlertButton.isEffectActive = false;
-                    veterenAlertButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
+                    veteranAlertButton.Timer = veteranAlertButton.MaxTimer;
+                    veteranAlertButton.isEffectActive = false;
+                    veteranAlertButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
                 },
-                Veteren.getButtonSprite(),
+                Veteran.getButtonNoSprite(),
                 CustomButton.ButtonPositions.lowerRowRight,
                 __instance,
                 KeyCode.F, 
                 true,
-                Veteren.alertDuration,
-                () => { veterenAlertButton.Timer = veterenAlertButton.MaxTimer; },
+                Veteran.alertDuration,
+                () => { veteranAlertButton.Timer = veteranAlertButton.MaxTimer; },
                 buttonText:"ALERT"
             );
 
@@ -602,7 +603,7 @@ namespace TheOtherRoles
                         RPCProcedure.medicSetShielded(Medic.currentTarget.PlayerId);
                     Medic.meetingAfterShielding = false;
 
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.medicShield, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.medicShield, false, 0.8f);
                 },
                 () => { return Medic.medic != null && Medic.medic == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { 
@@ -628,7 +629,7 @@ namespace TheOtherRoles
                     writer.Write(Shifter.currentTarget.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.setFutureShifted(Shifter.currentTarget.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.shifterShift, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.shifterShift, false, 0.8f);
                 },
                 () => { return Shifter.shifter != null && Shifter.shifter == CachedPlayer.LocalPlayer.PlayerControl && Shifter.futureShift == null && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => {
@@ -654,7 +655,7 @@ namespace TheOtherRoles
                         RPCProcedure.morphlingMorph(Morphling.sampledTarget.PlayerId);
                         Morphling.sampledTarget = null;
                         morphlingButton.EffectDuration = Morphling.duration;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                     }
                     else if (Morphling.currentTarget != null) {
                         if (Helpers.checkAndDoVetKill(Morphling.currentTarget)) return;
@@ -662,7 +663,7 @@ namespace TheOtherRoles
                         Morphling.sampledTarget = Morphling.currentTarget;
                         morphlingButton.Sprite = Morphling.getMorphSprite();
                         morphlingButton.EffectDuration = 1f;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingSample, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingSample, false, 0.8f);
 
                         // Add poolable player to the button so that the target outfit is shown
                         setButtonTargetDisplay(Morphling.sampledTarget, morphlingButton);
@@ -692,7 +693,7 @@ namespace TheOtherRoles
                     if (Morphling.sampledTarget == null) {
                         morphlingButton.Timer = morphlingButton.MaxTimer;
                         morphlingButton.Sprite = Morphling.getSampleSprite();
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
 
                         // Reset the poolable player
                         setButtonTargetDisplay(null);
@@ -708,7 +709,7 @@ namespace TheOtherRoles
                     writer.Write(1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.camouflagerCamouflage(1);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
 
                 },
                 () => { return Camouflager.camouflager != null && Camouflager.camouflager == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -726,7 +727,7 @@ namespace TheOtherRoles
                 Camouflager.duration,
                 () => {
                     camouflagerButton.Timer = camouflagerButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                 },
                 buttonText:"CAMO"
             );
@@ -735,7 +736,7 @@ namespace TheOtherRoles
             hackerButton = new CustomButton(
                 () => {
                     Hacker.hackerTimer = Hacker.duration;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.hackerHack, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.hackerHack, false, 0.8f);
                 },
                 () => { return Hacker.hacker != null && Hacker.hacker == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { return true; },
@@ -870,7 +871,7 @@ namespace TheOtherRoles
                     writer.Write(Tracker.currentTarget.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.trackerUsedTracker(Tracker.currentTarget.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trackerTrackPlayer, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trackerTrackPlayer, false, 0.8f);
                 },
                 () => { return Tracker.tracker != null && Tracker.tracker == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { 
@@ -887,7 +888,7 @@ namespace TheOtherRoles
 
             trackerTrackCorpsesButton = new CustomButton(
                 () => { Tracker.corpsesTrackingTimer = Tracker.corpsesTrackingDuration;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trackerTrackCorpses, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trackerTrackCorpses, false, 0.8f);
                 },
                 () => { return Tracker.tracker != null && Tracker.tracker == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead && Tracker.canTrackCorpses; },
                 () => { return CachedPlayer.LocalPlayer.PlayerControl.CanMove; },
@@ -1009,7 +1010,7 @@ namespace TheOtherRoles
                                     }
                                 }
                             })));
-                            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.vampireBite, false, 0.8f);
+                            if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.vampireBite, false, 0.8f);
 
                             vampireKillButton.HasEffect = true; // Trigger effect on this click
                         }
@@ -1064,7 +1065,7 @@ namespace TheOtherRoles
                         writer.WriteBytesAndSize(buff);
                         writer.EndMessage();
                         RPCProcedure.placeGarlic(buff);
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.garlic, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.garlic, false, 0.8f);
 
                     },
                     () => { return !Vampire.localPlacedGarlic && !CachedPlayer.LocalPlayer.Data.IsDead && Vampire.garlicsActive && !HideNSeek.isHideNSeekGM && !PropHunt.isPropHuntGM; },
@@ -1090,7 +1091,7 @@ namespace TheOtherRoles
                     writer.WriteBytesAndSize(buff);
                     writer.EndMessage();
                     RPCProcedure.placePortal(buff);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.tricksterPlaceBox, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.tricksterPlaceBox, false, 0.8f);
                 },
                 () => { return Portalmaker.portalmaker != null && Portalmaker.portalmaker == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead && Portal.secondPortal == null; },
                 () => { return CachedPlayer.LocalPlayer.PlayerControl.CanMove && Portal.secondPortal == null; },
@@ -1126,7 +1127,7 @@ namespace TheOtherRoles
                     RPCProcedure.usePortal(CachedPlayer.LocalPlayer.PlayerId, portalMakerSoloTeleport ? (byte)1 : (byte)0);
                     usePortalButton.Timer = usePortalButton.MaxTimer;
                     portalmakerMoveToPortalButton.Timer = usePortalButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.portalUse, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.portalUse, false, 0.8f);
                     FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Portal.teleportDuration, new Action<float>((p) => { // Delayed action
                         CachedPlayer.LocalPlayer.PlayerControl.moveable = false;
                         CachedPlayer.LocalPlayer.NetTransform.Halt();
@@ -1171,7 +1172,7 @@ namespace TheOtherRoles
         RPCProcedure.usePortal(CachedPlayer.LocalPlayer.PlayerId, 2);
         usePortalButton.Timer = usePortalButton.MaxTimer;
         portalmakerMoveToPortalButton.Timer = usePortalButton.MaxTimer;
-        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.portalUse, false, 0.8f);
+        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.portalUse, false, 0.8f);
         FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Portal.teleportDuration, new Action<float>((p) => { // Delayed action
             CachedPlayer.LocalPlayer.PlayerControl.moveable = false;
             CachedPlayer.LocalPlayer.NetTransform.Halt();
@@ -1223,7 +1224,7 @@ namespace TheOtherRoles
                     writer.Write(Jackal.currentTarget.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.jackalCreatesSidekick(Jackal.currentTarget.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.jackalSidekick, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.jackalSidekick, false, 0.8f);
                 },
                 () => { return Jackal.canCreateSidekick && Jackal.jackal != null && Jackal.jackal == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { 
@@ -1510,7 +1511,7 @@ namespace TheOtherRoles
             lighterButton = new CustomButton(
                 () => {
                     Lighter.lighterTimer = Lighter.duration;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
 
                 },
                 () => { return Lighter.lighter != null && Lighter.lighter == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -1528,7 +1529,7 @@ namespace TheOtherRoles
                 Lighter.duration,
                 () => {
                     lighterButton.Timer = lighterButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
                 },
                 buttonText:"LIGHT"
             );
@@ -1545,7 +1546,7 @@ namespace TheOtherRoles
                     writer.Write(Eraser.currentTarget.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.setFutureErased(Eraser.currentTarget.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.eraserErase, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.eraserErase, false, 0.8f);
                 },
                 () => { return Eraser.eraser != null && Eraser.eraser == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
                 () => { 
@@ -1571,7 +1572,7 @@ namespace TheOtherRoles
                     writer.WriteBytesAndSize(buff);
                     writer.EndMessage();
                     RPCProcedure.placeJackInTheBox(buff);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.tricksterPlaceBox, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.tricksterPlaceBox, false, 0.8f);
                 },
                 () => { return Trickster.trickster != null && Trickster.trickster == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead && !JackInTheBox.hasJackInTheBoxLimitReached(); },
                 () => { return CachedPlayer.LocalPlayer.PlayerControl.CanMove && !JackInTheBox.hasJackInTheBoxLimitReached(); },
@@ -1588,7 +1589,7 @@ namespace TheOtherRoles
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.LightsOut, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.lightsOut();
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
                 },
                 () => {
                     return Trickster.trickster != null && Trickster.trickster == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead
@@ -1608,7 +1609,7 @@ namespace TheOtherRoles
                 Trickster.lightsOutDuration,
                 () => {
                     lightsOutButton.Timer = lightsOutButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
                 },
                 buttonText:"LIGHTS OUT"
             );
@@ -1626,7 +1627,7 @@ namespace TheOtherRoles
                                 Vector2 truePosition2 = component.TruePosition;
                                 if (Vector2.Distance(truePosition2, truePosition) <= CachedPlayer.LocalPlayer.PlayerControl.MaxReportDistance && CachedPlayer.LocalPlayer.PlayerControl.CanMove && !PhysicsHelpers.AnythingBetween(truePosition, truePosition2, Constants.ShipAndObjectsMask, false))
                                 {
-                                    GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
+                                    NetworkedPlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
                                     
                                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.CleanBody, Hazel.SendOption.Reliable, -1);
                                     writer.Write(playerInfo.PlayerId);
@@ -1635,7 +1636,7 @@ namespace TheOtherRoles
                                     RPCProcedure.cleanBody(playerInfo.PlayerId, Cleaner.cleaner.PlayerId);
 
                                     Cleaner.cleaner.killTimer = cleanerCleanButton.Timer = cleanerCleanButton.MaxTimer;
-                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.cleanerClean, false, 0.8f);
+                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.cleanerClean, false, 0.8f);
                                     break;
                                 }
                             }
@@ -1666,8 +1667,8 @@ namespace TheOtherRoles
                                     Vector2 playerPosition = CachedPlayer.LocalPlayer.PlayerControl.GetTruePosition();
                                     Vector2 deadBodyPosition = deadBody.TruePosition;
                                     if (Vector2.Distance(deadBodyPosition, playerPosition) <= CachedPlayer.LocalPlayer.PlayerControl.MaxReportDistance && CachedPlayer.LocalPlayer.PlayerControl.CanMove && !PhysicsHelpers.AnythingBetween(playerPosition, deadBodyPosition, Constants.ShipAndObjectsMask, false) && !Undertaker.isDraging)
-                                    {                                        
-                                        GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(deadBody.ParentId);
+                                    {
+                                        NetworkedPlayerInfo playerInfo = GameData.Instance.GetPlayerById(deadBody.ParentId);
                                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.DragBody, Hazel.SendOption.Reliable, -1);
                                         writer.Write(playerInfo.PlayerId);
                                         AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -1729,7 +1730,7 @@ namespace TheOtherRoles
                         Warlock.curseVictim = Warlock.currentTarget;
                         warlockCurseButton.Sprite = Warlock.getCurseKillButtonSprite();
                         warlockCurseButton.Timer = 1f;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.warlockCurse, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.warlockCurse, false, 0.8f);
 
                         // Ghost Info
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareGhostInfo, Hazel.SendOption.Reliable, -1);
@@ -1812,7 +1813,7 @@ namespace TheOtherRoles
                         RPCProcedure.placeCamera(buff);
                         securityGuardButton.buttonText = "CAMERA";
                     }
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.securityGuardPlaceCam, false, 0.8f);                    // Same sound used for both types (cam or vent)!
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.securityGuardPlaceCam, false, 0.8f);                    // Same sound used for both types (cam or vent)!
                     securityGuardButton.Timer = securityGuardButton.MaxTimer;
                 },
                 () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews >= Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice); },
@@ -1924,7 +1925,7 @@ namespace TheOtherRoles
                     {
                         Arsonist.douseTarget = Arsonist.currentTarget;
                         arsonistButton.HasEffect = true;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.arsonistDouse, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.arsonistDouse, false, 0.8f);
                         arsonistButton.buttonText = "DOUSE";
                     }
                 },
@@ -1988,7 +1989,7 @@ namespace TheOtherRoles
                                 Vector2 truePosition = CachedPlayer.LocalPlayer.PlayerControl.GetTruePosition();
                                 Vector2 truePosition2 = component.TruePosition;
                                 if (Vector2.Distance(truePosition2, truePosition) <= CachedPlayer.LocalPlayer.PlayerControl.MaxReportDistance && CachedPlayer.LocalPlayer.PlayerControl.CanMove && !PhysicsHelpers.AnythingBetween(truePosition, truePosition2, Constants.ShipAndObjectsMask, false)) {
-                                    GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
+                                    NetworkedPlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
 
                                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.CleanBody, Hazel.SendOption.Reliable, -1);
                                     writer.Write(playerInfo.PlayerId);
@@ -1998,7 +1999,7 @@ namespace TheOtherRoles
 
                                     Vulture.cooldown = vultureEatButton.Timer = vultureEatButton.MaxTimer;
                                     //Vulture.eatenBodies++;
-                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.vultureEat, false, 0.8f);
+                                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.vultureEat, false, 0.8f);
                                     break;
                                 }
                             }
@@ -2031,7 +2032,7 @@ namespace TheOtherRoles
                                 Vector2 truePosition = CachedPlayer.LocalPlayer.PlayerControl.GetTruePosition();
                                 Vector2 truePosition2 = component.TruePosition;
                                 if (Vector2.Distance(truePosition2, truePosition) <= CachedPlayer.LocalPlayer.PlayerControl.MaxReportDistance && CachedPlayer.LocalPlayer.PlayerControl.CanMove && !PhysicsHelpers.AnythingBetween(truePosition, truePosition2, Constants.ShipAndObjectsMask, false)) {
-                                    GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
+                                    NetworkedPlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
 
                                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.AmnisiacTakeRole, Hazel.SendOption.Reliable, -1);
                                     writer.Write(playerInfo.PlayerId);
@@ -2059,7 +2060,7 @@ namespace TheOtherRoles
                     if (Medium.target != null) {
                         Medium.soulTarget = Medium.target;
                         mediumButton.HasEffect = true;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.mediumAsk, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.mediumAsk, false, 0.8f);
                     }
                 },
                 () => { return Medium.medium != null && Medium.medium == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -2126,7 +2127,7 @@ namespace TheOtherRoles
 
                         Medium.souls.Remove(target);
                     }
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.mediumAsk);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.mediumAsk);
                 },
                 buttonText:"ASK"
             );
@@ -2147,7 +2148,7 @@ namespace TheOtherRoles
 
                         Pursuer.blanks++;
                         pursuerButton.Timer = pursuerButton.MaxTimer;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.pursuerBlank, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.pursuerBlank, false, 0.8f);
                     }
 
                 },
@@ -2180,7 +2181,7 @@ namespace TheOtherRoles
                         if (Helpers.checkAndDoVetKill(Witch.currentTarget)) return;
 						Helpers.checkWatchFlash(Witch.currentTarget);
                         Witch.spellCastingTarget = Witch.currentTarget;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.witchSpell, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.witchSpell, false, 0.8f);
                     }
                 },
                 () => { return Witch.witch != null && Witch.witch == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -2300,7 +2301,7 @@ namespace TheOtherRoles
 						Helpers.checkWatchFlash(Ninja.currentTarget);
                         Ninja.ninjaMarked = Ninja.currentTarget;
                         ninjaButton.Timer = 5f;
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.warlockCurse, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.warlockCurse, false, 0.8f);
 
                         // Ghost Info
                         writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareGhostInfo, Hazel.SendOption.Reliable, -1);
@@ -2427,7 +2428,7 @@ namespace TheOtherRoles
                     writer.EndMessage();
                     RPCProcedure.setTrap(buff);
 
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trapperTrap, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trapperTrap, false, 0.8f);
                     trapperButton.Timer = trapperButton.MaxTimer;
                 },
                 () => { return Trapper.trapper != null && Trapper.trapper == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -2446,7 +2447,7 @@ namespace TheOtherRoles
             // Bomber button
             bomberButton = new CustomButton(
                 () => {
-                    if (Helpers.checkMuderAttempt(Bomber.bomber, Bomber.bomber) != MurderAttemptResult.BlankKill)
+                    if (Helpers.checkMuderAttempt(Bomber.bomber, Bomber.bomber, ignoreMedic: true) != MurderAttemptResult.BlankKill)
                     {
                         var pos = CachedPlayer.LocalPlayer.transform.position;
                         byte[] buff = new byte[sizeof(float) * 2];
@@ -2456,7 +2457,7 @@ namespace TheOtherRoles
                         writer.WriteBytesAndSize(buff);
                         writer.EndMessage();
                         RPCProcedure.placeBomb(buff);
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trapperTrap, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trapperTrap, false, 0.8f);
                     }
                     bomberButton.Timer = bomberButton.MaxTimer;
                     Bomber.isPlanted = true;
@@ -2587,12 +2588,11 @@ namespace TheOtherRoles
 
                     if (Yoyo.markedLocation == null)
                     {
-                        TheOtherRolesPlugin.Logger.LogMessage($"marked location is null in button press");
                         MessageWriter writer = AmongUsClient.Instance.StartRpc(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.YoyoMarkLocation, Hazel.SendOption.Reliable);
                         writer.WriteBytesAndSize(buff);
                         writer.EndMessage();
                         RPCProcedure.yoyoMarkLocation(buff);
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.tricksterPlaceBox, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.tricksterPlaceBox, false, 0.8f);
                         yoyoButton.Sprite = Yoyo.getBlinkButtonSprite();
                         yoyoButton.Timer = 10f;
                         yoyoButton.HasEffect = false;
@@ -2600,9 +2600,7 @@ namespace TheOtherRoles
                     }
                     else
                     {
-                        TheOtherRolesPlugin.Logger.LogMessage("in else for some reason");
                         // Jump to location
-                        TheOtherRolesPlugin.Logger.LogMessage($"trying to blink!");
                         var exit = (Vector3)Yoyo.markedLocation;
                         if (SubmergedCompatibility.IsSubmerged)
                         {
@@ -2617,7 +2615,7 @@ namespace TheOtherRoles
                         yoyoButton.Timer = 10f;
                         yoyoButton.HasEffect = true;
                         yoyoButton.buttonText = "Returning...";
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                     }
                 },
                 () => { return Yoyo.yoyo != null && Yoyo.yoyo == CachedPlayer.LocalPlayer.PlayerControl && !CachedPlayer.LocalPlayer.Data.IsDead; },
@@ -2675,7 +2673,7 @@ namespace TheOtherRoles
                     yoyoButton.HasEffect = false;
                     yoyoButton.Sprite = Yoyo.getMarkButtonSprite();
                     yoyoButton.buttonText = "Mark Location";
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                     if (Minigame.Instance)
                     {
                         Minigame.Instance.Close();
@@ -2754,7 +2752,7 @@ namespace TheOtherRoles
                 },
                 () => { return true; },
                 () => { return; },
-                Helpers.loadSpriteFromResources("TheOtherRoles.Resources.MinusButton.png", 150f),  // Invisible button!
+                null,  // Invisible button!
                 new Vector3(0.4f, 2.8f, 0),
                 __instance,
                 KeyCode.KeypadPlus
@@ -2765,7 +2763,7 @@ namespace TheOtherRoles
             doomsayerButton = new CustomButton(
                 () =>
                 {
-                    SoundManager.Instance.PlaySound(CustomMain.customAssets.knockKnock, false, 1f);
+                    SoundManager.Instance.PlaySound(CustomMain.customZips.knockKnock, false, 1f);
                     setButtonTargetDisplay(null);
                 },
                 () =>
@@ -2829,7 +2827,7 @@ namespace TheOtherRoles
             hunterLighterButton = new CustomButton(
                 () => {
                     Hunter.lightActive.Add(CachedPlayer.LocalPlayer.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareTimer, Hazel.SendOption.Reliable, -1);
                     writer.Write(Hunter.lightPunish);
@@ -2852,7 +2850,7 @@ namespace TheOtherRoles
                 () => {
                     Hunter.lightActive.Remove(CachedPlayer.LocalPlayer.PlayerId);
                     hunterLighterButton.Timer = hunterLighterButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.lighterLight, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.lighterLight, false, 0.8f);
                 }
             );
 
@@ -2895,7 +2893,7 @@ namespace TheOtherRoles
             hunterArrowButton = new CustomButton(
                 () => {
                     Hunter.arrowActive = true;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trackerTrackPlayer, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trackerTrackPlayer, false, 0.8f);
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, (byte)CustomRPC.ShareTimer, Hazel.SendOption.Reliable, -1);
                     writer.Write(Hunter.ArrowPunish);
@@ -2918,7 +2916,7 @@ namespace TheOtherRoles
                 () => {
                     Hunter.arrowActive = false;
                     hunterArrowButton.Timer = hunterArrowButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.trackerTrackPlayer, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.trackerTrackPlayer, false, 0.8f);
                 }
             );
 
@@ -2928,7 +2926,7 @@ namespace TheOtherRoles
                     writer.Write(CachedPlayer.LocalPlayer.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.huntedShield(CachedPlayer.LocalPlayer.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.timemasterShield, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.timemasterShield, false, 0.8f);
 
                     Hunted.shieldCount--;
                 },
@@ -2950,7 +2948,7 @@ namespace TheOtherRoles
                 Hunted.shieldDuration,
                 () => {
                     huntedShieldButton.Timer = huntedShieldButton.MaxTimer;
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);
 
                 }
             );
@@ -2976,7 +2974,7 @@ namespace TheOtherRoles
                         writer.Write(disguiseTarget.gameObject.transform.position.x);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.propHuntSetProp(CachedPlayer.LocalPlayer.PlayerId, disguiseTarget.gameObject.name, disguiseTarget.gameObject.transform.position.x);
-                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                        if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                         propDisguiseButton.Timer = 1f;
                     }
                 },
@@ -3052,7 +3050,7 @@ namespace TheOtherRoles
                     writer.Write(CachedPlayer.LocalPlayer.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.propHuntSetInvis(CachedPlayer.LocalPlayer.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                 },
                 () => { return PropHunt.isPropHuntGM && !PlayerControl.LocalPlayer.Data.IsDead && !PlayerControl.LocalPlayer.Data.Role.IsImpostor && PropHunt.enableInvis; },
                 () => { return PropHunt.currentObject.ContainsKey(PlayerControl.LocalPlayer.PlayerId); },
@@ -3064,7 +3062,7 @@ namespace TheOtherRoles
                 true,
                 5f,
                 () => {
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.morphlingMorph, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.morphlingMorph, false, 0.8f);
                     propHuntInvisButton.Timer = propHuntInvisButton.MaxTimer;
                 },
                 buttonText: "INVIS"
@@ -3076,7 +3074,7 @@ namespace TheOtherRoles
                     writer.Write(CachedPlayer.LocalPlayer.PlayerId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.propHuntSetSpeedboost(CachedPlayer.LocalPlayer.PlayerId);
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.timemasterShield, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.timemasterShield, false, 0.8f);
                 },
                 () => { return PropHunt.isPropHuntGM && !PlayerControl.LocalPlayer.Data.IsDead && !PlayerControl.LocalPlayer.Data.Role.IsImpostor && PropHunt.enableSpeedboost; },
                 () => { return true; },
@@ -3088,7 +3086,7 @@ namespace TheOtherRoles
                 true,
                 5f,
                 () => {
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.timemasterShield);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.timemasterShield);
                     propHuntSpeedboostButton.Timer = propHuntSpeedboostButton.MaxTimer;
                 },
                 buttonText: "BOOST"
@@ -3129,7 +3127,7 @@ namespace TheOtherRoles
             );
             propHuntFindButton = new CustomButton(
                 () => {
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customAssets.timemasterShield, false, 0.8f);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.PlaySound(CustomMain.customZips.timemasterShield, false, 0.8f);
                 },
                 () => { return PropHunt.isPropHuntGM && !PlayerControl.LocalPlayer.Data.IsDead && PlayerControl.LocalPlayer.Data.Role.IsImpostor; },
                 () => { return true; },
@@ -3141,7 +3139,7 @@ namespace TheOtherRoles
                 true,
                 5f,
                 () => {
-                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customAssets.engineerRepair);
+                    if (MapOptionsTor.enableSoundEffects) SoundManager.Instance.StopSound(CustomMain.customZips.engineerRepair);
                     propHuntFindButton.Timer = propHuntFindButton.MaxTimer;
                     propHuntFindButton.isEffectActive = false;
                 },

@@ -29,7 +29,7 @@ namespace TheOtherRoles.Objects {
 
         public static Sprite getDefuseSprite() {
             if (defuseSprite) return defuseSprite;
-            defuseSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Bomb_Button_Defuse.png", 115f);
+            defuseSprite = CustomMain.customZips.Bomb_Button_Defuse;
             return defuseSprite;
         }
 
@@ -64,7 +64,7 @@ namespace TheOtherRoles.Objects {
                 if (x == 1f && this != null) {
                     bomb.SetActive(true);
                     background.SetActive(true);
-                    playAtPositionBomb(CustomMain.customAssets.bombFuseBurning, p, Bomber.destructionTime, Bomber.hearRange, true);
+                    playAtPositionBomb(CustomMain.customZips.bombFuseBurning, p, Bomber.destructionTime, Bomber.hearRange, true);
                     Bomber.isActive = true;
 
                     FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Bomber.destructionTime, new Action<float>((x) => { // can you feel the pain?
@@ -118,7 +118,7 @@ namespace TheOtherRoles.Objects {
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     GameHistory.overrideDeathReasonAndKiller(CachedPlayer.LocalPlayer, DeadPlayer.CustomDeathReason.Bomb, killer: Bomber.bomber);
                 }
-                playAtPositionBomb(CustomMain.customAssets.bombExplosion, position, range: Bomber.hearRange);
+                playAtPositionBomb(CustomMain.customZips.bombExplosion, position, range: Bomber.hearRange);
             }
             Bomber.clearBomb();
             canDefuse = false;
