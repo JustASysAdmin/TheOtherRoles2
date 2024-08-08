@@ -15,7 +15,7 @@ The **The Other Roles CE**, is a mod for [Among Us](https://store.steampowered.c
 Even more roles are coming soon. :)
 
 | Impostor | Crewmate | Neutral | Modifier | Gamemode |
-|----------|-------------|-----------------|----------------|
+|----------|-------------|-----------------|----------------|----------------|
 | [Godfather (Mafia)](#mafia) | [Shifter](#shifter) | [Jester](#jester) | [Bloody](#bloody) | [Classic](#roles) |
 | [Mafioso (Mafia)](#mafia) | [Mayor](#mayor) | [Arsonist](#arsonist) | [Anti Teleport](#anti-teleport) | [Guesser Modifier](#guesser-modifier) |
 | [Janitor (Mafia)](#mafia) | [Engineer](#engineer) | [Jackal](#jackal) | [Tie Breaker](#tie-breaker) | [Hide 'n' Seek](#hide-n-seek) |
