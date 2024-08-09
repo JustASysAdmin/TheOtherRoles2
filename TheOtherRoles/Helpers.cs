@@ -1286,25 +1286,5 @@ namespace TheOtherRoles {
                 return texture!;
             }
         }
-        public class SpriteLoader : Image
-        {
-            Sprite sprite = null!;
-            float pixelsPerUnit;
-            ITextureLoader textureLoader;
-            public SpriteLoader(ITextureLoader textureLoader, float pixelsPerUnit)
-            {
-                this.textureLoader = textureLoader;
-                this.pixelsPerUnit = pixelsPerUnit;
-            }
-
-            public Sprite GetSprite()
-            {
-                if (!sprite) sprite = textureLoader.GetTexture().ToSprite(pixelsPerUnit);
-                sprite.hideFlags = textureLoader.GetTexture().hideFlags;
-                return sprite;
-            }
-
-            static public SpriteLoader FromResource(string address, float pixelsPerUnit) => new SpriteLoader(new ResourceTextureLoader(address), pixelsPerUnit);
-        }
     }
 }

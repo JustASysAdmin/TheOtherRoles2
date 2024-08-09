@@ -234,7 +234,7 @@ namespace TheOtherRoles
         // Main Controls
 
         public static void resetVariables() {
-            PropHunt.ResetData();
+            //PropHunt.ResetData();
             Garlic.clearGarlics();
             JackInTheBox.clearJackInTheBoxes();
             NinjaTrace.clearTraces();

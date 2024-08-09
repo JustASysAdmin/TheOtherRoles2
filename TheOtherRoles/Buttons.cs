@@ -3041,7 +3041,8 @@ namespace TheOtherRoles
                 5f,
                 () => {
                     propHuntRevealButton.Timer = propHuntRevealButton.MaxTimer;
-                }
+                },
+                buttonText: "Reveal"
                 );
 
             propHuntInvisButton = new CustomButton(

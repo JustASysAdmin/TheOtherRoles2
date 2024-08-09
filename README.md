@@ -1,7 +1,7 @@
 
 
 ![eisbison banner](./Images/TOR_Logo.jpg)
-<p align="center"><a href="https://github.com/JustASysAdmin/TheOtherRoles2/releases/"><img src="https://badgen.net/github/release/justasysadmin/theotherroles2"></a></p>
+<p align="center"><a href="https://github.com/FangkuaiYa/TheOtherRoles2/releases/"><img src="https://badgen.net/github/release/FangkuaiYa/theotherroles2"></a></p>
 
 <p align="center">
 This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.</p>
@@ -40,18 +40,55 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 
 # Releases
 | Among Us - Version| Mod Version | Link |
-|----------|-------------|-----------------|
-| 2022.9.20| v5.6.8| [Download](https://github.com/JustASysAdmin/TheOtherRoles2/releases/tag/v5.6.8)
-| 2022.9.20| v5.6.7| [Download](https://github.com/JustASysAdmin/TheOtherRoles2/releases/tag/v5.6.7)
+|-----------|-------------|-----------------|
+| 2024.6.18 | v5.9.0 | [Download](https://github.com/FangkuaiYa/TheOtherRoles2/releases/tag/v5.9.0)
 
+<details>
+  <summary>Click to show older versions</summary>
+
+| Among Us - Version| Mod Version | Link |
+|-----------|-------------|-----------------|
+| 2022.9.20 | v5.6.8 | [Download](https://github.com/JustASysAdmin/TheOtherRoles2/releases/tag/v5.6.8)
+| 2022.9.20 | v5.6.7|  [Download](https://github.com/JustASysAdmin/TheOtherRoles2/releases/tag/v5.6.7)
+</details>
 
 # Changelog
 <details>
   <summary>Click to show the Changelog</summary>
   
 **Beyond**
-   - Please see the release logs [here](https://github.com/JustASysAdmin/TheOtherRoles2/releases) for the newest changelogs
-  
+   - Please see the release logs [here](https://github.com/FangkuaiYa/TheOtherRoles2/releases) for the newest changelogs
+
+   **Version 5.9.0**  
+- Updated to Among Us version 2024.6.18 (Vanilla Update with new UI elements and many Server Side Changes)
+- Added Neutral Role Doomsayer
+- Added Modifier Role Disperser
+- Added new gamemode PropHunt(Temporarily unavailable)
+- New MainMenu UI
+- Added a completely new UI for the Mod's Options, using the new Vanilla Design.
+- Added a button to switch gamemodes in the lobby
+- Added an option to enable the Chat-Notification in game (in Mod Options)
+- Change sound effects and image storage methods
+- Added an option to show FPS in game (in Mod Options)
+- Fixed a bug where the shielding the bomber would show a murder attempt on the bomber, when they plant a bomb (sorry Vlesk)
+- Fixed a bug where guessing a player would sometimes not return the votes to the voters
+- Added some Chinese
+- Fixed a bug where the Lawyer would not properly die when guessing the client
+- Removed: Disabled Vanilla Servers for now, as the mod is incompatible with them in its / their current state. Thanks to Miniduikboot for making custom servers great again!
+- Experimental: Advanced users can try to install the mod on the Windows Store Version of Among Us. No Support Provided!
+- Added Load UI to Load Hats(China user download from Gitee)
+- Added a new role: Yo-Yo (Impostor) - Mark and blink to a position, then blink back to the start of the blink!
+- Fixed the chat command to ban a player from the lobby `/ban`
+- Fixed an issue with the very short kill distance in Vanilla HideNSeek
+- Changed trapper trap: is now visible with transparency to the trapper while inactive
+- Added a new feature: Stop the game start (With an option to allow any player to stop it)
+- Added a new option (guesser mode): Sidekick is always guesser
+- Fixed the Arsonist Win - death reasons for already dead players are no longer replaced 
+- Changed the implementation of the Detective footprints - Improved performance can be expected
+- Changed the medic shield: Is now also displayed in meetings to players who can see it with brackets around the name
+- Added a feature to change the gamemode in the settings: `/gm <gamemode>` (host only)
+- ……
+
 **Version 4.1.6**  
 - Added Sound Effects: Most buttons / role functionalities now have a sound!
 - Added a mod option: Enable Sound Effects  

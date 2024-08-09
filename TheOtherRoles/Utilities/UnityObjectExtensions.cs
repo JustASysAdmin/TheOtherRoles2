@@ -25,7 +25,7 @@ public static class UnityObjectExtensions
         return obj;
     }
 
-   public static void Destroy(this UnityObject obj)
+    public static void Destroy(this UnityObject obj)
     {
         UnityObject.Destroy(obj);
     }

@@ -468,14 +468,6 @@ namespace TheOtherRoles.CustomGameModes
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
         [HarmonyPostfix]
-        public static void ResetData()
-        {
-            if (TimeRemaining != null)
-            {
-                UnityEngine.Object.Destroy(TimeRemaining);
-                TimeRemaining = null;
-            }
-        }
         public static void IntroCutsceneDestroyPatch(IntroCutscene __instance)
         {
             if (!isPropHuntGM || !PlayerControl.LocalPlayer.Data.Role.IsImpostor) return;
@@ -514,7 +506,7 @@ namespace TheOtherRoles.CustomGameModes
                     introRenderer.sprite = getIntroSprite(510 - nFrames + (int)(p * nFrames));
                     Resources.UnloadUnusedAssets();  // Needed so that the last sprite gets unloaded
 
-                    TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
+                    /*TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
                     TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                     TimeRemaining.transform.position = Vector3.zero;
                     TimeRemaining.transform.localPosition = new Vector3(0, 0, -1f);
@@ -522,7 +514,7 @@ namespace TheOtherRoles.CustomGameModes
                     TimeRemaining.transform.SetParent(HudManager.Instance.FullScreen.transform);
                     TimeRemaining.color = Palette.White;
                     TimeRemaining.text = $"¾àÀë¿ªÊ¼: {initialBlackoutTime - Time.deltaTime}";
-                    TimeRemaining.gameObject.SetActive(true);
+                    TimeRemaining.gameObject.SetActive(true);*/
 
                 }
             })));
